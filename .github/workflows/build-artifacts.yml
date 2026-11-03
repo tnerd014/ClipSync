@@ -34,7 +34,7 @@ jobs:
         run: |
           cd electron
           npm install --legacy-peer-deps
-          npx electron-builder --win nsis --x64
+          npx electron-builder --win nsis --x64 --publish never
 
       - name: Upload Windows Setup EXE
         uses: actions/upload-artifact@v4
@@ -57,7 +57,7 @@ jobs:
           node-version: 22
 
       - name: Setup Java JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17'
