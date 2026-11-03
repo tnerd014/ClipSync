@@ -11,10 +11,15 @@ permissions:
   contents: write
 
 jobs:
+  # ========================================================
   # Job 1: Automated Windows Desktop EXE Installer Build
+  # ========================================================
   build-windows-exe:
     name: Build Windows Setup EXE
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -28,7 +33,7 @@ jobs:
         run: |
           npm install --legacy-peer-deps
           npm run build
-          node -e "const fs = require('fs'); fs.cpSync('dist', 'electron/dist', { recursive: true });"
+          node scripts/prepare-electron.js
 
       - name: Build Windows Installer with Electron Builder
         run: |
@@ -41,12 +46,18 @@ jobs:
         with:
           name: ClipSync-Windows-Setup-Installer
           path: electron/dist-electron/*.exe
+          if-no-files-found: warn
           retention-days: 30
 
+  # ========================================================
   # Job 2: Automated Android APK Build
+  # ========================================================
   build-android-apk:
     name: Build Android APK
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -84,4 +95,5 @@ jobs:
         with:
           name: ClipSync-Android-APK
           path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn
           retention-days: 30
