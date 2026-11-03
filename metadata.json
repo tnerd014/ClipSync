@@ -1,0 +1,6 @@
+{
+  "name": "ClipSync - Cross-Device Sticky Notes",
+  "description": "Real-time instant text and clipboard sync between PC and mobile devices with session pairing, desktop sticky widget mode, and clip history.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,71 @@
+name: Build Windows Setup EXE and Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build-windows-exe:
+    name: Build Windows Setup EXE
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build Web Application
+        run: |
+          npm ci
+          npm run build
+          xcopy /E /I dist electron\dist
+
+      - name: Build Windows Installer with Electron Builder
+        run: |
+          cd electron
+          npm install
+          npx electron-builder --win nsis --x64
+
+      - name: Upload Windows Setup EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClipSync-Windows-Setup-Installer
+          path: electron/dist-electron/*.exe
+
+  build-android-apk:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.x'
+          channel: 'stable'
+
+      - name: Build Android APK
+        run: |
+          if [ -d "flutter_app" ]; then
+            cd flutter_app
+            flutter pub get
+            flutter build apk --release
+          fi
+
+      - name: Upload Android APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClipSync-Android-Release-APK
+          path: flutter_app/build/app/outputs/flutter-apk/*.apk

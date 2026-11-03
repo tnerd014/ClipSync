@@ -1,0 +1,36 @@
+{
+  "name": "clipsync-desktop",
+  "version": "1.0.0",
+  "description": "Cross-device sticky note and clipboard sync for Windows desktop (Serverless LAN sync)",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron main.cjs",
+    "build:win": "electron-builder --win --x64"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.clipsync.desktop",
+    "productName": "ClipSync",
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "dist/**/*"
+    ],
+    "win": {
+      "target": ["portable", "nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "directories": {
+      "output": "dist-electron"
+    }
+  }
+}
