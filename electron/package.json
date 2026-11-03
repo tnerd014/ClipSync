@@ -2,6 +2,7 @@
   "name": "clipsync-desktop",
   "version": "1.0.0",
   "description": "Cross-device sticky note and clipboard sync for Windows desktop (Serverless LAN sync)",
+  "author": "ClipSync",
   "main": "main.cjs",
   "scripts": {
     "start": "electron main.cjs",

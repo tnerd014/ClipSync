@@ -1,0 +1,8 @@
+{
+  "appId": "com.clipsync.app",
+  "appName": "ClipSync",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

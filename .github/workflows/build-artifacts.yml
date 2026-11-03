@@ -1,11 +1,17 @@
 name: Build Windows Setup EXE and Android APK
 
 on:
-  workflow_dispatch:
   push:
     branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
+  # Job 1: Automated Windows Desktop EXE Installer Build
   build-windows-exe:
     name: Build Windows Setup EXE
     runs-on: windows-latest
@@ -13,21 +19,21 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      - name: Build Web Application
+      - name: Install Dependencies & Build Web App
         run: |
-          npm ci
+          npm install --legacy-peer-deps
           npm run build
-          xcopy /E /I dist electron\dist
+          node -e "const fs = require('fs'); fs.cpSync('dist', 'electron/dist', { recursive: true });"
 
       - name: Build Windows Installer with Electron Builder
         run: |
           cd electron
-          npm install
+          npm install --legacy-peer-deps
           npx electron-builder --win nsis --x64
 
       - name: Upload Windows Setup EXE
@@ -35,7 +41,9 @@ jobs:
         with:
           name: ClipSync-Windows-Setup-Installer
           path: electron/dist-electron/*.exe
+          retention-days: 30
 
+  # Job 2: Automated Android APK Build
   build-android-apk:
     name: Build Android APK
     runs-on: ubuntu-latest
@@ -43,29 +51,37 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Java JDK
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Java JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Flutter SDK
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.x'
-          channel: 'stable'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Build Android APK
+      - name: Install Dependencies & Build Web Bundle
         run: |
-          if [ -d "flutter_app" ]; then
-            cd flutter_app
-            flutter pub get
-            flutter build apk --release
-          fi
+          npm install --legacy-peer-deps
+          npm run build
+          npx cap sync android
+
+      - name: Make Gradlew Executable
+        run: chmod +x android/gradlew
+
+      - name: Build Android APK with Gradle
+        run: |
+          cd android
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload Android APK
-        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ClipSync-Android-Release-APK
-          path: flutter_app/build/app/outputs/flutter-apk/*.apk
+          name: ClipSync-Android-APK
+          path: android/app/build/outputs/apk/debug/*.apk
+          retention-days: 30

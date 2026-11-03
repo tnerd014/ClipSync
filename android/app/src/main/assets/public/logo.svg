@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Squircle Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="50%" stop-color="#0c0a09" />
+      <stop offset="100%" stop-color="#000000" />
+    </linearGradient>
+
+    <!-- Squircle Border Glow -->
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#10b981" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.2" />
+    </linearGradient>
+
+    <!-- Sticky Note Yellow Gradient -->
+    <linearGradient id="stickyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="35%" stop-color="#fde047" />
+      <stop offset="100%" stop-color="#eab308" />
+    </linearGradient>
+
+    <!-- Peeled Corner Shadow -->
+    <linearGradient id="cornerShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ca8a04" />
+      <stop offset="100%" stop-color="#854d0e" />
+    </linearGradient>
+
+    <!-- Lightning Sync Energy Gradient -->
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- Soft Drop Shadow Filter -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+
+    <filter id="stickyGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#ca8a04" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Outer Squircle Frame with Border -->
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="6" />
+
+  <!-- Background Ambient Glow -->
+  <circle cx="256" cy="240" r="140" fill="#f59e0b" opacity="0.12" filter="blur(40px)" />
+
+  <!-- Main Sticky Note Body (with peeled bottom-right corner) -->
+  <g filter="url(#dropShadow)">
+    <!-- Sticky Note Path with cut corner -->
+    <path d="M 124 108 
+             L 388 108 
+             A 20 20 0 0 1 408 128 
+             L 408 332 
+             L 332 408 
+             L 124 408 
+             A 20 20 0 0 1 104 388 
+             L 104 128 
+             A 20 20 0 0 1 124 108 Z" 
+          fill="url(#stickyGrad)" 
+          stroke="#fef9c3" 
+          stroke-width="3" />
+
+    <!-- Peeled Corner Triangle with Realistic Shadow -->
+    <path d="M 332 408 
+             L 332 344 
+             A 12 12 0 0 1 344 332 
+             L 408 332 Z" 
+          fill="url(#cornerShadow)" 
+          opacity="0.9" />
+
+    <path d="M 332 408 
+             L 332 344 
+             A 12 12 0 0 1 344 332 
+             L 408 332 Z" 
+          fill="#fef08a" 
+          opacity="0.4" />
+  </g>
+
+  <!-- Inside Sticky Note: Stylized PC Screen (Left) -->
+  <g transform="translate(142, 160)">
+    <!-- Monitor Body -->
+    <rect x="0" y="0" width="96" height="66" rx="8" fill="#1c1917" stroke="#44403c" stroke-width="4" />
+    <!-- Screen View -->
+    <rect x="8" y="8" width="80" height="50" rx="4" fill="#292524" />
+    <!-- Mini Text lines inside monitor -->
+    <line x1="16" y1="20" x2="68" y2="20" stroke="#fef08a" stroke-width="3" stroke-linecap="round" />
+    <line x1="16" y1="30" x2="52" y2="30" stroke="#fef08a" stroke-width="3" stroke-linecap="round" opacity="0.7" />
+    <line x1="16" y1="40" x2="60" y2="40" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
+    <!-- Monitor Stand -->
+    <path d="M 40 66 L 36 82 L 60 82 L 56 66 Z" fill="#44403c" />
+    <rect x="26" y="82" width="44" height="6" rx="3" fill="#57534e" />
+  </g>
+
+  <!-- Inside Sticky Note: Stylized Mobile Phone (Right) -->
+  <g transform="translate(276, 172)">
+    <!-- Phone Body -->
+    <rect x="0" y="0" width="56" height="96" rx="14" fill="#1c1917" stroke="#44403c" stroke-width="4" />
+    <!-- Phone Screen -->
+    <rect x="6" y="8" width="44" height="80" rx="8" fill="#292524" />
+    <!-- Camera Notch -->
+    <circle cx="28" cy="14" r="2.5" fill="#57534e" />
+    <!-- Mini Text lines inside phone -->
+    <line x1="14" y1="26" x2="42" y2="26" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" />
+    <line x1="14" y1="35" x2="36" y2="35" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" opacity="0.7" />
+    <line x1="14" y1="44" x2="40" y2="44" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+    <!-- Home Gesture Bar -->
+    <rect x="18" y="78" width="20" height="3" rx="1.5" fill="#78716c" />
+  </g>
+
+  <!-- Dynamic Electric Lightning Sync Bolt Connecting PC and Mobile -->
+  <g transform="translate(230, 192)" filter="url(#stickyGlow)">
+    <!-- Pulsing Glow Behind Bolt -->
+    <path d="M 32 0 L 14 36 L 28 36 L 10 74 L 46 28 L 28 28 Z" fill="#38bdf8" opacity="0.4" filter="blur(6px)" />
+    <!-- Sharp Front Bolt -->
+    <path d="M 32 0 L 14 36 L 28 36 L 10 74 L 46 28 L 28 28 Z" fill="#0284c7" stroke="#e0f2fe" stroke-width="3" stroke-linejoin="round" />
+    <path d="M 30 6 L 17 34 L 27 34 L 14 66 L 42 30 L 28 30 Z" fill="#38bdf8" />
+  </g>
+
+  <!-- Sync Sparkles / Data Beams -->
+  <circle cx="232" cy="178" r="4" fill="#38bdf8" />
+  <circle cx="280" cy="296" r="3.5" fill="#f59e0b" />
+  <circle cx="236" cy="274" r="3" fill="#10b981" />
+
+  <!-- Bottom Brand Text (Subtle & Elegant) -->
+  <text x="226" y="380" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="28" font-weight="800" fill="#78350f" letter-spacing="1">CLIPSYNC</text>
+</svg>
