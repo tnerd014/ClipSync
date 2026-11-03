@@ -12,10 +12,39 @@ permissions:
 
 jobs:
   # ========================================================
-  # Job 1: Automated Windows Desktop EXE Installer Build
+  # Job 1: Build Web App Once on Ubuntu (Fast & 100% Reliable)
+  # ========================================================
+  build-web:
+    name: Build Web Distribution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build Web Application
+        run: npm run build
+
+      - name: Upload Web Dist Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: dist/
+          retention-days: 1
+
+  # ========================================================
+  # Job 2: Build Windows Desktop NSIS Setup EXE
   # ========================================================
   build-windows-exe:
     name: Build Windows Setup EXE
+    needs: build-web
     runs-on: windows-latest
     defaults:
       run:
@@ -29,11 +58,11 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Dependencies & Build Web App
-        run: |
-          npm install --legacy-peer-deps
-          npm run build
-          node scripts/prepare-electron.js
+      - name: Download Web Dist
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: electron/dist
 
       - name: Build Windows Installer with Electron Builder
         run: |
@@ -50,10 +79,11 @@ jobs:
           retention-days: 30
 
   # ========================================================
-  # Job 2: Automated Android APK Build
+  # Job 3: Build Android APK with Gradle
   # ========================================================
   build-android-apk:
     name: Build Android APK
+    needs: build-web
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -76,11 +106,17 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Dependencies & Build Web Bundle
-        run: |
-          npm install --legacy-peer-deps
-          npm run build
-          npx cap sync android
+      - name: Download Web Dist
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: dist
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Sync Capacitor Android
+        run: npx cap sync android
 
       - name: Make Gradlew Executable
         run: chmod +x android/gradlew
