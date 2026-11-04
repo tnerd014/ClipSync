@@ -12228,6 +12228,7 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 	const [copied, setCopied] = (0, import_react.useState)(false);
 	const [showHistorySheet, setShowHistorySheet] = (0, import_react.useState)(false);
 	const [isClearModalOpen, setIsClearModalOpen] = (0, import_react.useState)(false);
+	const [isClearNoteModalOpen, setIsClearNoteModalOpen] = (0, import_react.useState)(false);
 	const [historySearch, setHistorySearch] = (0, import_react.useState)("");
 	const [detectedUrls, setDetectedUrls] = (0, import_react.useState)([]);
 	const [historyIndex, setHistoryIndex] = (0, import_react.useState)(-1);
@@ -12260,11 +12261,18 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 			}
 		}
 	};
-	const handleClearNote = () => {
+	const handleRequestClearNote = () => {
+		if (!note.content.trim()) return;
+		triggerHaptic();
+		setIsClearNoteModalOpen(true);
+	};
+	const confirmClearNote = () => {
 		if (!note.content.trim()) return;
 		triggerHaptic();
 		onSaveToHistory(note.content);
+		setHistoryIndex(-1);
 		onTextChange("");
+		setIsClearNoteModalOpen(false);
 	};
 	const handlePrevNote = () => {
 		if (history.length === 0) return;
@@ -12347,14 +12355,11 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: "flex items-center z-10 shrink-0",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							onClick: () => {
-								triggerHaptic();
-								setHistoryIndex(-1);
-								onNewNote();
-							},
-							title: "New Note",
-							className: "w-7 h-7 flex items-center justify-center bg-black/25 hover:bg-white/15 active:scale-90 rounded-full text-[#faf3e0]/95 transition-all cursor-pointer",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Plus, { className: "w-3.5 h-3.5 stroke-[2]" })
+							onClick: handleRequestClearNote,
+							disabled: !note.content.trim(),
+							title: "Clear Note",
+							className: "w-7 h-7 flex items-center justify-center bg-black/25 hover:bg-white/15 active:scale-90 disabled:opacity-30 disabled:pointer-events-none rounded-full text-[#faf3e0]/95 transition-all cursor-pointer",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-3.5 h-3.5 stroke-[1.8]" })
 						})
 					})
 				]
@@ -12424,11 +12429,14 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "w-[18px] h-[18px] stroke-[1.8]" }), history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#991b1b]" })]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								onClick: handleClearNote,
-								disabled: !note.content.trim(),
-								title: "Clear Note",
-								className: "w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-[18px] h-[18px] stroke-[1.8]" })
+								onClick: () => {
+									triggerHaptic();
+									setHistoryIndex(-1);
+									onNewNote();
+								},
+								title: "New Note",
+								className: "w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 transition-all cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Plus, { className: "w-5 h-5 stroke-[2]" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handleNextNote,
@@ -12532,6 +12540,37 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 					]
 				})
 			}),
+			isClearNoteModalOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/60 backdrop-blur-sm animate-in fade-in",
+				onClick: () => setIsClearNoteModalOpen(false),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "w-full max-w-[230px] bg-gradient-to-b from-[#452315] via-[#34180c] to-[#240f06] border border-black/40 rounded-2xl shadow-2xl p-4 text-[#faf3e0] space-y-3 select-none",
+					onClick: (e) => e.stopPropagation(),
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "text-center space-y-1",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							className: "text-xs font-semibold text-[#faf3e0]/95 tracking-tight",
+							children: "Clear Note?"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							className: "text-[11px] text-[#faf3e0]/70 leading-snug",
+							children: "Are you sure you want to clear? Your note will be saved to History."
+						})]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "grid grid-cols-2 gap-2 pt-0.5",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							onClick: () => setIsClearNoteModalOpen(false),
+							className: "py-1.5 rounded-xl bg-black/25 hover:bg-white/10 active:scale-[0.98] text-xs font-medium text-[#faf3e0]/90 transition-all cursor-pointer",
+							children: "No"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							onClick: confirmClearNote,
+							className: "py-1.5 rounded-xl bg-red-500/25 hover:bg-red-500/35 active:scale-[0.98] text-xs font-semibold text-red-300 transition-all cursor-pointer",
+							children: "Yes"
+						})]
+					})]
+				})
+			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClearHistoryModal, {
 				isOpen: isClearModalOpen,
 				onClose: () => setIsClearModalOpen(false),
@@ -12550,8 +12589,10 @@ var WindowsApp = ({ note, history, connectedDevices, pin, lanIp, lanPort, remote
 	const [historyIndex, setHistoryIndex] = (0, import_react.useState)(-1);
 	const [currentTime, setCurrentTime] = (0, import_react.useState)(/* @__PURE__ */ new Date());
 	const [isClearModalOpen, setIsClearModalOpen] = (0, import_react.useState)(false);
-	const [isPinned, setIsPinned] = (0, import_react.useState)(false);
-	const [isWidgetMode, setIsWidgetMode] = (0, import_react.useState)(false);
+	const [isClearNoteModalOpen, setIsClearNoteModalOpen] = (0, import_react.useState)(false);
+	const initialWidget = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("widget") === "1";
+	const [isPinned, setIsPinned] = (0, import_react.useState)(initialWidget);
+	const [isWidgetMode, setIsWidgetMode] = (0, import_react.useState)(initialWidget);
 	const isElectron = typeof window !== "undefined" && Boolean(window.electronAPI);
 	const textareaRef = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
@@ -12623,10 +12664,15 @@ var WindowsApp = ({ note, history, connectedDevices, pin, lanIp, lanPort, remote
 		setHistoryIndex(prevIdx);
 		onRestoreClip(history[prevIdx].content);
 	};
-	const handleClearNote = () => {
+	const handleRequestClearNote = () => {
+		if (!note.content.trim()) return;
+		setIsClearNoteModalOpen(true);
+	};
+	const confirmClearNote = () => {
 		if (note.content.trim()) onSaveToHistory(note.content);
 		setHistoryIndex(-1);
 		onTextChange("");
+		setIsClearNoteModalOpen(false);
 		textareaRef.current?.focus();
 	};
 	const handleMinimize = () => {
@@ -12672,7 +12718,7 @@ var WindowsApp = ({ note, history, connectedDevices, pin, lanIp, lanPort, remote
 		className: `h-screen w-screen overflow-hidden flex flex-col bg-[#2b170e] select-none font-sans shadow-2xl transition-all duration-200 ${isPinned ? "border border-white/20" : "border border-[#3e2215]"}`,
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
-				className: `relative z-30 flex items-center justify-between bg-gradient-to-b from-[#452315] to-[#281107] border-b border-black/40 shadow-sm ${isWidgetMode ? "h-[36px] pl-2" : "h-[38px] pl-2.5"} ${isElectron ? "pr-[138px]" : "pr-2"}`,
+				className: `relative z-30 flex items-center justify-between bg-gradient-to-b from-[#452315] to-[#281107] border-b border-black/40 shadow-sm ${isWidgetMode ? "h-[36px] pl-2" : "h-[38px] pl-2.5"} ${isElectron && !isWidgetMode ? "pr-[138px]" : "pr-2"}`,
 				style: { WebkitAppRegion: "drag" },
 				onDoubleClick: handleMaximize,
 				children: [
@@ -12740,7 +12786,7 @@ var WindowsApp = ({ note, history, connectedDevices, pin, lanIp, lanPort, remote
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LayoutTemplate, { className: "w-3 h-3 stroke-[1.8]" })
 								})
 							]
-						}), !isElectron && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						}), !isElectron && !isWidgetMode && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-center gap-0.5 pl-0.5",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
@@ -12834,7 +12880,7 @@ var WindowsApp = ({ note, history, connectedDevices, pin, lanIp, lanPort, remote
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "w-4 h-4 stroke-[1.8]" }), history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#991b1b]" })]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								onClick: handleClearNote,
+								onClick: handleRequestClearNote,
 								disabled: !note.content.trim(),
 								title: "Clear Note",
 								className: "w-7 h-7 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
@@ -12865,7 +12911,7 @@ var WindowsApp = ({ note, history, connectedDevices, pin, lanIp, lanPort, remote
 				]
 			}),
 			isHistoryOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "fixed inset-0 z-40 flex justify-end bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-150",
+				className: `fixed left-0 right-0 bottom-0 z-40 flex justify-end bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-150 ${isWidgetMode ? "top-[36px]" : "top-[38px]"}`,
 				onClick: () => setIsHistoryOpen(false),
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("aside", {
 					className: "w-[265px] max-w-[85vw] h-full flex flex-col bg-gradient-to-b from-[#452315] via-[#34180c] to-[#240f06] border-l border-black/40 shadow-2xl p-3.5 text-[#faf3e0] space-y-3 animate-in slide-in-from-right duration-200",
@@ -12945,6 +12991,37 @@ var WindowsApp = ({ note, history, connectedDevices, pin, lanIp, lanPort, remote
 							}, item.id))
 						})
 					]
+				})
+			}),
+			isClearNoteModalOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/60 backdrop-blur-sm animate-in fade-in",
+				onClick: () => setIsClearNoteModalOpen(false),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "w-full max-w-[230px] bg-gradient-to-b from-[#452315] via-[#34180c] to-[#240f06] border border-black/40 rounded-2xl shadow-2xl p-4 text-[#faf3e0] space-y-3 select-none",
+					onClick: (e) => e.stopPropagation(),
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "text-center space-y-1",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							className: "text-xs font-semibold text-[#faf3e0]/95 tracking-tight",
+							children: "Clear Note?"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							className: "text-[11px] text-[#faf3e0]/70 leading-snug",
+							children: "Are you sure you want to clear? Your note will be saved to History."
+						})]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "grid grid-cols-2 gap-2 pt-0.5",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							onClick: () => setIsClearNoteModalOpen(false),
+							className: "py-1.5 rounded-xl bg-black/25 hover:bg-white/10 active:scale-[0.98] text-xs font-medium text-[#faf3e0]/90 transition-all cursor-pointer",
+							children: "No"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							onClick: confirmClearNote,
+							className: "py-1.5 rounded-xl bg-red-500/25 hover:bg-red-500/35 active:scale-[0.98] text-xs font-semibold text-red-300 transition-all cursor-pointer",
+							children: "Yes"
+						})]
+					})]
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClearHistoryModal, {

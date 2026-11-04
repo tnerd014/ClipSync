@@ -62,6 +62,7 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
   const [copied, setCopied] = useState(false);
   const [showHistorySheet, setShowHistorySheet] = useState(false);
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
+  const [isClearNoteModalOpen, setIsClearNoteModalOpen] = useState(false);
   const [historySearch, setHistorySearch] = useState('');
   const [detectedUrls, setDetectedUrls] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number>(-1); // -1 = active draft
@@ -102,11 +103,26 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
     }
   };
 
-  const handleClearNote = () => {
+  const handleRequestClearNote = () => {
     if (!note.content.trim()) return;
     triggerHaptic();
-    onSaveToHistory(note.content);
+    setIsClearNoteModalOpen(true);
+  };
+
+  const confirmClearNote = () => {
+    const trimmed = note.content.trim();
+    if (!trimmed) return;
+    triggerHaptic();
+    const matchingHistoryItem =
+      historyIndex >= 0 && history[historyIndex]
+        ? history[historyIndex]
+        : history.find((h) => h.content.trim() === trimmed);
+    if (matchingHistoryItem) {
+      onDeleteClip(matchingHistoryItem.id);
+    }
+    setHistoryIndex(-1);
     onTextChange('');
+    setIsClearNoteModalOpen(false);
   };
 
   // Previous Note Navigation
@@ -208,18 +224,15 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
           )}
         </div>
 
-        {/* Right Action: SwiftUI Circular Capsule (+) */}
+        {/* Right Action: SwiftUI Circular Capsule (Delete/Clear Note) */}
         <div className="flex items-center z-10 shrink-0">
           <button
-            onClick={() => {
-              triggerHaptic();
-              setHistoryIndex(-1);
-              onNewNote();
-            }}
-            title="New Note"
-            className="w-7 h-7 flex items-center justify-center bg-black/25 hover:bg-white/15 active:scale-90 rounded-full text-[#faf3e0]/95 transition-all cursor-pointer"
+            onClick={handleRequestClearNote}
+            disabled={!note.content.trim()}
+            title="Clear Note"
+            className="w-7 h-7 flex items-center justify-center bg-black/25 hover:bg-white/15 active:scale-90 disabled:opacity-30 disabled:pointer-events-none rounded-full text-[#faf3e0]/95 transition-all cursor-pointer"
           >
-            <Plus className="w-3.5 h-3.5 stroke-[2]" />
+            <Trash2 className="w-3.5 h-3.5 stroke-[1.8]" />
           </button>
         </div>
       </header>
@@ -302,12 +315,15 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
           </button>
 
           <button
-            onClick={handleClearNote}
-            disabled={!note.content.trim()}
-            title="Clear Note"
-            className="w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer"
+            onClick={() => {
+              triggerHaptic();
+              setHistoryIndex(-1);
+              onNewNote();
+            }}
+            title="New Note"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 transition-all cursor-pointer"
           >
-            <Trash2 className="w-[18px] h-[18px] stroke-[1.8]" />
+            <Plus className="w-5 h-5 stroke-[2]" />
           </button>
 
           <button
@@ -425,6 +441,45 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
               )}
             </div>
           </aside>
+        </div>
+      )}
+
+      {/* Confirm Clear Current Note Modal (Saves to History + Asks Yes or No) */}
+      {isClearNoteModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/60 backdrop-blur-sm animate-in fade-in"
+          onClick={() => setIsClearNoteModalOpen(false)}
+        >
+          <div
+            className="w-full max-w-[230px] bg-gradient-to-b from-[#452315] via-[#34180c] to-[#240f06] border border-black/40 rounded-2xl shadow-2xl p-4 text-[#faf3e0] space-y-3 select-none"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center space-y-1">
+              <p className="text-xs font-semibold text-[#faf3e0]/95 tracking-tight">
+                Delete Note?
+              </p>
+              <p className="text-[11px] text-[#faf3e0]/70 leading-snug">
+                Are you sure you want to delete this note?
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 pt-0.5">
+              <button
+                type="button"
+                onClick={() => setIsClearNoteModalOpen(false)}
+                className="py-1.5 rounded-xl bg-black/25 hover:bg-white/10 active:scale-[0.98] text-xs font-medium text-[#faf3e0]/90 transition-all cursor-pointer"
+              >
+                No
+              </button>
+              <button
+                type="button"
+                onClick={confirmClearNote}
+                className="py-1.5 rounded-xl bg-red-500/25 hover:bg-red-500/35 active:scale-[0.98] text-xs font-semibold text-red-300 transition-all cursor-pointer"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

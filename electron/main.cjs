@@ -539,53 +539,80 @@ function startEmbeddedLanServer() {
   embeddedServer = server;
 }
 
-function createWindow() {
+let isSwappingWindow = false;
+let ipcRegistered = false;
+
+function createWindow(options = {}) {
+  const isWidget = Boolean(options.isWidget);
   const iconPath = fs.existsSync(path.join(__dirname, 'icon.ico'))
     ? path.join(__dirname, 'icon.ico')
     : path.join(__dirname, 'icon.png');
 
-  mainWindow = new BrowserWindow({
-    width: 480,
-    height: 620,
-    minWidth: 260,
-    minHeight: 200,
-    titleBarStyle: 'hidden', // Uses native Windows 11 window frame with custom header
-    titleBarOverlay: {
-      color: '#34180d', // Blends seamlessly into the stitched leather header
-      symbolColor: '#faf3e0', // Crisp cream/white caption symbols
-      height: 38,
-    },
+  const windowConfig = {
+    width: isWidget ? 280 : 480,
+    height: isWidget ? 360 : 620,
+    minWidth: isWidget ? 220 : 260,
+    minHeight: isWidget ? 240 : 200,
+    ...(typeof options.x === 'number' && typeof options.y === 'number'
+      ? { x: options.x, y: options.y }
+      : {}),
+    ...(isWidget
+      ? {
+          // Mini Widget Mode: Frameless sticky note without Windows 11 caption controls
+          frame: false,
+          alwaysOnTop: true,
+        }
+      : {
+          // Standard Desktop Mode: Native Windows 11 caption controls + Snap Layouts
+          titleBarStyle: 'hidden',
+          titleBarOverlay: {
+            color: '#34180d',
+            symbolColor: '#faf3e0',
+            height: 38,
+          },
+        }),
     transparent: false,
-    show: false, // Prevent white/transparent flash before HTML finishes loading
+    show: false,
     backgroundColor: '#171717',
     icon: iconPath,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       nodeIntegration: false,
       contextIsolation: true,
-      webSecurity: false, // Allows seamless local LAN asset loading
+      webSecurity: false,
     },
+  };
+
+  const nextWindow = new BrowserWindow(windowConfig);
+  const previousWindow = mainWindow;
+  mainWindow = nextWindow;
+
+  nextWindow.once('ready-to-show', () => {
+    nextWindow.show();
+    nextWindow.focus();
+    if (previousWindow && !previousWindow.isDestroyed() && previousWindow !== nextWindow) {
+      isSwappingWindow = true;
+      previousWindow.destroy();
+      isSwappingWindow = false;
+    }
   });
 
-  // Gracefully show window once DOM is painted
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
-    mainWindow.focus();
-  });
-
-  // Safety fallback: if ready-to-show does not fire within 2.5s, force display
   setTimeout(() => {
-    if (mainWindow && !mainWindow.isDestroyed() && !mainWindow.isVisible()) {
-      mainWindow.show();
+    if (nextWindow && !nextWindow.isDestroyed() && !nextWindow.isVisible()) {
+      nextWindow.show();
+      if (previousWindow && !previousWindow.isDestroyed() && previousWindow !== nextWindow) {
+        isSwappingWindow = true;
+        previousWindow.destroy();
+        isSwappingWindow = false;
+      }
     }
   }, 2500);
 
-  // Robust HTML location resolution for both development and packaged .exe modes
   const isDev = process.env.NODE_ENV === 'development';
+  const queryParam = isWidget ? '?widget=1' : '';
   if (isDev) {
-    mainWindow.loadURL('http://localhost:3000');
+    nextWindow.loadURL(`http://localhost:3000${queryParam}`);
   } else {
-    // Check possible dist locations
     const candidatePaths = [
       path.join(__dirname, 'dist', 'index.html'),
       path.join(__dirname, '../dist', 'index.html'),
@@ -597,7 +624,7 @@ function createWindow() {
     for (const p of candidatePaths) {
       if (fs.existsSync(p)) {
         console.log('[ClipSync] Loading HTML from:', p);
-        mainWindow.loadFile(p);
+        nextWindow.loadFile(p, isWidget ? { query: { widget: '1' } } : undefined);
         found = true;
         break;
       }
@@ -605,7 +632,7 @@ function createWindow() {
 
     if (!found) {
       console.error('[ClipSync] CRITICAL: Could not find index.html in candidates:', candidatePaths);
-      mainWindow.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(`
+      nextWindow.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(`
         <!DOCTYPE html>
         <html>
         <head><title>ClipSync</title></head>
@@ -619,102 +646,128 @@ function createWindow() {
     }
   }
 
-  // Window control IPC handlers
-  ipcMain.on('window:minimize', () => mainWindow && mainWindow.minimize());
-  ipcMain.on('window:maximize', () => {
-    if (!mainWindow) return;
-    if (mainWindow.isMaximized()) {
-      mainWindow.unmaximize();
-    } else {
-      mainWindow.maximize();
-    }
-  });
-  ipcMain.on('window:close', () => mainWindow && mainWindow.hide());
-  ipcMain.on('window:set-always-on-top', (e, flag) => mainWindow && mainWindow.setAlwaysOnTop(flag));
+  if (!ipcRegistered) {
+    ipcRegistered = true;
 
-  // Toggle Mini Sticky Note Desktop Widget Mode
-  ipcMain.on('window:toggle-widget-mode', (e, isWidget) => {
-    if (!mainWindow) return;
-    try {
-      if (isWidget) {
-        mainWindow.setMinimumSize(220, 260);
-        mainWindow.setSize(280, 360, true);
-      } else {
-        mainWindow.setMinimumSize(260, 200);
-        mainWindow.setSize(480, 620, true);
-      }
-    } catch (err) {
-      console.error('[ClipSync] Error toggling widget size:', err);
-    }
-  });
-
-  // Windows 11 Snap Layouts integration
-  ipcMain.on('window:snap', (e, layout) => {
-    if (!mainWindow) return;
-    try {
-      const currentDisplay = screen.getDisplayMatching(mainWindow.getBounds());
-      const { x, y, width, height } = currentDisplay.workArea;
-
+    // Window control IPC handlers
+    ipcMain.on('window:minimize', () => mainWindow && !mainWindow.isDestroyed() && mainWindow.minimize());
+    ipcMain.on('window:maximize', () => {
+      if (!mainWindow || mainWindow.isDestroyed()) return;
       if (mainWindow.isMaximized()) {
         mainWindow.unmaximize();
+      } else {
+        mainWindow.maximize();
       }
-
-      if (layout === 'left-half') {
-        mainWindow.setBounds({ x, y, width: Math.floor(width / 2), height });
-      } else if (layout === 'right-half') {
-        mainWindow.setBounds({ x: x + Math.floor(width / 2), y, width: Math.floor(width / 2), height });
-      } else if (layout === 'top-right') {
-        mainWindow.setBounds({ x: x + Math.floor(width / 2), y, width: Math.floor(width / 2), height: Math.floor(height / 2) });
-      } else if (layout === 'bottom-right') {
-        mainWindow.setBounds({ x: x + Math.floor(width / 2), y: y + Math.floor(height / 2), width: Math.floor(width / 2), height: Math.floor(height / 2) });
-      } else if (layout === 'widget-corner') {
-        mainWindow.setBounds({ x: x + width - 300, y: y + height - 390, width: 280, height: 360 });
-      } else if (layout === 'center-note') {
-        mainWindow.setBounds({ x: x + Math.floor((width - 480) / 2), y: y + Math.floor((height - 620) / 2), width: 480, height: 620 });
+    });
+    ipcMain.on('window:close', () => mainWindow && !mainWindow.isDestroyed() && mainWindow.hide());
+    ipcMain.on('window:set-always-on-top', (e, flag) => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.setAlwaysOnTop(Boolean(flag));
       }
-    } catch (err) {
-      console.error('[ClipSync] Error snapping window:', err);
-    }
-  });
+    });
+    ipcMain.handle('window:toggle-always-on-top', (e, flag) => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.setAlwaysOnTop(Boolean(flag));
+        return mainWindow.isAlwaysOnTop();
+      }
+      return Boolean(flag);
+    });
 
-  // LAN network info
-  ipcMain.handle('lan:get-info', () => {
-    const all = getAllLocalIpAddresses();
-    const defaultSession = getOrCreateSession('DEFAULT');
-    return {
-      ip: getLocalIpAddress(),
-      allIps: all.map(c => ({ name: c.name, ip: c.ip })),
-      port: currentLanPort,
-      pin: defaultSession.pin,
-      clients: clients.size,
+    // Toggle Mini Sticky Note Desktop Widget Mode (Switches between Native WCO Window and Frameless Widget)
+    const handleToggleWidget = (isWidgetFlag) => {
+      if (!mainWindow || mainWindow.isDestroyed()) return { isWidgetMode: Boolean(isWidgetFlag), alwaysOnTop: Boolean(isWidgetFlag) };
+      try {
+        const bounds = mainWindow.getBounds();
+        createWindow({
+          isWidget: Boolean(isWidgetFlag),
+          x: bounds.x,
+          y: bounds.y,
+        });
+        return {
+          isWidgetMode: Boolean(isWidgetFlag),
+          alwaysOnTop: Boolean(isWidgetFlag),
+        };
+      } catch (err) {
+        console.error('[ClipSync] Error toggling widget mode:', err);
+        return { isWidgetMode: Boolean(isWidgetFlag), alwaysOnTop: Boolean(isWidgetFlag) };
+      }
     };
-  });
 
-  ipcMain.handle('lan:set-pin', (e, newPin) => {
-    const session = getOrCreateSession('DEFAULT');
-    if (newPin && newPin.trim()) {
-      session.pin = newPin.trim();
+    ipcMain.on('window:toggle-widget-mode', (e, isWidgetFlag) => {
+      handleToggleWidget(isWidgetFlag);
+    });
+    ipcMain.handle('window:toggle-widget-mode', (e, isWidgetFlag) => {
+      return handleToggleWidget(isWidgetFlag);
+    });
+
+    // Windows 11 Snap Layouts integration
+    ipcMain.on('window:snap', (e, layout) => {
+      if (!mainWindow || mainWindow.isDestroyed()) return;
+      try {
+        const currentDisplay = screen.getDisplayMatching(mainWindow.getBounds());
+        const { x, y, width, height } = currentDisplay.workArea;
+
+        if (mainWindow.isMaximized()) {
+          mainWindow.unmaximize();
+        }
+
+        if (layout === 'left-half') {
+          mainWindow.setBounds({ x, y, width: Math.floor(width / 2), height });
+        } else if (layout === 'right-half') {
+          mainWindow.setBounds({ x: x + Math.floor(width / 2), y, width: Math.floor(width / 2), height });
+        } else if (layout === 'top-right') {
+          mainWindow.setBounds({ x: x + Math.floor(width / 2), y, width: Math.floor(width / 2), height: Math.floor(height / 2) });
+        } else if (layout === 'bottom-right') {
+          mainWindow.setBounds({ x: x + Math.floor(width / 2), y: y + Math.floor(height / 2), width: Math.floor(width / 2), height: Math.floor(height / 2) });
+        } else if (layout === 'widget-corner') {
+          mainWindow.setBounds({ x: x + width - 300, y: y + height - 390, width: 280, height: 360 });
+        } else if (layout === 'center-note') {
+          mainWindow.setBounds({ x: x + Math.floor((width - 480) / 2), y: y + Math.floor((height - 620) / 2), width: 480, height: 620 });
+        }
+      } catch (err) {
+        console.error('[ClipSync] Error snapping window:', err);
+      }
+    });
+
+    // LAN network info
+    ipcMain.handle('lan:get-info', () => {
+      const all = getAllLocalIpAddresses();
+      const defaultSession = getOrCreateSession('DEFAULT');
+      return {
+        ip: getLocalIpAddress(),
+        allIps: all.map(c => ({ name: c.name, ip: c.ip })),
+        port: currentLanPort,
+        pin: defaultSession.pin,
+        clients: clients.size,
+      };
+    });
+
+    ipcMain.handle('lan:set-pin', (e, newPin) => {
+      const session = getOrCreateSession('DEFAULT');
+      if (newPin && newPin.trim()) {
+        session.pin = newPin.trim();
+        broadcastToSession('DEFAULT', { type: 'pin:updated', pin: session.pin });
+        return session.pin;
+      }
+      return session.pin;
+    });
+
+    ipcMain.handle('lan:regenerate-pin', () => {
+      const session = getOrCreateSession('DEFAULT');
+      session.pin = generatePin();
       broadcastToSession('DEFAULT', { type: 'pin:updated', pin: session.pin });
       return session.pin;
-    }
-    return session.pin;
-  });
+    });
 
-  ipcMain.handle('lan:regenerate-pin', () => {
-    const session = getOrCreateSession('DEFAULT');
-    session.pin = generatePin();
-    broadcastToSession('DEFAULT', { type: 'pin:updated', pin: session.pin });
-    return session.pin;
-  });
-
-  // Broadcast to all connected Android devices
-  ipcMain.on('lan:broadcast', (e, payload) => {
-    const currentSessionId = (payload.sessionId || 'DEFAULT').trim().toUpperCase();
-    broadcastToSession(currentSessionId, payload);
-    if (currentSessionId !== 'DEFAULT') {
-      broadcastToSession('DEFAULT', payload);
-    }
-  });
+    // Broadcast to all connected Android devices
+    ipcMain.on('lan:broadcast', (e, payload) => {
+      const currentSessionId = (payload.sessionId || 'DEFAULT').trim().toUpperCase();
+      broadcastToSession(currentSessionId, payload);
+      if (currentSessionId !== 'DEFAULT') {
+        broadcastToSession('DEFAULT', payload);
+      }
+    });
+  }
 }
 
 function createTray() {
@@ -787,6 +840,7 @@ if (!gotTheLock) {
 }
 
 app.on('window-all-closed', () => {
+  if (isSwappingWindow) return;
   if (process.platform !== 'darwin') {
     app.quit();
   }

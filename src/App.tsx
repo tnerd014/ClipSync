@@ -571,44 +571,13 @@ export default function App() {
       (window as any).electronAPI.broadcast(payload);
     }
 
-    // 1. Instant keystroke broadcast (50ms debounce for ultra-responsive live sync)
+    // Instant keystroke broadcast (50ms debounce for ultra-responsive live sync)
     if (textDebounceRef.current) clearTimeout(textDebounceRef.current);
     textDebounceRef.current = setTimeout(() => {
       if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         wsRef.current.send(JSON.stringify(payload));
       }
     }, 50);
-
-    // 2. Automatic history snapshot saved after typing pause (3 seconds)
-    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
-    autoSaveTimerRef.current = setTimeout(() => {
-      const trimmed = newContent.trim();
-      if (trimmed.length > 0 && trimmed !== lastSavedContentRef.current.trim()) {
-        lastSavedContentRef.current = trimmed;
-        const newClip: ClipItem = {
-          id: `clip-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-          content: trimmed,
-          timestamp: Date.now(),
-          device: deviceInfo.name,
-          deviceType: currentPlatform === 'android' ? 'mobile' : 'desktop',
-        };
-
-        setHistory((prev) => {
-          const next = [newClip, ...prev.filter((c) => c.content !== trimmed)].slice(0, 50);
-          return next;
-        });
-
-        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-          wsRef.current.send(
-            JSON.stringify({
-              type: 'history:add',
-              sessionId,
-              clip: newClip,
-            })
-          );
-        }
-      }
-    }, 3000);
   };
 
   const handleColorChange = (newColor: StickyColor) => {

@@ -33,9 +33,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
     return () => ipcRenderer.removeListener('lan:pin-updated', handler);
   },
   minimize: () => ipcRenderer.send('window:minimize'),
+  minimizeWindow: () => ipcRenderer.send('window:minimize'),
   maximize: () => ipcRenderer.send('window:maximize'),
+  maximizeWindow: () => ipcRenderer.send('window:maximize'),
   close: () => ipcRenderer.send('window:close'),
+  closeWindow: () => ipcRenderer.send('window:close'),
   setAlwaysOnTop: (flag) => ipcRenderer.send('window:set-always-on-top', flag),
-  toggleWidgetMode: (isWidget) => ipcRenderer.send('window:toggle-widget-mode', isWidget),
+  toggleAlwaysOnTop: (flag) => ipcRenderer.invoke('window:toggle-always-on-top', flag),
+  toggleWidgetMode: (isWidget) => ipcRenderer.invoke('window:toggle-widget-mode', isWidget),
   snapWindow: (layout) => ipcRenderer.send('window:snap', layout),
 });

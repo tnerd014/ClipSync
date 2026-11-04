@@ -69,10 +69,14 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
+  const [isClearNoteModalOpen, setIsClearNoteModalOpen] = useState(false);
 
   // Desktop Sticky Note Widget States (Always on Top & Mini Widget Mode)
-  const [isPinned, setIsPinned] = useState(false);
-  const [isWidgetMode, setIsWidgetMode] = useState(false);
+  const initialWidget =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('widget') === '1';
+  const [isPinned, setIsPinned] = useState(initialWidget);
+  const [isWidgetMode, setIsWidgetMode] = useState(initialWidget);
   const isElectron = typeof window !== 'undefined' && Boolean((window as any).electronAPI);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -166,12 +170,25 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
     onRestoreClip(history[prevIdx].content);
   };
 
-  const handleClearNote = () => {
-    if (note.content.trim()) {
-      onSaveToHistory(note.content);
+  const handleRequestClearNote = () => {
+    if (!note.content.trim()) return;
+    setIsClearNoteModalOpen(true);
+  };
+
+  const confirmClearNote = () => {
+    const trimmed = note.content.trim();
+    if (trimmed) {
+      const matchingHistoryItem =
+        historyIndex >= 0 && history[historyIndex]
+          ? history[historyIndex]
+          : history.find((h) => h.content.trim() === trimmed);
+      if (matchingHistoryItem) {
+        onDeleteClip(matchingHistoryItem.id);
+      }
     }
     setHistoryIndex(-1);
     onTextChange('');
+    setIsClearNoteModalOpen(false);
     textareaRef.current?.focus();
   };
 
@@ -250,7 +267,7 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
       <header
         className={`relative z-30 flex items-center justify-between bg-gradient-to-b from-[#452315] to-[#281107] border-b border-black/40 shadow-sm ${
           isWidgetMode ? 'h-[36px] pl-2' : 'h-[38px] pl-2.5'
-        } ${isElectron ? 'pr-[138px]' : 'pr-2'}`}
+        } ${isElectron && !isWidgetMode ? 'pr-[138px]' : 'pr-2'}`}
         style={{ WebkitAppRegion: 'drag' } as any}
         onDoubleClick={handleMaximize}
       >
@@ -348,7 +365,7 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
             </button>
           </div>
 
-          {!isElectron && (
+          {!isElectron && !isWidgetMode && (
             <div className="flex items-center gap-0.5 pl-0.5">
               <button
                 onClick={handleMinimize}
@@ -463,7 +480,7 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
           </button>
 
           <button
-            onClick={handleClearNote}
+            onClick={handleRequestClearNote}
             disabled={!note.content.trim()}
             title="Clear Note"
             className="w-7 h-7 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer"
@@ -499,10 +516,12 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
         </footer>
       </main>
 
-      {/* 4. SLIDE-IN SIDEBAR DRAWER FOR HISTORY WITH HEADER COLOR SCHEME & SWIFTUI UI/UX */}
+      {/* 4. SLIDE-IN SIDEBAR DRAWER FOR HISTORY BELOW HEADER (NEVER COVERED BY WINDOWS CONTROLS) */}
       {isHistoryOpen && (
         <div
-          className="fixed inset-0 z-40 flex justify-end bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-150"
+          className={`fixed left-0 right-0 bottom-0 z-40 flex justify-end bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-150 ${
+            isWidgetMode ? 'top-[36px]' : 'top-[38px]'
+          }`}
           onClick={() => setIsHistoryOpen(false)}
         >
           <aside
@@ -593,6 +612,45 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
               )}
             </div>
           </aside>
+        </div>
+      )}
+
+      {/* Confirm Clear Current Note Modal (Saves to History + Asks Yes or No) */}
+      {isClearNoteModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/60 backdrop-blur-sm animate-in fade-in"
+          onClick={() => setIsClearNoteModalOpen(false)}
+        >
+          <div
+            className="w-full max-w-[230px] bg-gradient-to-b from-[#452315] via-[#34180c] to-[#240f06] border border-black/40 rounded-2xl shadow-2xl p-4 text-[#faf3e0] space-y-3 select-none"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center space-y-1">
+              <p className="text-xs font-semibold text-[#faf3e0]/95 tracking-tight">
+                Delete Note?
+              </p>
+              <p className="text-[11px] text-[#faf3e0]/70 leading-snug">
+                Are you sure you want to delete this note?
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 pt-0.5">
+              <button
+                type="button"
+                onClick={() => setIsClearNoteModalOpen(false)}
+                className="py-1.5 rounded-xl bg-black/25 hover:bg-white/10 active:scale-[0.98] text-xs font-medium text-[#faf3e0]/90 transition-all cursor-pointer"
+              >
+                No
+              </button>
+              <button
+                type="button"
+                onClick={confirmClearNote}
+                className="py-1.5 rounded-xl bg-red-500/25 hover:bg-red-500/35 active:scale-[0.98] text-xs font-semibold text-red-300 transition-all cursor-pointer"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
