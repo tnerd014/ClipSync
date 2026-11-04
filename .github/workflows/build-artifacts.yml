@@ -127,10 +127,65 @@ jobs:
           cd android
           ./gradlew assembleDebug --stacktrace
 
+      - name: Copy & Rename APK
+        run: |
+          mkdir -p release-apk
+          cp android/app/build/outputs/apk/debug/*.apk release-apk/ClipSync-Android.apk
+
       - name: Upload Android APK
         uses: actions/upload-artifact@v4
         with:
           name: ClipSync-Android-APK
-          path: android/app/build/outputs/apk/debug/*.apk
+          path: release-apk/ClipSync-Android.apk
           if-no-files-found: warn
           retention-days: 30
+
+  # ========================================================
+  # Job 4: Automatically Publish to GitHub Releases Page
+  # ========================================================
+  publish-release:
+    name: Publish to GitHub Releases
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    needs: [build-windows-exe, build-android-apk]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download Windows Installer
+        uses: actions/download-artifact@v4
+        with:
+          name: ClipSync-Windows-Setup-Installer
+          path: release-files
+
+      - name: Download Android APK
+        uses: actions/download-artifact@v4
+        with:
+          name: ClipSync-Android-APK
+          path: release-files
+
+      - name: Publish Official GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0
+          name: ClipSync v1.0.0
+          body: |
+            ### 🚀 ClipSync v1.0.0 Official Release
+
+            Download and install on your devices:
+
+            - 💻 **Windows Desktop**: `ClipSync Setup 1.0.0.exe` (Windows 10/11 sticky note application with serverless LAN sync)
+            - 📱 **Android Mobile**: `ClipSync-Android.apk` (Native Android mobile app with instant camera QR scanning and 1-tap New Note)
+
+            #### Highlights:
+            - ⚡ Instant real-time LAN clipboard sync between PC and phone
+            - 📷 Instant QR Code camera pairing: Point your phone at the PC screen to pair
+            - 📝 Minimalist sticky note UI with customizable color themes
+            - 🔒 100% private: Direct local Wi-Fi synchronization with zero cloud tracking
+          files: release-files/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
