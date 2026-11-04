@@ -11,6 +11,7 @@ import { AndroidApp } from './platforms/AndroidApp';
 import { WindowsApp } from './platforms/WindowsApp';
 import { LanDirectModal } from './components/LanDirectModal';
 import { QrScannerModal } from './components/QrScannerModal';
+import { PermissionsModal } from './components/PermissionsModal';
 import { WifiOff, Bell, CheckCircle2 } from 'lucide-react';
 
 export default function App() {
@@ -79,6 +80,7 @@ export default function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [isLanModalOpen, setIsLanModalOpen] = useState(false);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [isPermissionsOpen, setIsPermissionsOpen] = useState(false);
   const [soundEnabled] = useState<boolean>(() => {
     return localStorage.getItem('clipsync_sound') !== 'false';
   });
@@ -434,6 +436,7 @@ export default function App() {
           onBuzzDevices={handleBuzzDevices}
           onOpenScanner={() => setIsScannerOpen(true)}
           onNewNote={handleNewNote}
+          onOpenPermissions={() => setIsPermissionsOpen(true)}
           remoteTypingDevice={remoteTypingDevice}
         />
       )}
@@ -454,6 +457,12 @@ export default function App() {
         onClose={() => setIsScannerOpen(false)}
         onScanSuccess={handleQrScanSuccess}
         onManualConnect={handleQrScanSuccess}
+      />
+
+      {/* Android: Permissions Checklist Modal */}
+      <PermissionsModal
+        isOpen={isPermissionsOpen}
+        onClose={() => setIsPermissionsOpen(false)}
       />
     </div>
   );

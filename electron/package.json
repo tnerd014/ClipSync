@@ -25,9 +25,12 @@
     "files": [
       "main.cjs",
       "preload.cjs",
+      "icon.png",
+      "icon.ico",
       "dist/**/*"
     ],
     "win": {
+      "icon": "icon.ico",
       "target": [
         {
           "target": "nsis",
@@ -39,7 +42,9 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
+      "createStartMenuShortcut": true,
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico"
     }
   }
 }

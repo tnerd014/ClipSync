@@ -9,7 +9,8 @@ import {
   Search,
   RotateCcw,
   Camera,
-  Plus
+  Plus,
+  ShieldCheck
 } from 'lucide-react';
 import { NoteState, StickyColor, ClipItem, ConnectedDevice } from '../types';
 import { COLOR_SCHEMES, triggerHaptic } from '../utils/device';
@@ -29,6 +30,7 @@ interface AndroidAppProps {
   onBuzzDevices: () => void;
   onOpenScanner: () => void;
   onNewNote: () => void;
+  onOpenPermissions?: () => void;
   remoteTypingDevice?: string | null;
 }
 
@@ -44,6 +46,7 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
   onClearHistory,
   onOpenScanner,
   onNewNote,
+  onOpenPermissions,
   remoteTypingDevice,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -122,6 +125,20 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
             <Camera className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-600" />
             <span>Scan PC</span>
           </button>
+
+          {/* Permissions Checklist */}
+          {onOpenPermissions && (
+            <button
+              onClick={() => {
+                triggerHaptic();
+                onOpenPermissions();
+              }}
+              className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all cursor-pointer opacity-80 hover:opacity-100"
+              title="App Permissions Checklist"
+            >
+              <ShieldCheck className="w-5 h-5 text-amber-500 dark:text-amber-400" />
+            </button>
+          )}
 
           {/* Theme Color */}
           <button
