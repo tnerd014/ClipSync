@@ -23,6 +23,7 @@ interface NoteState {
   fontSize: 'sm' | 'base' | 'lg';
   updatedAt: number;
   updatedBy: string;
+  rev?: number;
 }
 
 interface ClientMeta {
@@ -35,6 +36,7 @@ interface ClientMeta {
 }
 
 interface SessionData {
+  pin: string;
   note: NoteState;
   history: ClipItem[];
 }
@@ -43,11 +45,16 @@ interface SessionData {
 const sessions = new Map<string, SessionData>();
 const clients = new Map<WebSocket, ClientMeta>();
 
+function generatePin(): string {
+  return String(Math.floor(1000 + Math.random() * 9000));
+}
+
 function getOrCreateSession(sessionId: string): SessionData {
   const normalized = sessionId.trim().toUpperCase() || 'DEFAULT';
   let session = sessions.get(normalized);
   if (!session) {
     session = {
+      pin: generatePin(),
       note: {
         id: 'note-1',
         content: `👋 Welcome to your synced Sticky Note!\n\n📱 Scan the QR code or share this room code to open this note on your phone or tablet.\n\n⚡ Anything you type or paste here appears instantly across all your devices in real-time.`,
@@ -55,6 +62,7 @@ function getOrCreateSession(sessionId: string): SessionData {
         fontSize: 'base',
         updatedAt: Date.now(),
         updatedBy: 'ClipSync Bot',
+        rev: 1,
       },
       history: [
         {
@@ -203,10 +211,31 @@ async function startServer() {
       try {
         const msg = JSON.parse(data.toString());
 
+        // Heartbeat ping/pong
+        if (msg.type === 'ping') {
+          ws.send(JSON.stringify({
+            type: 'pong',
+            timestamp: msg.timestamp || Date.now(),
+            serverTime: Date.now(),
+          }));
+          return;
+        }
+
         if (msg.type === 'join') {
           const rawId = (msg.sessionId || 'DEFAULT').trim().toUpperCase();
           currentSessionId = rawId;
           const session = getOrCreateSession(currentSessionId);
+
+          // If PIN is set and client does not supply matching PIN
+          if (session.pin && msg.pin && msg.pin.trim() !== session.pin) {
+            ws.send(JSON.stringify({
+              type: 'auth:error',
+              sessionId: currentSessionId,
+              requiresPin: true,
+              message: 'Incorrect pairing PIN. Please enter the 4-digit PIN displayed on your PC screen.',
+            }));
+            return;
+          }
 
           clients.set(ws, {
             ws,
@@ -216,11 +245,12 @@ async function startServer() {
             deviceType: msg.deviceType || 'desktop',
           });
 
-          // Send immediate initial sync
+          // Send immediate initial sync with PIN
           ws.send(
             JSON.stringify({
               type: 'sync',
               sessionId: currentSessionId,
+              pin: session.pin,
               note: session.note,
               history: session.history,
               clients: getSessionClients(currentSessionId),
@@ -234,9 +264,22 @@ async function startServer() {
             event: 'joined',
             deviceName: msg.deviceName,
           });
+        } else if (msg.type === 'pin:update') {
+          if (!currentSessionId) return;
+          const session = getOrCreateSession(currentSessionId);
+          if (msg.pin && msg.pin.trim()) {
+            session.pin = msg.pin.trim();
+            broadcastToSession(currentSessionId, {
+              type: 'pin:updated',
+              pin: session.pin,
+            });
+          }
         } else if (msg.type === 'text:update') {
           if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
+
+          const nextRev = Math.max(session.note.rev || 0, msg.rev || 0) + 1;
+          session.note.rev = nextRev;
           session.note.content = msg.content;
           session.note.updatedAt = Date.now();
           session.note.updatedBy = msg.deviceName || 'Connected Device';
@@ -247,6 +290,7 @@ async function startServer() {
             {
               type: 'text:update',
               content: msg.content,
+              rev: nextRev,
               updatedAt: session.note.updatedAt,
               updatedBy: session.note.updatedBy,
               senderDeviceId: msg.deviceId,

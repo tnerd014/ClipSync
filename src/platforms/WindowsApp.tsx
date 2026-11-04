@@ -14,7 +14,13 @@ import {
   Square, 
   QrCode, 
   RotateCcw,
-  ExternalLink
+  ExternalLink,
+  Minimize2,
+  Maximize2,
+  Pin,
+  PinOff,
+  LayoutGrid,
+  LayoutTemplate
 } from 'lucide-react';
 import { NoteState, StickyColor, ClipItem, ConnectedDevice } from '../types';
 import { ClearHistoryModal } from '../components/ClearHistoryModal';
@@ -26,6 +32,7 @@ interface WindowsAppProps {
   history: ClipItem[];
   lanIp: string;
   lanPort: number;
+  pin?: string;
   onTextChange: (newContent: string) => void;
   onColorChange: (newColor: StickyColor) => void;
   onFontSizeChange: (newSize: 'sm' | 'base' | 'lg') => void;
@@ -35,6 +42,7 @@ interface WindowsAppProps {
   onClearHistory: () => void;
   onBuzzDevices: () => void;
   onOpenLanModal: () => void;
+  onOpenTroubleshoot?: () => void;
   onNewNote: () => void;
   remoteTypingDevice?: string | null;
 }
@@ -45,12 +53,14 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
   history,
   lanIp,
   lanPort,
+  pin = '4819',
   onTextChange,
   onSaveToHistory,
   onRestoreClip,
   onDeleteClip,
   onClearHistory,
   onOpenLanModal,
+  onOpenTroubleshoot,
   onNewNote,
   remoteTypingDevice,
 }) => {
@@ -62,6 +72,24 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
   const [historySearch, setHistorySearch] = useState('');
   const [detectedUrls, setDetectedUrls] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number>(-1); // -1 = active draft
+  const [isCompact, setIsCompact] = useState(false); // Compact menu bar mode
+  const [isPinned, setIsPinned] = useState(false); // Pin over all screens (Always on Top)
+  const [isWidgetMode, setIsWidgetMode] = useState(false); // Floating mini sticky note widget
+  const [showSnapMenu, setShowSnapMenu] = useState(false); // Windows 11 Snap Layouts flyout
+  const snapMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close snap flyout when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (snapMenuRef.current && !snapMenuRef.current.contains(e.target as Node)) {
+        setShowSnapMenu(false);
+      }
+    }
+    if (showSnapMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showSnapMenu]);
 
   // Extract URLs
   useEffect(() => {
@@ -168,6 +196,35 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
     }
   };
 
+  // Always on top Pin Control (Desktop Sticky Note mode)
+  const handleTogglePin = () => {
+    const next = !isPinned;
+    setIsPinned(next);
+    if ((window as any).electronAPI?.setAlwaysOnTop) {
+      (window as any).electronAPI.setAlwaysOnTop(next);
+    }
+  };
+
+  // Mini Desktop Sticky Note Widget Mode
+  const handleToggleWidget = () => {
+    const next = !isWidgetMode;
+    setIsWidgetMode(next);
+    if ((window as any).electronAPI?.toggleWidgetMode) {
+      (window as any).electronAPI.toggleWidgetMode(next);
+    }
+  };
+
+  // Windows 11 Snap Layouts
+  const handleSnap = (layout: string) => {
+    setShowSnapMenu(false);
+    if (layout === 'widget-corner') {
+      setIsWidgetMode(true);
+    }
+    if ((window as any).electronAPI?.snapWindow) {
+      (window as any).electronAPI.snapWindow(layout);
+    }
+  };
+
   const filteredHistory = history.filter((item) =>
     item.content.toLowerCase().includes(historySearch.toLowerCase()) ||
     item.device.toLowerCase().includes(historySearch.toLowerCase())
@@ -175,15 +232,19 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
 
   return (
     <div className="h-screen w-screen overflow-hidden flex flex-col bg-[#241006] select-none rounded-lg border border-[#4a2414] shadow-2xl">
-      {/* 1. CLASSIC STITCHED LEATHER HEADER BAR (Draggable in Electron) */}
+      {/* 1. CLASSIC STITCHED LEATHER HEADER BAR (Fully draggable PC title bar) */}
       <header
-        className="relative z-20 flex items-center justify-between px-3 py-2 bg-gradient-to-b from-[#482517] via-[#381a0e] to-[#240e06] border-b-2 border-[#150702] shadow-[0_4px_10px_rgba(0,0,0,0.5)] cursor-move select-none"
+        className={`relative z-20 flex items-center justify-between ${
+          isCompact ? 'px-2.5 py-1' : 'px-3 py-2'
+        } bg-gradient-to-b from-[#482517] via-[#381a0e] to-[#240e06] border-b-2 border-[#150702] shadow-[0_4px_10px_rgba(0,0,0,0.5)] cursor-move select-none transition-all`}
         style={{ WebkitAppRegion: 'drag' } as any}
+        onDoubleClick={handleMaximize}
+        title="Double-click to Maximize / Restore or Drag to move"
       >
         {/* Subtle decorative top stitched seam line */}
         <div className="absolute top-1 left-2 right-2 border-t border-dashed border-[#683925]/60 pointer-events-none" />
 
-        {/* Left Section: Compact Smart LAN QR Pairing Pill */}
+        {/* Left Section: Compact Smart LAN QR Pairing Pill + PIN Badge */}
         <div className="flex items-center gap-1.5 z-10 shrink-0" style={{ WebkitAppRegion: 'no-drag' } as any}>
           <button
             onClick={onOpenLanModal}
@@ -199,22 +260,44 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
               </span>
             )}
           </button>
+
+          {/* Pairing Security PIN Pill */}
+          <button
+            onClick={onOpenLanModal}
+            title={`Pairing PIN: ${pin} (Required for phones to connect)`}
+            className="hidden sm:flex items-center gap-1 px-2 py-1 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-amber-300 text-[11px] font-mono font-bold shadow-inner cursor-pointer"
+          >
+            <span className="text-[9px] uppercase tracking-wider text-neutral-400">PIN:</span>
+            <span>{pin}</span>
+          </button>
         </div>
 
-        {/* Embossed Leather Title: Always clean "Notes" without echoing typed keystrokes */}
-        <div className="flex-1 text-center px-2 truncate pointer-events-none">
-          <h1 className="text-base sm:text-lg font-bold text-[#faf3e0] tracking-wider drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] truncate font-serif">
+        {/* Embossed Leather Title: Center draggable PC title bar grab area */}
+        <div 
+          className="flex-1 flex flex-col items-center justify-center px-2 truncate cursor-move"
+          style={{ WebkitAppRegion: 'drag' } as any}
+        >
+          <h1 className="text-base sm:text-lg font-bold text-[#faf3e0] tracking-wider drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] truncate font-serif pointer-events-none select-none">
             Notes
           </h1>
           {remoteTypingDevice && (
-            <p className="text-[10px] text-amber-300 font-sans animate-pulse">
+            <p className="text-[10px] text-amber-300 font-sans animate-pulse pointer-events-none">
               {remoteTypingDevice} is typing...
             </p>
           )}
         </div>
 
-        {/* Right Section: New Note (+) and Window Controls */}
-        <div className="flex items-center gap-2 z-10 shrink-0" style={{ WebkitAppRegion: 'no-drag' } as any}>
+        {/* Right Section: New Note (+), Reduce Menu Bar, and Window Controls */}
+        <div className="flex items-center gap-1.5 z-10 shrink-0" style={{ WebkitAppRegion: 'no-drag' } as any}>
+          {/* Reduce / Compact Menu Bar Toggle */}
+          <button
+            onClick={() => setIsCompact(!isCompact)}
+            title={isCompact ? 'Expand Menu Bar' : 'Reduce Menu Bar (Compact Mode)'}
+            className="p-1 hover:bg-white/10 rounded text-[#d6c7b2] hover:text-white transition-colors cursor-pointer"
+          >
+            {isCompact ? <Maximize2 className="w-3.5 h-3.5" /> : <Minimize2 className="w-3.5 h-3.5" />}
+          </button>
+
           {/* Recessed Dark Leather Button with White Plus (New Note) */}
           <button
             onClick={() => {
@@ -227,26 +310,153 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
             <Plus className="w-4 h-4 text-white stroke-[2.5]" />
           </button>
 
-          {/* Windows Minimize / Maximize / Close Buttons */}
-          <div className="flex items-center ml-1 border-l border-[#542816] pl-1.5">
+          {/* Windows Window Controls & Desktop Widget Tools */}
+          <div className="flex items-center ml-1 border-l border-[#542816] pl-1.5 gap-0.5">
+            {/* 1. Pin to Screen (Always on Top Sticky Note Widget) */}
+            <button
+              onClick={handleTogglePin}
+              title={isPinned ? '📌 Window is PINNED: Floating over all apps (Click to unpin)' : 'Pin to Screen: Keep sticky note always on top of all windows'}
+              className={`p-1.5 rounded transition-all cursor-pointer flex items-center justify-center ${
+                isPinned
+                  ? 'bg-amber-500/25 text-amber-300 border border-amber-500/60 shadow-[0_0_10px_rgba(251,191,36,0.4)]'
+                  : 'text-[#d6c7b2] hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Pin className={`w-3.5 h-3.5 transition-transform ${isPinned ? 'fill-amber-400 text-amber-400 rotate-45 scale-110' : ''}`} />
+            </button>
+
+            {/* 2. Mini Desktop Widget Mode Toggle */}
+            <button
+              onClick={handleToggleWidget}
+              title={isWidgetMode ? 'Exit Mini Widget Mode (Standard Window)' : 'Mini Desktop Sticky Note Widget (Compact Corner Mode)'}
+              className={`p-1.5 rounded transition-all cursor-pointer flex items-center justify-center ${
+                isWidgetMode
+                  ? 'bg-amber-500/25 text-amber-300 border border-amber-500/60'
+                  : 'text-[#d6c7b2] hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <LayoutTemplate className="w-3.5 h-3.5" />
+            </button>
+
+            {/* 3. Minimize Button */}
             <button
               onClick={handleMinimize}
               title="Minimize"
-              className="p-1 hover:bg-white/10 rounded text-[#d6c7b2] hover:text-white transition-colors"
+              className="p-1.5 hover:bg-white/10 rounded text-[#d6c7b2] hover:text-white transition-colors cursor-pointer"
             >
               <Minus className="w-3.5 h-3.5" />
             </button>
-            <button
-              onClick={handleMaximize}
-              title="Maximize"
-              className="p-1 hover:bg-white/10 rounded text-[#d6c7b2] hover:text-white transition-colors"
-            >
-              <Square className="w-3 h-3" />
-            </button>
+
+            {/* 4. Maximize / Windows 11 Snap Layouts Button & Hover Flyout */}
+            <div className="relative inline-flex items-center">
+              <button
+                onClick={handleMaximize}
+                onMouseEnter={() => setShowSnapMenu(true)}
+                title="Maximize / Windows 11 Snap Layouts (Hover to choose layout)"
+                className="p-1.5 hover:bg-white/10 rounded text-[#d6c7b2] hover:text-white transition-colors cursor-pointer"
+              >
+                <Square className="w-3 h-3" />
+              </button>
+
+              {/* Windows 11 Snap Layouts Flyout Menu (Matches User Screenshot) */}
+              {showSnapMenu && (
+                <div
+                  ref={snapMenuRef}
+                  onMouseLeave={() => setShowSnapMenu(false)}
+                  className="absolute top-9 right-0 z-50 w-64 bg-[#1e1e1e]/95 backdrop-blur-2xl border border-neutral-700/80 rounded-2xl p-3 shadow-2xl space-y-2.5 animate-in fade-in slide-in-from-top-1 text-neutral-100"
+                  style={{ WebkitAppRegion: 'no-drag' } as any}
+                >
+                  <div className="flex items-center justify-between pb-1.5 border-b border-neutral-800">
+                    <span className="text-[11px] font-semibold text-neutral-200">Windows 11 Snap Layouts</span>
+                    <button
+                      type="button"
+                      onClick={() => setShowSnapMenu(false)}
+                      className="text-neutral-500 hover:text-neutral-200 text-xs px-1 cursor-pointer"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    {/* Layout 1: 50 / 50 Split */}
+                    <div className="p-1.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1">
+                      <span className="text-[10px] font-medium text-neutral-400 block text-center">Split 50 / 50</span>
+                      <div className="h-9 grid grid-cols-2 gap-1">
+                        <button
+                          type="button"
+                          onClick={() => handleSnap('left-half')}
+                          title="Snap to Left Half of Screen"
+                          className="bg-neutral-800 hover:bg-sky-500/80 active:bg-sky-600 rounded border border-neutral-700 hover:border-sky-400 transition-all flex items-center justify-center cursor-pointer group"
+                        >
+                          <span className="text-[9px] font-bold text-neutral-400 group-hover:text-white">Left</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleSnap('right-half')}
+                          title="Snap to Right Half of Screen"
+                          className="bg-neutral-800 hover:bg-sky-500/80 active:bg-sky-600 rounded border border-neutral-700 hover:border-sky-400 transition-all flex items-center justify-center cursor-pointer group"
+                        >
+                          <span className="text-[9px] font-bold text-neutral-400 group-hover:text-white">Right</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Layout 2: Corner Desktop Sticky Note Widget */}
+                    <div className="p-1.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1">
+                      <span className="text-[10px] font-medium text-neutral-400 block text-center">Corner Widget</span>
+                      <div className="h-9 flex">
+                        <button
+                          type="button"
+                          onClick={() => handleSnap('widget-corner')}
+                          title="Mini Floating Sticky Note Widget in Bottom-Right Corner"
+                          className="w-full bg-neutral-800 hover:bg-amber-500/80 active:bg-amber-600 rounded border border-neutral-700 hover:border-amber-400 transition-all flex items-center justify-center gap-1 cursor-pointer group"
+                        >
+                          <Pin className="w-2.5 h-2.5 text-amber-400 group-hover:text-white" />
+                          <span className="text-[9px] font-bold text-amber-300 group-hover:text-white">Bottom Right</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Layout 3: Top Right Quadrant */}
+                    <div className="p-1.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1">
+                      <span className="text-[10px] font-medium text-neutral-400 block text-center">Top Quadrant</span>
+                      <div className="h-9 grid grid-cols-2 gap-1">
+                        <div className="bg-neutral-950/40 rounded border border-neutral-800/80" />
+                        <button
+                          type="button"
+                          onClick={() => handleSnap('top-right')}
+                          title="Snap to Top-Right Quadrant"
+                          className="bg-neutral-800 hover:bg-sky-500/80 rounded border border-neutral-700 hover:border-sky-400 transition-all flex items-center justify-center cursor-pointer group"
+                        >
+                          <span className="text-[8px] font-bold text-neutral-400 group-hover:text-white">Top R</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Layout 4: Center Sticky Note */}
+                    <div className="p-1.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1">
+                      <span className="text-[10px] font-medium text-neutral-400 block text-center">Center Note</span>
+                      <div className="h-9 flex items-center justify-center">
+                        <button
+                          type="button"
+                          onClick={() => handleSnap('center-note')}
+                          title="Center Sticky Note on Desktop"
+                          className="w-full h-full bg-neutral-800 hover:bg-sky-500/80 rounded border border-neutral-700 hover:border-sky-400 transition-all flex items-center justify-center cursor-pointer group"
+                        >
+                          <span className="text-[9px] font-bold text-neutral-400 group-hover:text-white">Center</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 5. Close Button */}
             <button
               onClick={handleClose}
               title="Close to Tray"
-              className="p-1 hover:bg-red-600/80 rounded text-[#d6c7b2] hover:text-white transition-colors"
+              className="p-1.5 hover:bg-red-600/80 rounded text-[#d6c7b2] hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -259,15 +469,25 @@ export const WindowsApp: React.FC<WindowsAppProps> = ({
 
       {/* 2. CANARY YELLOW LINED LEGAL PAD BODY */}
       <main className="relative flex-1 flex flex-col overflow-hidden bg-[#fbf5cd] text-neutral-900 shadow-inner">
-        {/* Paper Subheader Metadata Line (Today | Date & Time) */}
-        <div className="flex items-center justify-between px-6 pt-3 pb-1 border-b border-[#e5dcab] text-xs">
-          <span className="font-serif font-bold text-[#991b1b] tracking-wider text-sm">
-            Today
-          </span>
-          <span className="text-[#854d0e] font-sans text-xs tracking-tight">
-            {formattedDateTime}
-          </span>
-        </div>
+        {/* Paper Subheader Metadata Line (Today | Date & Time) - Hidden in compact mode */}
+        {!isCompact && !isWidgetMode && (
+          <div className="flex items-center justify-between px-6 pt-3 pb-1 border-b border-[#e5dcab] text-xs">
+            <div className="flex items-center gap-2">
+              <span className="font-serif font-bold text-[#991b1b] tracking-wider text-sm">
+                Today
+              </span>
+              {isPinned && (
+                <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-200/80 px-2 py-0.5 rounded-full border border-amber-400/60">
+                  <Pin className="w-2.5 h-2.5 fill-amber-800 rotate-45" />
+                  <span>Pinned on Top</span>
+                </span>
+              )}
+            </div>
+            <span className="text-[#854d0e] font-sans text-xs tracking-tight">
+              {formattedDateTime}
+            </span>
+          </div>
+        )}
 
         {/* Lined Paper Canvas with Left Red Margin Rule */}
         <div className="relative flex-1 flex overflow-hidden">

@@ -15,8 +15,27 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('lan:client-count', handler);
     return () => ipcRenderer.removeListener('lan:client-count', handler);
   },
+  onClientConnected: (callback) => {
+    const handler = (event, info) => callback(info);
+    ipcRenderer.on('lan:client-connected', handler);
+    return () => ipcRenderer.removeListener('lan:client-connected', handler);
+  },
+  setPin: (newPin) => ipcRenderer.invoke('lan:set-pin', newPin),
+  regeneratePin: () => ipcRenderer.invoke('lan:regenerate-pin'),
+  onPortUpdated: (callback) => {
+    const handler = (event, port) => callback(port);
+    ipcRenderer.on('lan:port-updated', handler);
+    return () => ipcRenderer.removeListener('lan:port-updated', handler);
+  },
+  onPinUpdated: (callback) => {
+    const handler = (event, pin) => callback(pin);
+    ipcRenderer.on('lan:pin-updated', handler);
+    return () => ipcRenderer.removeListener('lan:pin-updated', handler);
+  },
   minimize: () => ipcRenderer.send('window:minimize'),
   maximize: () => ipcRenderer.send('window:maximize'),
   close: () => ipcRenderer.send('window:close'),
   setAlwaysOnTop: (flag) => ipcRenderer.send('window:set-always-on-top', flag),
+  toggleWidgetMode: (isWidget) => ipcRenderer.send('window:toggle-widget-mode', isWidget),
+  snapWindow: (layout) => ipcRenderer.send('window:snap', layout),
 });

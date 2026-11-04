@@ -12,7 +12,9 @@ import {
   Search, 
   X, 
   RotateCcw,
-  ExternalLink
+  ExternalLink,
+  Lock,
+  HelpCircle
 } from 'lucide-react';
 import { NoteState, StickyColor, ClipItem, ConnectedDevice } from '../types';
 import { triggerHaptic } from '../utils/device';
@@ -23,6 +25,7 @@ interface AndroidAppProps {
   sessionId: string;
   connectedDevices: ConnectedDevice[];
   history: ClipItem[];
+  pin?: string;
   onTextChange: (newContent: string) => void;
   onColorChange: (newColor: StickyColor) => void;
   onSaveToHistory: (content: string) => void;
@@ -31,6 +34,8 @@ interface AndroidAppProps {
   onClearHistory: () => void;
   onBuzzDevices: () => void;
   onOpenScanner: () => void;
+  onOpenPinModal?: () => void;
+  onOpenTroubleshoot?: () => void;
   onNewNote: () => void;
   onOpenPermissions?: () => void;
   remoteTypingDevice?: string | null;
@@ -40,12 +45,15 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
   note,
   connectedDevices,
   history,
+  pin,
   onTextChange,
   onSaveToHistory,
   onRestoreClip,
   onDeleteClip,
   onClearHistory,
   onOpenScanner,
+  onOpenPinModal,
+  onOpenTroubleshoot,
   onNewNote,
   onOpenPermissions,
   remoteTypingDevice,
@@ -135,7 +143,7 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
         {/* Subtle decorative top stitched seam line */}
         <div className="absolute top-1 left-2 right-2 border-t border-dashed border-[#683925]/60 pointer-events-none" />
 
-        {/* Left Action Controls (Scan PC / Permissions) */}
+        {/* Left Action Controls (Scan PC / Permissions / PIN / Diagnostics) */}
         <div className="flex items-center gap-1.5 z-10 shrink-0">
           <button
             onClick={() => {
@@ -151,6 +159,34 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse ml-0.5 shrink-0" />
             )}
           </button>
+
+          {/* Security Pairing PIN Badge */}
+          {onOpenPinModal && (
+            <button
+              onClick={() => {
+                triggerHaptic();
+                onOpenPinModal();
+              }}
+              title={pin ? `Pairing PIN: ${pin} (Tap to change)` : 'Enter Pairing PIN'}
+              className="flex items-center gap-1 px-2 py-1 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-amber-300 text-[11px] font-mono shadow-inner shrink-0 cursor-pointer"
+            >
+              <Lock className="w-3 h-3 text-amber-400" />
+              <span className="font-bold">{pin || 'PIN'}</span>
+            </button>
+          )}
+
+          {onOpenTroubleshoot && (
+            <button
+              onClick={() => {
+                triggerHaptic();
+                onOpenTroubleshoot();
+              }}
+              title="Wi-Fi Diagnostics & Troubleshooting"
+              className="p-1.5 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-neutral-400 hover:text-amber-300 shadow-inner transition-all shrink-0 cursor-pointer"
+            >
+              <HelpCircle className="w-3.5 h-3.5 text-amber-300/80 shrink-0" />
+            </button>
+          )}
 
           {onOpenPermissions && (
             <button

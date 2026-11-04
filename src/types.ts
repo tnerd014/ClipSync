@@ -16,6 +16,7 @@ export interface NoteState {
   fontSize: 'sm' | 'base' | 'lg';
   updatedAt: number;
   updatedBy: string;
+  rev?: number;
 }
 
 export interface ConnectedDevice {

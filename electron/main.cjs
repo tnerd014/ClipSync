@@ -1,6 +1,6 @@
 // Electron Main Process for Windows Sticky Notes (Serverless LAN Sync)
 // Zero cloud servers, zero cloud databases
-const { app, BrowserWindow, ipcMain, Tray, Menu, globalShortcut } = require('electron');
+const { app, BrowserWindow, ipcMain, Tray, Menu, globalShortcut, screen } = require('electron');
 const path = require('path');
 const os = require('os');
 const http = require('http');
@@ -11,17 +11,22 @@ let mainWindow = null;
 let tray = null;
 let embeddedServer = null;
 let wss = null;
-const LAN_PORT = 8432;
+let currentLanPort = 8432;
 
 // In-memory sessions store
 const sessions = new Map();
 const clients = new Map(); // ws -> clientMeta
+
+function generatePin() {
+  return String(Math.floor(1000 + Math.random() * 9000));
+}
 
 function getOrCreateSession(sessionId) {
   const normalized = (sessionId || 'DEFAULT').trim().toUpperCase();
   let session = sessions.get(normalized);
   if (!session) {
     session = {
+      pin: generatePin(),
       note: {
         id: 'note-1',
         content: `👋 Welcome to your synced Sticky Note!\n\n📱 Scan the QR code or share this room code to open this note on your phone or tablet.\n\n⚡ Anything you type or paste here appears instantly across all your devices in real-time.`,
@@ -29,6 +34,7 @@ function getOrCreateSession(sessionId) {
         fontSize: 'base',
         updatedAt: Date.now(),
         updatedBy: 'ClipSync Desktop',
+        rev: 1,
       },
       history: [],
     };
@@ -63,17 +69,54 @@ function broadcastToSession(sessionId, payload, senderWs) {
   }
 }
 
-// Get local network IPv4 address (e.g. 192.168.1.50)
-function getLocalIpAddress() {
+// Find and prioritize physical LAN IPv4 addresses over virtual switches (WSL, Hyper-V, VirtualBox, Docker)
+function getAllLocalIpAddresses() {
   const interfaces = os.networkInterfaces();
+  const candidates = [];
+
   for (const name of Object.keys(interfaces)) {
+    const lowerName = name.toLowerCase();
+    const isVirtual = lowerName.includes('virtualbox') ||
+                      lowerName.includes('vmware') ||
+                      lowerName.includes('vethernet') ||
+                      lowerName.includes('wsl') ||
+                      lowerName.includes('docker') ||
+                      lowerName.includes('loopback') ||
+                      lowerName.includes('pseudo') ||
+                      lowerName.includes('teredo') ||
+                      lowerName.includes('tailscale') ||
+                      lowerName.includes('zerotier') ||
+                      lowerName.includes('hamachi') ||
+                      lowerName.includes('hyper-v');
+
     for (const iface of interfaces[name]) {
-      if (iface.family === 'IPv4' && !iface.internal && iface.address !== '127.0.0.1') {
-        return iface.address;
+      if (iface.family === 'IPv4' && !iface.internal) {
+        const ip = iface.address;
+        if (ip.startsWith('169.254.') || ip === '127.0.0.1') continue;
+
+        let priority = 10;
+        if (isVirtual) priority -= 100;
+        if (lowerName.includes('wi-fi') || lowerName.includes('wireless') || lowerName.includes('wlan')) priority += 60;
+        if (lowerName.includes('ethernet') || lowerName.includes('eth') || lowerName.includes('lan')) priority += 40;
+        if (ip.startsWith('192.168.')) priority += 20;
+        else if (ip.startsWith('10.')) priority += 10;
+        else if (/^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(ip)) priority += 5;
+
+        candidates.push({ name, ip, priority });
       }
     }
   }
-  return '127.0.0.1';
+
+  candidates.sort((a, b) => b.priority - a.priority);
+  return candidates;
+}
+
+function getLocalIpAddress() {
+  const all = getAllLocalIpAddresses();
+  if (all.length > 0 && all[0].priority > 0) {
+    return all[0].ip;
+  }
+  return all.length > 0 ? all[0].ip : '127.0.0.1';
 }
 
 // MIME types for serving static web files over LAN
@@ -108,11 +151,13 @@ function startEmbeddedLanServer() {
 
     // API: Health / LAN Info
     if (pathname === '/api/lan-info' || pathname === '/api/health') {
+      const defaultSession = getOrCreateSession('DEFAULT');
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({
         status: 'online',
         ip: getLocalIpAddress(),
-        port: LAN_PORT,
+        port: currentLanPort,
+        pin: defaultSession.pin,
         device: 'Windows Desktop (ClipSync)',
         clients: clients.size,
       }));
@@ -161,16 +206,44 @@ function startEmbeddedLanServer() {
 
   wss = new WebSocketServer({ server });
 
-  wss.on('connection', (ws) => {
+  wss.on('connection', (ws, req) => {
     let currentSessionId = '';
+    const isLoopback = req?.socket?.remoteAddress === '127.0.0.1' || req?.socket?.remoteAddress === '::1' || req?.socket?.remoteAddress === '::ffff:127.0.0.1';
 
     ws.on('message', (message) => {
       try {
         const msg = JSON.parse(message.toString());
 
+        // Heartbeat Ping / Pong
+        if (msg.type === 'ping') {
+          ws.send(JSON.stringify({
+            type: 'pong',
+            timestamp: msg.timestamp || Date.now(),
+            serverTime: Date.now(),
+          }));
+          return;
+        }
+
         if (msg.type === 'join') {
           currentSessionId = (msg.sessionId || 'DEFAULT').trim().toUpperCase();
           const session = getOrCreateSession(currentSessionId);
+
+          // PIN Security Verification:
+          // Desktop loopback is auto-authenticated.
+          // Remote devices (Android/browser on LAN) must supply matching PIN.
+          const isDesktopLocal = isLoopback || msg.deviceType === 'desktop' || msg.isDesktop;
+          if (!isDesktopLocal && session.pin) {
+            const clientPin = (msg.pin || '').trim();
+            if (clientPin !== session.pin) {
+              ws.send(JSON.stringify({
+                type: 'auth:error',
+                sessionId: currentSessionId,
+                requiresPin: true,
+                message: clientPin ? 'Incorrect pairing PIN. Please enter the 4-digit PIN shown on your PC screen.' : 'Pairing PIN required to join.',
+              }));
+              return;
+            }
+          }
 
           clients.set(ws, {
             ws,
@@ -180,10 +253,11 @@ function startEmbeddedLanServer() {
             deviceType: msg.deviceType || 'mobile',
           });
 
-          // Send full current note & history back to newly connected device
+          // Send full current note, PIN & history back to newly authenticated device
           ws.send(JSON.stringify({
             type: 'sync',
             sessionId: currentSessionId,
+            pin: session.pin,
             note: session.note,
             history: session.history,
             clients: getSessionClients(currentSessionId),
@@ -199,11 +273,34 @@ function startEmbeddedLanServer() {
 
           // Notify Electron UI
           if (mainWindow && !mainWindow.isDestroyed()) {
-            mainWindow.webContents.send('lan:client-count', getSessionClients(currentSessionId).length);
+            const count = getSessionClients(currentSessionId).length;
+            mainWindow.webContents.send('lan:client-count', count);
+            mainWindow.webContents.send('lan:client-connected', {
+              deviceName: msg.deviceName || 'Phone',
+              deviceType: msg.deviceType || 'mobile',
+              clientsCount: count,
+            });
+          }
+        } else if (msg.type === 'pin:update') {
+          if (!currentSessionId) return;
+          const session = getOrCreateSession(currentSessionId);
+          if (msg.pin && msg.pin.trim()) {
+            session.pin = msg.pin.trim();
+            broadcastToSession(currentSessionId, {
+              type: 'pin:updated',
+              pin: session.pin,
+            });
+            if (mainWindow && !mainWindow.isDestroyed()) {
+              mainWindow.webContents.send('lan:pin-updated', session.pin);
+            }
           }
         } else if (msg.type === 'text:update') {
           if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
+
+          // Monotonic revision bump to prevent stale out-of-order race conditions
+          const nextRev = Math.max(session.note.rev || 0, msg.rev || 0) + 1;
+          session.note.rev = nextRev;
           session.note.content = msg.content;
           session.note.updatedAt = Date.now();
           session.note.updatedBy = msg.deviceName || 'Connected Device';
@@ -211,6 +308,7 @@ function startEmbeddedLanServer() {
           broadcastToSession(currentSessionId, {
             type: 'text:update',
             content: msg.content,
+            rev: nextRev,
             updatedAt: session.note.updatedAt,
             updatedBy: session.note.updatedBy,
             senderDeviceId: msg.deviceId,
@@ -220,6 +318,8 @@ function startEmbeddedLanServer() {
             mainWindow.webContents.send('lan:message', {
               type: 'text:update',
               content: msg.content,
+              rev: nextRev,
+              senderDeviceId: msg.deviceId,
               deviceName: msg.deviceName,
             });
           }
@@ -272,10 +372,27 @@ function startEmbeddedLanServer() {
     });
   });
 
-  server.listen(LAN_PORT, '0.0.0.0', () => {
-    console.log(`[ClipSync] Embedded LAN Host listening on http://${getLocalIpAddress()}:${LAN_PORT}`);
-  });
+  // Dynamic Port Binding with automatic fallback if occupied
+  function startListening(port, maxPort) {
+    server.listen(port, '0.0.0.0', () => {
+      currentLanPort = port;
+      console.log(`[ClipSync] Embedded LAN Host listening on http://${getLocalIpAddress()}:${port}`);
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('lan:port-updated', port);
+      }
+    });
 
+    server.once('error', (err) => {
+      if (err.code === 'EADDRINUSE' && port < maxPort) {
+        console.warn(`[ClipSync] Port ${port} is occupied, retrying port ${port + 1}...`);
+        startListening(port + 1, maxPort);
+      } else {
+        console.error('[ClipSync] LAN Server listen error:', err);
+      }
+    });
+  }
+
+  startListening(currentLanPort, currentLanPort + 10);
   embeddedServer = server;
 }
 
@@ -287,8 +404,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 480,
     height: 620,
-    minWidth: 320,
-    minHeight: 400,
+    minWidth: 260,
+    minHeight: 200,
     frame: false, // Windows 11 frameless sticky note
     transparent: false,
     show: false, // Prevent white/transparent flash before HTML finishes loading
@@ -346,7 +463,7 @@ function createWindow() {
         <head><title>ClipSync</title></head>
         <body style="background:#171717;color:#fde047;font-family:sans-serif;padding:30px;text-align:center;">
           <h2>ClipSync Windows Host</h2>
-          <p style="color:#e2e8f0;">LAN Server is running on port ${LAN_PORT}.</p>
+          <p style="color:#e2e8f0;">LAN Server is running on port ${currentLanPort}.</p>
           <p style="color:#94a3b8;font-size:12px;">Local IP: ${getLocalIpAddress()}</p>
         </body>
         </html>
@@ -367,19 +484,88 @@ function createWindow() {
   ipcMain.on('window:close', () => mainWindow && mainWindow.hide());
   ipcMain.on('window:set-always-on-top', (e, flag) => mainWindow && mainWindow.setAlwaysOnTop(flag));
 
+  // Toggle Mini Sticky Note Desktop Widget Mode
+  ipcMain.on('window:toggle-widget-mode', (e, isWidget) => {
+    if (!mainWindow) return;
+    try {
+      if (isWidget) {
+        mainWindow.setMinimumSize(220, 260);
+        mainWindow.setSize(280, 360, true);
+      } else {
+        mainWindow.setMinimumSize(260, 200);
+        mainWindow.setSize(480, 620, true);
+      }
+    } catch (err) {
+      console.error('[ClipSync] Error toggling widget size:', err);
+    }
+  });
+
+  // Windows 11 Snap Layouts integration
+  ipcMain.on('window:snap', (e, layout) => {
+    if (!mainWindow) return;
+    try {
+      const currentDisplay = screen.getDisplayMatching(mainWindow.getBounds());
+      const { x, y, width, height } = currentDisplay.workArea;
+
+      if (mainWindow.isMaximized()) {
+        mainWindow.unmaximize();
+      }
+
+      if (layout === 'left-half') {
+        mainWindow.setBounds({ x, y, width: Math.floor(width / 2), height });
+      } else if (layout === 'right-half') {
+        mainWindow.setBounds({ x: x + Math.floor(width / 2), y, width: Math.floor(width / 2), height });
+      } else if (layout === 'top-right') {
+        mainWindow.setBounds({ x: x + Math.floor(width / 2), y, width: Math.floor(width / 2), height: Math.floor(height / 2) });
+      } else if (layout === 'bottom-right') {
+        mainWindow.setBounds({ x: x + Math.floor(width / 2), y: y + Math.floor(height / 2), width: Math.floor(width / 2), height: Math.floor(height / 2) });
+      } else if (layout === 'widget-corner') {
+        mainWindow.setBounds({ x: x + width - 300, y: y + height - 390, width: 280, height: 360 });
+      } else if (layout === 'center-note') {
+        mainWindow.setBounds({ x: x + Math.floor((width - 480) / 2), y: y + Math.floor((height - 620) / 2), width: 480, height: 620 });
+      }
+    } catch (err) {
+      console.error('[ClipSync] Error snapping window:', err);
+    }
+  });
+
   // LAN network info
   ipcMain.handle('lan:get-info', () => {
+    const all = getAllLocalIpAddresses();
+    const defaultSession = getOrCreateSession('DEFAULT');
     return {
       ip: getLocalIpAddress(),
-      port: LAN_PORT,
+      allIps: all.map(c => ({ name: c.name, ip: c.ip })),
+      port: currentLanPort,
+      pin: defaultSession.pin,
       clients: clients.size,
     };
   });
 
+  ipcMain.handle('lan:set-pin', (e, newPin) => {
+    const session = getOrCreateSession('DEFAULT');
+    if (newPin && newPin.trim()) {
+      session.pin = newPin.trim();
+      broadcastToSession('DEFAULT', { type: 'pin:updated', pin: session.pin });
+      return session.pin;
+    }
+    return session.pin;
+  });
+
+  ipcMain.handle('lan:regenerate-pin', () => {
+    const session = getOrCreateSession('DEFAULT');
+    session.pin = generatePin();
+    broadcastToSession('DEFAULT', { type: 'pin:updated', pin: session.pin });
+    return session.pin;
+  });
+
   // Broadcast to all connected Android devices
   ipcMain.on('lan:broadcast', (e, payload) => {
-    const currentSessionId = payload.sessionId || 'DEFAULT';
+    const currentSessionId = (payload.sessionId || 'DEFAULT').trim().toUpperCase();
     broadcastToSession(currentSessionId, payload);
+    if (currentSessionId !== 'DEFAULT') {
+      broadcastToSession('DEFAULT', payload);
+    }
   });
 }
 
@@ -400,7 +586,7 @@ function createTray() {
           } 
         } 
       },
-      { label: `LAN Host: ${getLocalIpAddress()}:${LAN_PORT}`, enabled: false },
+      { label: `LAN Host: ${getLocalIpAddress()}:${currentLanPort}`, enabled: false },
       { type: 'separator' },
       { label: 'Quit ClipSync', click: () => app.quit() },
     ]);

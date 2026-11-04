@@ -3,6 +3,7 @@
 	"appName": "ClipSync",
 	"webDir": "dist",
 	"server": {
-		"androidScheme": "https"
+		"androidScheme": "http",
+		"cleartext": true
 	}
 }
