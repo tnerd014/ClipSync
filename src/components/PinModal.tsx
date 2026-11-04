@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X } from 'lucide-react';
 import { triggerHaptic } from '../utils/device';
 
 interface PinModalProps {
@@ -40,7 +39,6 @@ export const PinModal: React.FC<PinModalProps> = ({
       inputRefs.current[index + 1]?.focus();
     }
 
-    // Auto-submit immediately when 4th digit is entered
     if (clean && index === 3 && nextDigits.every((d) => d.length === 1)) {
       triggerHaptic();
       onSubmitPin(nextDigits.join(''));
@@ -81,28 +79,21 @@ export const PinModal: React.FC<PinModalProps> = ({
   };
 
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in fade-in"
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/65 backdrop-blur-sm animate-in fade-in"
       onClick={onClose}
     >
-      <div 
-        className="w-full max-w-[240px] bg-neutral-900 border border-neutral-800 rounded-2xl shadow-xl p-4 text-neutral-100 space-y-3"
+      <div
+        className="w-full max-w-[230px] bg-[#1c1c1e]/95 backdrop-blur-xl rounded-2xl shadow-2xl p-4 text-neutral-100 space-y-3 select-none"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Minimalist Header */}
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-neutral-300 tracking-wide">Enter PC PIN</span>
-          <button
-            onClick={onClose}
-            className="p-1 -mr-1 text-neutral-500 hover:text-neutral-200 transition-colors cursor-pointer"
-            aria-label="Close"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
+        <div className="text-center">
+          <span className="text-xs font-semibold text-neutral-200 tracking-tight">
+            Enter PIN
+          </span>
         </div>
 
-        {/* Clean 4-Digit Input Row */}
-        <form onSubmit={handleSubmit} className="space-y-2.5">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <div className="flex justify-between gap-2" onPaste={handlePaste}>
             {digits.map((digit, idx) => (
               <input
@@ -117,22 +108,30 @@ export const PinModal: React.FC<PinModalProps> = ({
                 value={digit}
                 onChange={(e) => handleDigitChange(idx, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(idx, e)}
-                className={`w-11 h-12 bg-neutral-950 border text-center font-mono text-lg font-semibold rounded-xl outline-none transition-colors ${
+                className={`w-11 h-11 bg-white/[0.07] text-center font-mono text-base font-semibold rounded-xl outline-none transition-all ${
                   errorMessage
-                    ? 'border-red-500/70 text-red-300 focus:border-red-400'
+                    ? 'ring-1 ring-red-500/80 text-red-400'
                     : digit
-                    ? 'border-amber-400/80 text-amber-300'
-                    : 'border-neutral-800 text-neutral-100 focus:border-neutral-500'
+                    ? 'ring-1 ring-amber-400/80 text-amber-300'
+                    : 'text-white focus:ring-1 focus:ring-white/30'
                 }`}
               />
             ))}
           </div>
 
           {errorMessage && (
-            <p className="text-[11px] text-red-400 text-center">
+            <p className="text-[11px] text-red-400 text-center leading-none">
               Incorrect PIN
             </p>
           )}
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:scale-[0.98] text-xs font-medium text-neutral-200 transition-all cursor-pointer"
+          >
+            Close
+          </button>
         </form>
       </div>
     </div>

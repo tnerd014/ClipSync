@@ -120,7 +120,7 @@ export default function App() {
     return Boolean((window as any).electronAPI) || /Electron/i.test(navigator.userAgent);
   });
 
-  // Room / Session (clean 4-digit code)
+  // Unified Workspace Session (protected by 4-digit PIN)
   const [sessionId, setSessionId] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -130,13 +130,8 @@ export default function App() {
         safeStorageSet('clipsync_room', r);
         return r;
       }
-      const saved = localStorage.getItem('clipsync_room');
-      if (saved && saved.trim()) return saved.trim().toUpperCase();
-      const generated = 'CLIP-' + Math.floor(1000 + Math.random() * 9000);
-      safeStorageSet('clipsync_room', generated);
-      return generated;
     }
-    return 'CLIP-' + Math.floor(1000 + Math.random() * 9000);
+    return 'DEFAULT';
   });
 
   // Note State with localStorage persistence & versioning
@@ -289,6 +284,10 @@ export default function App() {
           });
           playSyncChime(soundEnabled);
           triggerHaptic();
+        } else if (data.type === 'history:update') {
+          if (Array.isArray(data.history)) {
+            setHistory(data.history);
+          }
         } else if (data.type === 'ping:notify') {
           playPingChime(soundEnabled);
           setBuzzNotification('Connected phone buzzed!');
@@ -376,16 +375,29 @@ export default function App() {
           setPinErrorMessage(null);
           lastPongRef.current = Date.now();
 
-          // Send join payload with security PIN
+          // Load latest local note & history so both merge smartly on handshake
+          let localHistoryToMerge: ClipItem[] = [];
+          let localNoteToMerge: NoteState | undefined = undefined;
+          try {
+            const rawHist = localStorage.getItem('clipsync_history');
+            if (rawHist) localHistoryToMerge = JSON.parse(rawHist);
+            const rawNote = localStorage.getItem('clipsync_note');
+            if (rawNote) localNoteToMerge = JSON.parse(rawNote);
+          } catch {
+            // ignore
+          }
+
           ws.send(
             JSON.stringify({
               type: 'join',
-              sessionId,
+              sessionId: 'DEFAULT',
               pin,
               deviceId,
               deviceName: deviceInfo.name,
               deviceType: currentPlatform === 'android' ? 'mobile' : 'desktop',
               isDesktop: currentPlatform === 'windows',
+              note: localNoteToMerge,
+              history: localHistoryToMerge,
             })
           );
 
@@ -394,7 +406,6 @@ export default function App() {
           heartbeatInterval = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
               ws.send(JSON.stringify({ type: 'ping', timestamp: Date.now() }));
-              // Check if server pong is late by more than 25 seconds
               if (Date.now() - lastPongRef.current > 25000) {
                 console.warn('[ClipSync] Heartbeat pong timed out, reconnecting...');
                 ws.close();
@@ -415,7 +426,7 @@ export default function App() {
 
             // PIN Security Authentication Error
             if (msg.type === 'auth:error') {
-              setPinErrorMessage(msg.message || 'Incorrect pairing PIN. Please enter the PIN shown on your PC.');
+              setPinErrorMessage(msg.message || 'Incorrect PIN');
               setIsPinModalOpen(true);
               setIsConnected(false);
               return;
@@ -426,16 +437,20 @@ export default function App() {
                 setPin(msg.pin);
                 safeStorageSet('clipsync_pin', msg.pin);
               }
-              if (msg.note && msg.note.content) {
+              if (msg.note && typeof msg.note.content === 'string') {
                 setNote(msg.note);
                 lastSavedContentRef.current = msg.note.content;
               }
-              if (msg.history && Array.isArray(msg.history) && msg.history.length > 0) {
+              if (msg.history && Array.isArray(msg.history)) {
                 setHistory(msg.history);
+                safeStorageSet('clipsync_history', JSON.stringify(msg.history));
               }
-              if (msg.clients) setConnectedDevices(msg.clients);
-              if (currentPlatform === 'android' && (!connectedDevices || connectedDevices.length === 0)) {
-                showToast('Handshake Connected to PC!', 'success');
+              if (msg.clients && Array.isArray(msg.clients)) {
+                const remoteOnly = msg.clients.filter((c: any) => c.deviceId !== deviceId);
+                setConnectedDevices(remoteOnly);
+              }
+              if (currentPlatform === 'android') {
+                showToast('Synced with PC', 'success');
               }
             } else if (msg.type === 'pin:updated') {
               if (msg.pin) {
@@ -476,16 +491,20 @@ export default function App() {
                 updatedAt: msg.updatedAt || Date.now(),
               }));
             } else if (msg.type === 'history:update') {
-              if (msg.history) setHistory(msg.history);
+              if (Array.isArray(msg.history)) {
+                setHistory(msg.history);
+              }
             } else if (msg.type === 'history:add') {
               if (msg.clip) {
                 setHistory((prev) => [msg.clip, ...prev.filter(c => c.id !== msg.clip.id)].slice(0, 50));
               }
             } else if (msg.type === 'presence') {
-              if (msg.clients) setConnectedDevices(msg.clients);
+              if (msg.clients && Array.isArray(msg.clients)) {
+                setConnectedDevices(msg.clients.filter((c: any) => c.deviceId !== deviceId));
+              }
               if (msg.event === 'joined' && msg.deviceName && msg.deviceName !== deviceInfo.name) {
                 playSyncChime(soundEnabled);
-                showToast(`Handshake: ${msg.deviceName} connected`, 'success');
+                showToast(`${msg.deviceName} connected`, 'success');
                 triggerHaptic();
               }
             } else if (msg.type === 'ping:notify') {
@@ -652,13 +671,22 @@ export default function App() {
   };
 
   const handleDeleteClip = (clipId: string) => {
-    setHistory((prev) => prev.filter((c) => c.id !== clipId));
+    const targetClip = history.find((c) => c.id === clipId);
+    const clipContent = targetClip?.content;
+
+    setHistory((prev) => {
+      const updated = prev.filter((c) => c.id !== clipId && (!clipContent || c.content !== clipContent));
+      safeStorageSet('clipsync_history', JSON.stringify(updated));
+      return updated;
+    });
+
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(
         JSON.stringify({
           type: 'clip:delete',
           sessionId,
           clipId,
+          clipContent,
         })
       );
     }
@@ -676,7 +704,7 @@ export default function App() {
         })
       );
     }
-    showToast('History cleared', 'info');
+    showToast('History cleared on all connected devices', 'info');
   };
 
   const handleBuzzDevices = () => {
@@ -694,6 +722,12 @@ export default function App() {
   };
 
   const handleNewNote = () => {
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    const trimmedCurrent = note.content.trim();
+    if (trimmedCurrent) {
+      handleSaveToHistory(trimmedCurrent);
+    }
+
     const freshNote: NoteState = {
       id: `note-${Date.now()}`,
       content: '',
@@ -710,7 +744,7 @@ export default function App() {
       wsRef.current.send(
         JSON.stringify({
           type: 'text:update',
-          sessionId,
+          sessionId: 'DEFAULT',
           content: '',
           rev: freshNote.rev,
           deviceId,
@@ -718,7 +752,7 @@ export default function App() {
         })
       );
     }
-    showToast('New note ready', 'info');
+    showToast('New note', 'info');
   };
 
   // PIN Management
@@ -807,48 +841,48 @@ export default function App() {
 
   return (
     <div className="h-screen w-screen overflow-hidden flex flex-col font-sans select-none bg-[#1c1815] text-neutral-100">
-      {/* Needs Pairing Alert on Mobile */}
+      {/* Succinct SwiftUI Pairing Pill */}
       {needsPairing && (
-        <div className="fixed top-2 left-1/2 -translate-x-1/2 z-50">
+        <div className="fixed top-12 left-1/2 -translate-x-1/2 z-40">
           <button
             onClick={() => setIsScannerOpen(true)}
-            className="px-3 py-1 bg-amber-600/95 hover:bg-amber-500 border border-amber-400/80 text-amber-50 text-xs font-medium rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-md active:scale-95 transition-all cursor-pointer"
+            className="px-3 py-1 bg-[#1c1c1e]/90 hover:bg-[#2c2c2e] text-neutral-100 text-[11px] font-medium rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xl active:scale-95 transition-all cursor-pointer"
           >
-            <QrCode className="w-3.5 h-3.5" />
-            <span>Ready to Pair: Tap to Scan PC</span>
+            <QrCode className="w-3 h-3 text-neutral-300" />
+            <span>Scan PC</span>
           </button>
         </div>
       )}
 
-      {/* Offline Alert: Clickable to diagnose */}
+      {/* Succinct SwiftUI Offline Pill */}
       {!isConnected && !needsPairing && (
-        <div className="fixed top-2 left-1/2 -translate-x-1/2 z-50">
+        <div className="fixed top-12 left-1/2 -translate-x-1/2 z-40">
           <button
             onClick={() => setIsTroubleshootOpen(true)}
-            className="px-3 py-1 bg-red-950/90 hover:bg-red-900 border border-red-700/80 text-red-200 text-xs rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-md active:scale-95 transition-all cursor-pointer"
-            title="Click to run network diagnostics & firewall checks"
+            className="px-2.5 py-0.5 bg-[#1c1c1e]/85 hover:bg-[#2c2c2e] text-neutral-200 text-[11px] font-medium rounded-full shadow-md flex items-center gap-1.5 backdrop-blur-xl active:scale-95 transition-all cursor-pointer"
+            title="Connection Setup"
           >
-            <WifiOff className="w-3 h-3 text-red-400" />
-            <span>LAN Connecting... (Tap to Troubleshoot)</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+            <span>Offline</span>
           </button>
         </div>
       )}
 
-      {/* Toast Alert */}
+      {/* Compact SwiftUI Toast */}
       {statusToast && (
-        <div className="fixed top-3 left-1/2 -translate-x-1/2 z-50 pointer-events-none animate-in fade-in slide-in-from-top-2">
-          <div className="px-3.5 py-1.5 bg-neutral-900 border border-neutral-700 text-neutral-200 text-xs rounded-full shadow-xl flex items-center gap-2 backdrop-blur-md">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+        <div className="fixed top-12 left-1/2 -translate-x-1/2 z-50 pointer-events-none animate-in fade-in slide-in-from-top-1">
+          <div className="px-3 py-1 bg-[#1c1c1e]/90 text-neutral-100 text-[11px] font-medium rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xl">
+            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
             <span>{statusToast.message}</span>
           </div>
         </div>
       )}
 
-      {/* Buzz Alert */}
+      {/* Compact SwiftUI Buzz Pill */}
       {buzzNotification && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-          <div className="px-4 py-1.5 bg-amber-400 text-neutral-950 text-xs font-bold rounded-full shadow-xl flex items-center gap-2 backdrop-blur-md animate-bounce">
-            <Bell className="w-3.5 h-3.5 fill-neutral-950" />
+        <div className="fixed top-12 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+          <div className="px-3 py-1 bg-[#1c1c1e]/90 text-neutral-100 text-[11px] font-medium rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xl">
+            <Bell className="w-3 h-3 text-neutral-300" />
             <span>{buzzNotification}</span>
           </div>
         </div>

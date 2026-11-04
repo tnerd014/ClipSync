@@ -22,21 +22,25 @@ function generatePin() {
 }
 
 function getOrCreateSession(sessionId) {
-  const normalized = (sessionId || 'DEFAULT').trim().toUpperCase();
+  const normalized = 'DEFAULT';
   let session = sessions.get(normalized);
   if (!session) {
     session = {
       pin: generatePin(),
       note: {
         id: 'note-1',
-        content: `👋 Welcome to your synced Sticky Note!\n\n📱 Scan the QR code or share this room code to open this note on your phone or tablet.\n\n⚡ Anything you type or paste here appears instantly across all your devices in real-time.`,
+        content: '',
         color: 'yellow',
         fontSize: 'base',
-        updatedAt: Date.now(),
+        updatedAt: 0,
         updatedBy: 'ClipSync Desktop',
         rev: 1,
+        isDefault: true,
       },
       history: [],
+      deletedIds: new Set(),
+      deletedContents: new Set(),
+      lastClearedAt: 0,
     };
     sessions.set(normalized, session);
   }
@@ -46,7 +50,8 @@ function getOrCreateSession(sessionId) {
 function getSessionClients(sessionId) {
   const result = [];
   for (const [, meta] of clients.entries()) {
-    if (meta.sessionId === sessionId) {
+    // Only count remote/phone connections, not the PC's own local loopback socket
+    if (!meta.isHost) {
       result.push({
         deviceId: meta.deviceId,
         deviceName: meta.deviceName,
@@ -60,8 +65,8 @@ function getSessionClients(sessionId) {
 
 function broadcastToSession(sessionId, payload, senderWs) {
   const json = JSON.stringify(payload);
-  for (const [ws, meta] of clients.entries()) {
-    if (meta.sessionId === sessionId && ws.readyState === WebSocket.OPEN) {
+  for (const [ws] of clients.entries()) {
+    if (ws.readyState === WebSocket.OPEN) {
       if (!senderWs || ws !== senderWs) {
         ws.send(json);
       }
@@ -159,7 +164,7 @@ function startEmbeddedLanServer() {
         port: currentLanPort,
         pin: defaultSession.pin,
         device: 'Windows Desktop (ClipSync)',
-        clients: clients.size,
+        clients: getSessionClients('DEFAULT').length,
       }));
       return;
     }
@@ -168,14 +173,12 @@ function startEmbeddedLanServer() {
     const distDir = path.join(__dirname, 'dist');
     let filePath = path.join(distDir, pathname === '/' ? 'index.html' : pathname);
 
-    // Security check: ensure path is within distDir
     if (!filePath.startsWith(distDir)) {
       filePath = path.join(distDir, 'index.html');
     }
 
     fs.stat(filePath, (err, stats) => {
       if (err || !stats.isFile()) {
-        // Fallback to index.html for SPA client-side routing
         const indexPath = path.join(distDir, 'index.html');
         fs.readFile(indexPath, (readErr, content) => {
           if (readErr) {
@@ -207,7 +210,7 @@ function startEmbeddedLanServer() {
   wss = new WebSocketServer({ server });
 
   wss.on('connection', (ws, req) => {
-    let currentSessionId = '';
+    let currentSessionId = 'DEFAULT';
     const isLoopback = req?.socket?.remoteAddress === '127.0.0.1' || req?.socket?.remoteAddress === '::1' || req?.socket?.remoteAddress === '::ffff:127.0.0.1';
 
     ws.on('message', (message) => {
@@ -225,13 +228,11 @@ function startEmbeddedLanServer() {
         }
 
         if (msg.type === 'join') {
-          currentSessionId = (msg.sessionId || 'DEFAULT').trim().toUpperCase();
+          currentSessionId = 'DEFAULT';
           const session = getOrCreateSession(currentSessionId);
+          const isDesktopLocal = Boolean(isLoopback && (msg.deviceType === 'desktop' || msg.isDesktop));
 
-          // PIN Security Verification:
-          // Desktop loopback is auto-authenticated.
-          // Remote devices (Android/browser on LAN) must supply matching PIN.
-          const isDesktopLocal = isLoopback || msg.deviceType === 'desktop' || msg.isDesktop;
+          // PIN Security Verification for remote devices:
           if (!isDesktopLocal && session.pin) {
             const clientPin = (msg.pin || '').trim();
             if (clientPin !== session.pin) {
@@ -239,7 +240,7 @@ function startEmbeddedLanServer() {
                 type: 'auth:error',
                 sessionId: currentSessionId,
                 requiresPin: true,
-                message: clientPin ? 'Incorrect pairing PIN. Please enter the 4-digit PIN shown on your PC screen.' : 'Pairing PIN required to join.',
+                message: 'Incorrect PIN',
               }));
               return;
             }
@@ -249,11 +250,112 @@ function startEmbeddedLanServer() {
             ws,
             sessionId: currentSessionId,
             deviceId: msg.deviceId || 'dev-' + Math.random().toString(36).substring(2, 7),
-            deviceName: msg.deviceName || 'Phone / Remote Device',
+            deviceName: msg.deviceName || 'Phone',
             deviceType: msg.deviceType || 'mobile',
+            isHost: isDesktopLocal,
           });
 
-          // Send full current note, PIN & history back to newly authenticated device
+          // 1. Smart Active Note Resolution on Handshake (Prevents overwriting saved PC notes or offline phone notes)
+          if (msg.note && typeof msg.note.content === 'string') {
+            const incomingText = msg.note.content.trim();
+            const existingText = (session.note.content || '').trim();
+            const incomingTime = msg.note.updatedAt || 0;
+            const existingTime = session.note.updatedAt || 0;
+
+            if (session.note.isDefault || !existingText) {
+              if (incomingText) {
+                session.note = {
+                  ...session.note,
+                  content: msg.note.content,
+                  updatedAt: incomingTime || Date.now(),
+                  updatedBy: msg.deviceName || 'Device',
+                  rev: Math.max(session.note.rev || 1, msg.note.rev || 1),
+                  isDefault: false,
+                };
+              }
+            } else if (incomingText && incomingText !== existingText) {
+              // Both devices have different non-empty notes: keep the newer one on the pad and archive the older one to history!
+              if (incomingTime > existingTime) {
+                const archivedOld = {
+                  id: `clip-${Date.now()}-arch`,
+                  content: existingText,
+                  timestamp: existingTime || Date.now() - 1000,
+                  device: session.note.updatedBy || 'PC',
+                  deviceType: 'desktop',
+                };
+                if (!session.history.some(c => c.content.trim() === existingText)) {
+                  session.history = [archivedOld, ...session.history].slice(0, 50);
+                }
+                session.note = {
+                  ...session.note,
+                  content: msg.note.content,
+                  updatedAt: incomingTime,
+                  updatedBy: msg.deviceName || 'Phone',
+                  rev: (session.note.rev || 1) + 1,
+                  isDefault: false,
+                };
+              } else {
+                const archivedIncoming = {
+                  id: `clip-${Date.now()}-arch`,
+                  content: incomingText,
+                  timestamp: incomingTime || Date.now() - 1000,
+                  device: msg.deviceName || 'Phone',
+                  deviceType: msg.deviceType || 'mobile',
+                };
+                if (!session.history.some(c => c.content.trim() === incomingText)) {
+                  session.history = [archivedIncoming, ...session.history].slice(0, 50);
+                }
+              }
+            }
+          }
+
+          // 2. 2-Way History Merge with Tombstone Filtering (Prevents deleted or cleared notes from resurrecting)
+          if (Array.isArray(msg.history) && msg.history.length > 0) {
+            const combined = [...session.history];
+            for (const incomingClip of msg.history) {
+              if (!incomingClip || !incomingClip.content) continue;
+              const cleanContent = incomingClip.content.trim();
+              if (!cleanContent) continue;
+
+              // Skip if deleted or cleared previously
+              if (session.lastClearedAt && (incomingClip.timestamp || 0) <= session.lastClearedAt) continue;
+              if (session.deletedIds.has(incomingClip.id) || session.deletedContents.has(cleanContent)) continue;
+
+              if (!combined.some(c => c.id === incomingClip.id || c.content.trim() === cleanContent)) {
+                combined.push(incomingClip);
+              }
+            }
+            combined.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            session.history = combined.slice(0, 50);
+          }
+
+          // Broadcast updated note & merged history to all connected devices
+          broadcastToSession(currentSessionId, {
+            type: 'history:update',
+            history: session.history,
+          }, ws);
+          broadcastToSession(currentSessionId, {
+            type: 'text:update',
+            content: session.note.content,
+            rev: session.note.rev,
+            updatedAt: session.note.updatedAt,
+            updatedBy: session.note.updatedBy,
+          }, ws);
+
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('lan:message', {
+              type: 'history:update',
+              history: session.history,
+            });
+            mainWindow.webContents.send('lan:message', {
+              type: 'text:update',
+              content: session.note.content,
+              rev: session.note.rev,
+              deviceName: session.note.updatedBy,
+            });
+          }
+
+          // Send full current note, PIN & merged history back to newly authenticated device
           ws.send(JSON.stringify({
             type: 'sync',
             sessionId: currentSessionId,
@@ -264,25 +366,24 @@ function startEmbeddedLanServer() {
           }));
 
           // Notify everyone in session
+          const remoteClients = getSessionClients(currentSessionId);
           broadcastToSession(currentSessionId, {
             type: 'presence',
-            clients: getSessionClients(currentSessionId),
-            event: 'joined',
+            clients: remoteClients,
+            event: isDesktopLocal ? 'host' : 'joined',
             deviceName: msg.deviceName,
           });
 
-          // Notify Electron UI
-          if (mainWindow && !mainWindow.isDestroyed()) {
-            const count = getSessionClients(currentSessionId).length;
-            mainWindow.webContents.send('lan:client-count', count);
+          // Notify Electron UI only when an actual remote device connects
+          if (!isDesktopLocal && mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('lan:client-count', remoteClients.length);
             mainWindow.webContents.send('lan:client-connected', {
               deviceName: msg.deviceName || 'Phone',
               deviceType: msg.deviceType || 'mobile',
-              clientsCount: count,
+              clientsCount: remoteClients.length,
             });
           }
         } else if (msg.type === 'pin:update') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
           if (msg.pin && msg.pin.trim()) {
             session.pin = msg.pin.trim();
@@ -295,15 +396,14 @@ function startEmbeddedLanServer() {
             }
           }
         } else if (msg.type === 'text:update') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
 
-          // Monotonic revision bump to prevent stale out-of-order race conditions
           const nextRev = Math.max(session.note.rev || 0, msg.rev || 0) + 1;
           session.note.rev = nextRev;
           session.note.content = msg.content;
           session.note.updatedAt = Date.now();
           session.note.updatedBy = msg.deviceName || 'Connected Device';
+          session.note.isDefault = false;
 
           broadcastToSession(currentSessionId, {
             type: 'text:update',
@@ -324,7 +424,6 @@ function startEmbeddedLanServer() {
             });
           }
         } else if (msg.type === 'style:update') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
           if (msg.color) session.note.color = msg.color;
           if (msg.fontSize) session.note.fontSize = msg.fontSize;
@@ -335,18 +434,63 @@ function startEmbeddedLanServer() {
             fontSize: msg.fontSize,
           }, ws);
         } else if (msg.type === 'history:add') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
-          if (msg.clip) {
-            session.history.unshift(msg.clip);
-            if (session.history.length > 50) session.history.pop();
+          if (msg.clip && msg.clip.content) {
+            const clean = msg.clip.content.trim();
+            session.deletedContents.delete(clean);
+            session.deletedIds.delete(msg.clip.id);
+            session.history = [msg.clip, ...session.history.filter(c => c.id !== msg.clip.id && c.content.trim() !== clean)].slice(0, 50);
             broadcastToSession(currentSessionId, {
+              type: 'history:update',
+              history: session.history,
+            });
+            if (mainWindow && !mainWindow.isDestroyed()) {
+              mainWindow.webContents.send('lan:message', {
+                type: 'history:update',
+                history: session.history,
+              });
+            }
+          }
+        } else if (msg.type === 'clip:delete') {
+          const session = getOrCreateSession(currentSessionId);
+          if (msg.clipId) session.deletedIds.add(msg.clipId);
+          if (msg.clipContent) session.deletedContents.add(msg.clipContent.trim());
+          for (const c of session.history) {
+            if (c.id === msg.clipId) {
+              session.deletedContents.add(c.content.trim());
+            }
+          }
+          session.history = session.history.filter(c => c.id !== msg.clipId && (!msg.clipContent || c.content.trim() !== msg.clipContent.trim()));
+          broadcastToSession(currentSessionId, {
+            type: 'history:update',
+            history: session.history,
+          });
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('lan:message', {
+              type: 'history:update',
+              history: session.history,
+            });
+          }
+        } else if (msg.type === 'history:update' || msg.type === 'clip:clear_history') {
+          const session = getOrCreateSession(currentSessionId);
+          const nextHistory = Array.isArray(msg.history) ? msg.history : [];
+          if (nextHistory.length === 0) {
+            session.lastClearedAt = Date.now();
+            session.deletedIds.clear();
+            session.deletedContents.clear();
+          }
+          session.history = nextHistory;
+          broadcastToSession(currentSessionId, {
+            type: 'history:update',
+            history: session.history,
+          });
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('lan:message', {
               type: 'history:update',
               history: session.history,
             });
           }
         } else if (msg.type === 'ping:buzz') {
-          if (!currentSessionId) return;
           broadcastToSession(currentSessionId, {
             type: 'ping:notify',
             fromDevice: msg.deviceName || 'Device',
@@ -359,15 +503,14 @@ function startEmbeddedLanServer() {
 
     ws.on('close', () => {
       clients.delete(ws);
-      if (currentSessionId) {
-        broadcastToSession(currentSessionId, {
-          type: 'presence',
-          clients: getSessionClients(currentSessionId),
-          event: 'left',
-        });
-      }
+      const remoteClients = getSessionClients(currentSessionId);
+      broadcastToSession(currentSessionId, {
+        type: 'presence',
+        clients: remoteClients,
+        event: 'left',
+      });
       if (mainWindow && !mainWindow.isDestroyed()) {
-        mainWindow.webContents.send('lan:client-count', clients.size);
+        mainWindow.webContents.send('lan:client-count', remoteClients.length);
       }
     });
   });
@@ -406,7 +549,12 @@ function createWindow() {
     height: 620,
     minWidth: 260,
     minHeight: 200,
-    frame: false, // Windows 11 frameless sticky note
+    titleBarStyle: 'hidden', // Uses native Windows 11 window frame with custom header
+    titleBarOverlay: {
+      color: '#34180d', // Blends seamlessly into the stitched leather header
+      symbolColor: '#faf3e0', // Crisp cream/white caption symbols
+      height: 38,
+    },
     transparent: false,
     show: false, // Prevent white/transparent flash before HTML finishes loading
     backgroundColor: '#171717',

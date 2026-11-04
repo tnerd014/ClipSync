@@ -11646,19 +11646,6 @@ var createLucideIcon = (iconName, iconNode) => {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
-var ArrowLeft = createLucideIcon("arrow-left", [["path", {
-	d: "m12 19-7-7 7-7",
-	key: "1l729n"
-}], ["path", {
-	d: "M19 12H5",
-	key: "x3x0zl"
-}]]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
 var ArrowRight = createLucideIcon("arrow-right", [["path", {
 	d: "M5 12h14",
 	key: "1ays0h"
@@ -11724,34 +11711,6 @@ var ChevronRight = createLucideIcon("chevron-right", [["path", {
 	d: "m9 18 6-6-6-6",
 	key: "mthhwq"
 }]]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
-var CircleAlert = createLucideIcon("circle-alert", [
-	["circle", {
-		cx: "12",
-		cy: "12",
-		r: "10",
-		key: "1mglay"
-	}],
-	["line", {
-		x1: "12",
-		x2: "12",
-		y1: "8",
-		y2: "12",
-		key: "1pkeuh"
-	}],
-	["line", {
-		x1: "12",
-		x2: "12.01",
-		y1: "16",
-		y2: "16",
-		key: "4dfq90"
-	}]
-]);
 /**
 * @license lucide-react v0.546.0 - ISC
 *
@@ -11851,16 +11810,6 @@ var ExternalLink = createLucideIcon("external-link", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
-var Flame = createLucideIcon("flame", [["path", {
-	d: "M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4",
-	key: "1slcih"
-}]]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
 var LayoutTemplate = createLucideIcon("layout-template", [
 	["rect", {
 		width: "18",
@@ -11922,54 +11871,6 @@ var Mail = createLucideIcon("mail", [["path", {
 	rx: "2",
 	key: "izxlao"
 }]]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
-var Maximize2 = createLucideIcon("maximize-2", [
-	["path", {
-		d: "M15 3h6v6",
-		key: "1q9fwt"
-	}],
-	["path", {
-		d: "m21 3-7 7",
-		key: "1l2asr"
-	}],
-	["path", {
-		d: "m3 21 7-7",
-		key: "tjx5ai"
-	}],
-	["path", {
-		d: "M9 21H3v-6",
-		key: "wtvkvv"
-	}]
-]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
-var Minimize2 = createLucideIcon("minimize-2", [
-	["path", {
-		d: "m14 10 7-7",
-		key: "oa77jy"
-	}],
-	["path", {
-		d: "M20 10h-6V4",
-		key: "mjg0md"
-	}],
-	["path", {
-		d: "m3 21 7-7",
-		key: "tjx5ai"
-	}],
-	["path", {
-		d: "M4 14h6v6",
-		key: "rmj7iw"
-	}]
-]);
 /**
 * @license lucide-react v0.546.0 - ISC
 *
@@ -12080,36 +11981,6 @@ var QrCode = createLucideIcon("qr-code", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
-var Radio = createLucideIcon("radio", [
-	["path", {
-		d: "M16.247 7.761a6 6 0 0 1 0 8.478",
-		key: "1fwjs5"
-	}],
-	["path", {
-		d: "M19.075 4.933a10 10 0 0 1 0 14.134",
-		key: "ehdyv1"
-	}],
-	["path", {
-		d: "M4.925 19.067a10 10 0 0 1 0-14.134",
-		key: "1q22gi"
-	}],
-	["path", {
-		d: "M7.753 16.239a6 6 0 0 1 0-8.478",
-		key: "r2q7qm"
-	}],
-	["circle", {
-		cx: "12",
-		cy: "12",
-		r: "2",
-		key: "1c9p78"
-	}]
-]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
 var RefreshCw = createLucideIcon("refresh-cw", [
 	["path", {
 		d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8",
@@ -12134,19 +12005,6 @@ var RefreshCw = createLucideIcon("refresh-cw", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
-var RotateCcw = createLucideIcon("rotate-ccw", [["path", {
-	d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8",
-	key: "1357e3"
-}], ["path", {
-	d: "M3 3v5h5",
-	key: "1xhq8a"
-}]]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
 var Search = createLucideIcon("search", [["path", {
 	d: "m21 21-4.34-4.34",
 	key: "14j7rj"
@@ -12162,26 +12020,6 @@ var Search = createLucideIcon("search", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
-var ShieldAlert = createLucideIcon("shield-alert", [
-	["path", {
-		d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
-		key: "oel41y"
-	}],
-	["path", {
-		d: "M12 8v4",
-		key: "1got3b"
-	}],
-	["path", {
-		d: "M12 16h.01",
-		key: "1drbdi"
-	}]
-]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
 var ShieldCheck = createLucideIcon("shield-check", [["path", {
 	d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
 	key: "oel41y"
@@ -12189,32 +12027,6 @@ var ShieldCheck = createLucideIcon("shield-check", [["path", {
 	d: "m9 12 2 2 4-4",
 	key: "dzmm74"
 }]]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
-var Sparkles = createLucideIcon("sparkles", [
-	["path", {
-		d: "M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z",
-		key: "1s2grr"
-	}],
-	["path", {
-		d: "M20 2v4",
-		key: "1rf3ol"
-	}],
-	["path", {
-		d: "M22 4h-4",
-		key: "gwowj6"
-	}],
-	["circle", {
-		cx: "4",
-		cy: "20",
-		r: "2",
-		key: "6kqj1y"
-	}]
-]);
 /**
 * @license lucide-react v0.546.0 - ISC
 *
@@ -12275,66 +12087,6 @@ var TriangleAlert = createLucideIcon("triangle-alert", [
 	["path", {
 		d: "M12 17h.01",
 		key: "p32p05"
-	}]
-]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
-var Vibrate = createLucideIcon("vibrate", [
-	["path", {
-		d: "m2 8 2 2-2 2 2 2-2 2",
-		key: "sv1b1"
-	}],
-	["path", {
-		d: "m22 8-2 2 2 2-2 2 2 2",
-		key: "101i4y"
-	}],
-	["rect", {
-		width: "8",
-		height: "14",
-		x: "8",
-		y: "5",
-		rx: "1",
-		key: "1oyrl4"
-	}]
-]);
-/**
-* @license lucide-react v0.546.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
-var WifiOff = createLucideIcon("wifi-off", [
-	["path", {
-		d: "M12 20h.01",
-		key: "zekei9"
-	}],
-	["path", {
-		d: "M8.5 16.429a5 5 0 0 1 7 0",
-		key: "1bycff"
-	}],
-	["path", {
-		d: "M5 12.859a10 10 0 0 1 5.17-2.69",
-		key: "1dl1wf"
-	}],
-	["path", {
-		d: "M19 12.859a10 10 0 0 0-2.007-1.523",
-		key: "4k23kn"
-	}],
-	["path", {
-		d: "M2 8.82a15 15 0 0 1 4.177-2.643",
-		key: "1grhjp"
-	}],
-	["path", {
-		d: "M22 8.82a15 15 0 0 0-11.288-3.764",
-		key: "z3jwby"
-	}],
-	["path", {
-		d: "m2 2 20 20",
-		key: "1ooewy"
 	}]
 ]);
 /**
@@ -12424,90 +12176,50 @@ var ClearHistoryModal = ({ isOpen, onClose, onConfirm, itemCount }) => {
 			onClose();
 		}
 	};
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200",
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: "fixed inset-0",
-			onClick: onClose
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "relative z-10 w-full max-w-sm bg-[#220d05] border-2 border-[#542713] rounded-2xl shadow-2xl overflow-hidden p-5 flex flex-col gap-4 text-[#faf5ee] animate-in zoom-in-95 duration-200 select-none",
-			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex items-start justify-between",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-2.5",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "w-9 h-9 rounded-full bg-red-950/80 border border-red-800 flex items-center justify-center text-red-400 shrink-0 shadow-inner",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "w-5 h-5" })
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							className: "font-bold text-base text-white tracking-wide",
-							children: "Clear All History?"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-							className: "text-[11px] text-amber-200/70",
-							children: [
-								itemCount,
-								" ",
-								itemCount === 1 ? "note" : "notes",
-								" will be deleted"
-							]
-						})] })]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						onClick: onClose,
-						className: "p-1 text-neutral-400 hover:text-white rounded-lg transition-colors",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-5 h-5" })
-					})]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-					className: "text-xs text-[#d1bfae] leading-relaxed",
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: "fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/65 backdrop-blur-sm animate-in fade-in",
+		onClick: onClose,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "w-full max-w-[230px] bg-[#1c1c1e]/95 backdrop-blur-xl rounded-2xl shadow-2xl p-4 text-neutral-100 space-y-3 select-none",
+			onClick: (e) => e.stopPropagation(),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "text-center",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+					className: "text-xs font-semibold text-neutral-200 tracking-tight",
 					children: [
-						"This will permanently delete all saved notes and clips across all your connected devices. This action ",
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "text-red-400 font-semibold underline",
-							children: "cannot"
-						}),
-						" be undone."
+						"Clear ",
+						itemCount,
+						" ",
+						itemCount === 1 ? "Note" : "Notes",
+						"?"
 					]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
-					onSubmit: handleSubmit,
-					className: "flex flex-col gap-3",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex flex-col gap-1.5",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
-							className: "text-xs font-medium text-[#ead9c9]",
-							children: [
-								"Type ",
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "font-mono font-bold text-red-400 bg-red-950/80 px-1.5 py-0.5 rounded border border-red-800/80",
-									children: "clear"
-								}),
-								" to confirm:"
-							]
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-							type: "text",
-							value: confirmationInput,
-							onChange: (e) => setConfirmationInput(e.target.value),
-							placeholder: "type clear",
-							autoFocus: true,
-							className: "w-full bg-[#150702] border border-[#5a2a16] focus:border-red-500 rounded-lg px-3 py-2 text-sm text-white placeholder:text-[#6e5142] font-mono outline-none shadow-inner"
-						})]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center justify-end gap-2 pt-2",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							type: "button",
-							onClick: onClose,
-							className: "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-[#d6c3b2] hover:bg-white/5 active:scale-95 transition-all",
-							children: "Cancel"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-							type: "submit",
-							disabled: !isClearTyped,
-							className: `flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold transition-all shadow-md ${isClearTyped ? "bg-red-700 hover:bg-red-600 active:scale-95 text-white cursor-pointer" : "bg-red-950/40 text-red-300/40 border border-red-900/30 cursor-not-allowed"}`,
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-3.5 h-3.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Clear Everything" })]
-						})]
-					})]
 				})
-			]
-		})]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
+				onSubmit: handleSubmit,
+				className: "space-y-2.5",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+					type: "text",
+					value: confirmationInput,
+					onChange: (e) => setConfirmationInput(e.target.value),
+					placeholder: "Type \"clear\"",
+					autoFocus: true,
+					className: "w-full bg-white/[0.07] rounded-xl px-3 py-1.5 text-xs text-white text-center placeholder:text-neutral-500 font-mono outline-none focus:ring-1 focus:ring-red-400/70"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "grid grid-cols-2 gap-2",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						type: "button",
+						onClick: onClose,
+						className: "py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:scale-[0.98] text-xs font-medium text-neutral-200 transition-all cursor-pointer",
+						children: "Close"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						type: "submit",
+						disabled: !isClearTyped,
+						className: "py-1.5 rounded-xl bg-red-500/20 hover:bg-red-500/30 disabled:opacity-30 active:scale-[0.98] text-xs font-semibold text-red-400 transition-all cursor-pointer",
+						children: "Clear"
+					})]
+				})]
+			})]
+		})
 	});
 };
 // src/platforms/AndroidApp.tsx
@@ -12551,10 +12263,8 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 	const handleClearNote = () => {
 		if (!note.content.trim()) return;
 		triggerHaptic();
-		if (window.confirm("Clear this note? It will stay safely saved in your History.")) {
-			onSaveToHistory(note.content);
-			onTextChange("");
-		}
+		onSaveToHistory(note.content);
+		onTextChange("");
 	};
 	const handlePrevNote = () => {
 		if (history.length === 0) return;
@@ -12577,26 +12287,22 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 		className: "h-screen w-screen overflow-hidden flex flex-col bg-[#2a1309] select-none pb-[env(safe-area-inset-bottom,0px)]",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
-				className: "relative z-20 flex items-center justify-between px-3.5 py-2.5 bg-gradient-to-b from-[#482517] via-[#381a0e] to-[#240e06] border-b-2 border-[#150702] shadow-[0_4px_10px_rgba(0,0,0,0.5)]",
+				className: "relative z-20 flex items-center justify-between px-3 py-2 bg-gradient-to-b from-[#452315] to-[#281107] border-b border-black/40 shadow-sm",
 				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-1 left-2 right-2 border-t border-dashed border-[#683925]/60 pointer-events-none" }),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-1.5 z-10 shrink-0",
+						className: "flex items-center gap-0.5 p-0.5 bg-black/25 backdrop-blur-md rounded-full z-10 shrink-0",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 								onClick: () => {
 									triggerHaptic();
 									onOpenScanner();
 								},
-								title: "Scan PC QR to Connect",
-								className: "flex items-center gap-1.5 px-2.5 py-1 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-[#f3e8d2] text-xs font-semibold shadow-inner transition-all shrink-0 cursor-pointer",
+								title: "Scan QR",
+								className: "flex items-center gap-1 px-2.5 py-1 hover:bg-white/10 active:scale-95 rounded-full text-[#faf3e0]/95 text-[11px] font-medium tracking-tight transition-all shrink-0 cursor-pointer",
 								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Camera, { className: "w-3.5 h-3.5 text-amber-400 shrink-0" }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: "hidden sm:inline",
-										children: "Scan PC"
-									}),
-									connectedDevices.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse ml-0.5 shrink-0" })
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Camera, { className: "w-3 h-3 text-[#faf3e0]/80 stroke-[1.8] shrink-0" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Scan" }),
+									connectedDevices.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" })
 								]
 							}),
 							onOpenPinModal && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
@@ -12604,45 +12310,42 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 									triggerHaptic();
 									onOpenPinModal();
 								},
-								title: pin ? `Pairing PIN: ${pin} (Tap to change)` : "Enter Pairing PIN",
-								className: "flex items-center gap-1 px-2 py-1 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-amber-300 text-[11px] font-mono shadow-inner shrink-0 cursor-pointer",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Lock, { className: "w-3 h-3 text-amber-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "font-bold",
-									children: pin || "PIN"
-								})]
+								title: "PIN",
+								className: "flex items-center gap-1 px-2 py-1 hover:bg-white/10 active:scale-95 rounded-full text-[#faf3e0]/85 text-[11px] font-mono font-medium shrink-0 cursor-pointer transition-all",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Lock, { className: "w-2.5 h-2.5 text-[#faf3e0]/70 stroke-[1.8]" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: pin || "PIN" })]
 							}),
 							onOpenTroubleshoot && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: () => {
 									triggerHaptic();
 									onOpenTroubleshoot();
 								},
-								title: "Wi-Fi Diagnostics & Troubleshooting",
-								className: "p-1.5 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-neutral-400 hover:text-amber-300 shadow-inner transition-all shrink-0 cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleQuestionMark, { className: "w-3.5 h-3.5 text-amber-300/80 shrink-0" })
+								title: "Connection",
+								className: "w-6 h-6 flex items-center justify-center hover:bg-white/10 active:scale-95 rounded-full text-[#faf3e0]/75 hover:text-white transition-all shrink-0 cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleQuestionMark, { className: "w-3 h-3 stroke-[1.8] shrink-0" })
 							}),
 							onOpenPermissions && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: () => {
 									triggerHaptic();
 									onOpenPermissions();
 								},
-								title: "Android Permissions Checklist",
-								className: "p-1.5 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-[#d6c7b2] shadow-inner transition-all shrink-0 cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "w-3.5 h-3.5 text-amber-300 shrink-0" })
+								title: "Permissions",
+								className: "w-6 h-6 flex items-center justify-center hover:bg-white/10 active:scale-95 rounded-full text-[#faf3e0]/75 hover:text-white transition-all shrink-0 cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "w-3 h-3 stroke-[1.8] shrink-0" })
 							})
 						]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "flex-1 text-center px-2 truncate pointer-events-none",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-							className: "text-base sm:text-lg font-bold text-[#faf3e0] tracking-wider drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] truncate font-serif",
+							className: "text-sm sm:text-base font-semibold text-[#faf3e0]/95 tracking-tight truncate font-serif",
 							children: "Notes"
 						}), remoteTypingDevice && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-							className: "text-[10px] text-amber-300 font-sans animate-pulse",
-							children: [remoteTypingDevice, " is typing..."]
+							className: "text-[10px] text-[#faf3e0]/70 font-sans animate-pulse leading-none",
+							children: [remoteTypingDevice, " typing..."]
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "flex items-center gap-1.5 z-10 shrink-0",
+						className: "flex items-center z-10 shrink-0",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 							onClick: () => {
 								triggerHaptic();
@@ -12650,31 +12353,30 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 								onNewNote();
 							},
 							title: "New Note",
-							className: "w-8 h-8 flex items-center justify-center bg-[#180903] hover:bg-[#120602] active:scale-90 border border-[#582b17] rounded shadow-[inset_0_2px_4px_rgba(0,0,0,0.8),0_1px_1px_rgba(255,255,255,0.1)] transition-all cursor-pointer",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Plus, { className: "w-5 h-5 text-white stroke-[2.5]" })
+							className: "w-7 h-7 flex items-center justify-center bg-black/25 hover:bg-white/15 active:scale-90 rounded-full text-[#faf3e0]/95 transition-all cursor-pointer",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Plus, { className: "w-3.5 h-3.5 stroke-[2]" })
 						})
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute bottom-1 left-2 right-2 border-b border-dashed border-[#552c1b]/60 pointer-events-none" })
+					})
 				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("main", {
 				className: "relative flex-1 flex flex-col overflow-hidden bg-[#fbf5cd] text-neutral-900 shadow-inner",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center justify-between px-6 pt-3 pb-1 border-b border-[#e5dcab] text-xs",
+						className: "flex items-center justify-between px-6 pt-2.5 pb-1 border-b border-[#e5dcab]/80 text-xs",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "font-serif font-bold text-[#991b1b] tracking-wider text-sm",
+							className: "font-serif font-semibold text-[#991b1b] tracking-tight text-xs",
 							children: "Today"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "text-[#854d0e] font-sans text-xs tracking-tight",
+							className: "text-[#854d0e]/80 font-sans text-[11px] tracking-tight",
 							children: formattedDateTime
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "relative flex-1 flex overflow-hidden",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 bottom-0 left-[44px] w-px bg-red-400/40 pointer-events-none z-10" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 bottom-0 left-[44px] w-px bg-red-400/35 pointer-events-none z-10" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: "flex-1 h-full w-full overflow-y-auto px-4 pl-[54px] pr-4 py-2 relative",
-							style: { background: "repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(148, 163, 184, 0.35) 27px, rgba(148, 163, 184, 0.35) 28px)" },
+							style: { background: "repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(148, 163, 184, 0.32) 27px, rgba(148, 163, 184, 0.32) 28px)" },
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
 								ref: textareaRef,
 								value: note.content,
@@ -12689,174 +12391,146 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 							})
 						})]
 					}),
-					detectedUrls.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "px-6 py-1.5 bg-[#f5ecc0] border-t border-[#e2d69b] flex items-center gap-2 overflow-x-auto z-10",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "text-[10px] uppercase font-bold text-[#854d0e] tracking-wider shrink-0",
-							children: "Link:"
-						}), detectedUrls.map((url, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
+					detectedUrls.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "px-5 py-1.5 bg-[#f5ecc0]/80 border-t border-[#e2d69b]/70 flex items-center gap-1.5 overflow-x-auto z-10",
+						children: detectedUrls.map((url, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
 							href: url,
 							target: "_blank",
 							rel: "noopener noreferrer",
-							className: "inline-flex items-center gap-1 text-xs text-[#0369a1] hover:underline bg-white/70 px-2 py-0.5 rounded border border-[#cbd5e1] truncate max-w-[220px]",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, { className: "w-3 h-3 shrink-0" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "inline-flex items-center gap-1 text-[11px] font-medium text-[#1c1917] bg-black/[0.06] hover:bg-black/[0.1] px-2.5 py-0.5 rounded-full truncate max-w-[220px] transition-colors",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, { className: "w-3 h-3 shrink-0 opacity-70" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								className: "truncate",
 								children: url
 							})]
-						}, i))]
+						}, i))
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("footer", {
-						className: "relative z-20 flex items-center justify-around px-4 py-3 bg-[#fbf5cd] border-t border-[#e8dfb0]",
+						className: "relative z-20 flex items-center justify-around px-4 py-2 bg-[#fbf5cd] border-t border-[#e8dfb0]/80",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handlePrevNote,
 								disabled: history.length === 0 || historyIndex >= history.length - 1,
-								title: "Previous Note in History",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronLeft, { className: "w-6 h-6 stroke-[2.2]" })
+								title: "Previous Note",
+								className: "w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronLeft, { className: "w-5 h-5 stroke-[1.8]" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 								onClick: () => {
 									triggerHaptic();
 									setShowHistorySheet(true);
 								},
-								title: "Notes History & Clips",
-								className: "relative p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 transition-all cursor-pointer",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "w-6 h-6 stroke-[2.2]" }), history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "absolute top-1 right-1 w-2 h-2 rounded-full bg-[#991b1b]" })]
+								title: "History",
+								className: "relative w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 transition-all cursor-pointer",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "w-[18px] h-[18px] stroke-[1.8]" }), history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#991b1b]" })]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handleClearNote,
 								disabled: !note.content.trim(),
-								title: "Clear Current Note",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-6 h-6 stroke-[2.2]" })
+								title: "Clear Note",
+								className: "w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-[18px] h-[18px] stroke-[1.8]" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handleNextNote,
 								disabled: historyIndex <= 0,
-								title: "Next Note in History",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, { className: "w-6 h-6 stroke-[2.2]" })
+								title: "Next Note",
+								className: "w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, { className: "w-5 h-5 stroke-[1.8]" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handleCopy,
 								disabled: !note.content.trim(),
-								title: "Copy Note Text",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer",
-								children: copied ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-5 h-5 text-emerald-700 stroke-[2.5]" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Copy, { className: "w-5 h-5 stroke-[2.2]" })
+								title: "Copy",
+								className: "w-8 h-8 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
+								children: copied ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-4 h-4 text-emerald-700 stroke-[2.2]" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Copy, { className: "w-4 h-4 stroke-[1.8]" })
 							})
 						]
 					})
 				]
 			}),
-			showHistorySheet && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-sm animate-in fade-in duration-200",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "fixed inset-0",
-					onClick: () => setShowHistorySheet(false)
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "relative z-10 w-full max-h-[80vh] flex flex-col bg-[#241209] border-t-2 border-[#542915] rounded-t-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-300",
+			showHistorySheet && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-150",
+				onClick: () => setShowHistorySheet(false),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("aside", {
+					className: "w-[275px] max-w-[82vw] h-full flex flex-col bg-gradient-to-b from-[#452315] via-[#34180c] to-[#240f06] border-l border-black/40 shadow-2xl p-3.5 text-[#faf3e0] space-y-3 animate-in slide-in-from-right duration-200",
+					onClick: (e) => e.stopPropagation(),
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "p-4 bg-[#381a0e] border-b border-[#4d2413] flex items-center justify-between",
+							className: "flex items-center justify-between pt-0.5",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex items-center gap-2",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "w-5 h-5 text-amber-400" }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-										className: "font-bold text-white text-base",
-										children: "Notes & Clip History"
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: "text-xs text-amber-200/70 bg-[#210c05] px-2 py-0.5 rounded-full border border-[#522514]",
-										children: history.length
-									})
-								]
+								className: "flex items-center gap-1.5",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-xs font-semibold text-[#faf3e0]/95 tracking-tight",
+									children: "History"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "px-2 py-0.5 bg-black/25 rounded-full text-[10px] font-medium text-[#faf3e0]/80",
+									children: history.length
+								})]
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex items-center gap-2",
+								className: "flex items-center gap-1.5",
 								children: [history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									type: "button",
 									onClick: () => setIsClearModalOpen(true),
-									className: "text-xs text-red-300 hover:text-red-100 px-2.5 py-1 bg-red-950/80 hover:bg-red-900 rounded border border-red-800 font-semibold shadow-sm transition-colors cursor-pointer",
-									children: "Clear All"
+									className: "px-2.5 py-1 rounded-full bg-red-500/20 hover:bg-red-500/30 active:scale-95 text-[11px] font-medium text-red-300 transition-all cursor-pointer",
+									children: "Clear"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									type: "button",
 									onClick: () => setShowHistorySheet(false),
-									className: "p-1 rounded-full text-neutral-400 hover:text-white",
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-5 h-5" })
+									className: "px-2.5 py-1 rounded-full bg-black/25 hover:bg-white/10 active:scale-95 text-[11px] font-medium text-[#faf3e0]/90 transition-all cursor-pointer",
+									children: "Close"
 								})]
 							})]
 						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "p-3 bg-[#2d150b] border-b border-[#452010]",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "relative",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Search, { className: "w-4 h-4 text-amber-400/60 absolute left-3 top-2.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-									type: "text",
-									value: historySearch,
-									onChange: (e) => setHistorySearch(e.target.value),
-									placeholder: "Search past notes...",
-									className: "w-full bg-[#1b0a04] border border-[#522514] rounded-lg pl-9 pr-3 py-1.5 text-sm text-[#f5eedc] placeholder:text-[#8a7260] outline-none focus:border-amber-500"
-								})]
-							})
+						history.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "relative",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Search, { className: "w-3 h-3 text-[#faf3e0]/50 absolute left-2.5 top-2" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+								type: "text",
+								value: historySearch,
+								onChange: (e) => setHistorySearch(e.target.value),
+								placeholder: "Search notes...",
+								className: "w-full bg-black/25 rounded-xl pl-7 pr-2.5 py-1 text-xs text-[#faf3e0] placeholder:text-[#faf3e0]/45 outline-none focus:bg-black/35 transition-colors"
+							})]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "flex-1 overflow-y-auto p-3 space-y-2.5 max-h-[50vh]",
-							children: filteredHistory.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "py-12 text-center text-[#9c826c]",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "text-sm",
-									children: "No notes in history yet."
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "text-xs text-[#705a49] mt-1",
-									children: "Notes are automatically saved every 3 seconds and when tapping +"
-								})]
+							className: "flex-1 overflow-y-auto space-y-1.5 pr-0.5",
+							children: filteredHistory.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "h-32 flex items-center justify-center text-xs text-[#faf3e0]/50",
+								children: "No saved notes"
 							}) : filteredHistory.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 								onClick: () => {
 									triggerHaptic();
 									onRestoreClip(item.content);
 									setShowHistorySheet(false);
 								},
-								className: "p-3 bg-[#1d0b04] hover:bg-[#2e1307] active:scale-[0.99] border border-[#4d2311] rounded-xl cursor-pointer transition-all flex flex-col gap-1.5 shadow",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "flex items-center justify-between text-[11px] text-[#9c826c]",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "font-semibold text-amber-300/90",
-											children: item.device
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: new Date(item.timestamp).toLocaleTimeString([], {
+								className: "p-2.5 bg-black/25 hover:bg-black/35 active:scale-[0.99] rounded-xl cursor-pointer transition-all flex flex-col gap-1",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "flex items-center justify-between text-[10px] text-[#faf3e0]/60",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-[#faf3e0]/85 font-medium truncate max-w-[130px]",
+										children: item.device
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center gap-2",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: new Date(item.timestamp).toLocaleTimeString([], {
 											hour: "2-digit",
 											minute: "2-digit"
-										}) })]
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "text-sm text-[#f5eedc] font-['Patrick_Hand',cursive,sans-serif] text-[18px] line-clamp-3 whitespace-pre-wrap leading-tight",
-										children: item.content
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "flex items-center justify-end gap-2 pt-1 border-t border-[#3b190c]",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 											onClick: (e) => {
 												e.stopPropagation();
 												onDeleteClip(item.id);
 											},
-											className: "text-xs text-[#a37060] hover:text-red-400 p-1",
-											title: "Delete note",
-											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-3.5 h-3.5" })
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-											onClick: (e) => {
-												e.stopPropagation();
-												triggerHaptic();
-												onRestoreClip(item.content);
-												setShowHistorySheet(false);
-											},
-											className: "text-xs text-amber-300 font-medium flex items-center gap-1 hover:underline",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RotateCcw, { className: "w-3.5 h-3.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Restore" })]
+											className: "text-[#faf3e0]/50 hover:text-red-300 p-0.5 cursor-pointer transition-colors",
+											title: "Delete",
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-3 h-3" })
 										})]
-									})
-								]
+									})]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "text-xs text-[#faf3e0]/95 line-clamp-2 whitespace-pre-wrap leading-snug",
+									children: item.content
+								})]
 							}, item.id))
 						})
 					]
-				})]
+				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClearHistoryModal, {
 				isOpen: isClearModalOpen,
@@ -12868,362 +12542,254 @@ var AndroidApp = ({ note, connectedDevices, history, pin, onTextChange, onSaveTo
 	});
 };
 // src/platforms/WindowsApp.tsx
-var WindowsApp = ({ note, connectedDevices, history, lanIp, lanPort, pin = "4819", onTextChange, onSaveToHistory, onRestoreClip, onDeleteClip, onClearHistory, onOpenLanModal, onOpenTroubleshoot, onNewNote, remoteTypingDevice }) => {
-	const textareaRef = (0, import_react.useRef)(null);
+var WindowsApp = ({ note, history, connectedDevices, pin, lanIp, lanPort, remoteTypingDevice, onTextChange, onSaveToHistory, onRestoreClip, onDeleteClip, onClearHistory, onNewNote, onOpenLanModal }) => {
 	const [copied, setCopied] = (0, import_react.useState)(false);
 	const [pasted, setPasted] = (0, import_react.useState)(false);
 	const [isHistoryOpen, setIsHistoryOpen] = (0, import_react.useState)(false);
-	const [isClearModalOpen, setIsClearModalOpen] = (0, import_react.useState)(false);
 	const [historySearch, setHistorySearch] = (0, import_react.useState)("");
-	const [detectedUrls, setDetectedUrls] = (0, import_react.useState)([]);
 	const [historyIndex, setHistoryIndex] = (0, import_react.useState)(-1);
-	const [isCompact, setIsCompact] = (0, import_react.useState)(false);
+	const [currentTime, setCurrentTime] = (0, import_react.useState)(/* @__PURE__ */ new Date());
+	const [isClearModalOpen, setIsClearModalOpen] = (0, import_react.useState)(false);
 	const [isPinned, setIsPinned] = (0, import_react.useState)(false);
 	const [isWidgetMode, setIsWidgetMode] = (0, import_react.useState)(false);
-	const [showSnapMenu, setShowSnapMenu] = (0, import_react.useState)(false);
-	const snapMenuRef = (0, import_react.useRef)(null);
+	const isElectron = typeof window !== "undefined" && Boolean(window.electronAPI);
+	const textareaRef = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
-		function handleClickOutside(e) {
-			if (snapMenuRef.current && !snapMenuRef.current.contains(e.target)) setShowSnapMenu(false);
-		}
-		if (showSnapMenu) {
-			document.addEventListener("mousedown", handleClickOutside);
-			return () => document.removeEventListener("mousedown", handleClickOutside);
-		}
-	}, [showSnapMenu]);
+		const timer = setInterval(() => setCurrentTime(/* @__PURE__ */ new Date()), 3e4);
+		return () => clearInterval(timer);
+	}, []);
 	(0, import_react.useEffect)(() => {
-		const matches = note.content.match(/(https?:\/\/[^\s]+)/gi) || [];
-		setDetectedUrls(Array.from(new Set(matches)).slice(0, 3));
+		const api = window.electronAPI;
+		if (api?.getWindowState) api.getWindowState().then((state) => {
+			if (state) {
+				setIsPinned(Boolean(state.alwaysOnTop));
+				setIsWidgetMode(Boolean(state.isWidgetMode));
+			}
+		}).catch(() => {});
+		if (api?.onAlwaysOnTopChanged) {
+			const unsub = api.onAlwaysOnTopChanged((val) => setIsPinned(val));
+			return () => {
+				if (typeof unsub === "function") unsub();
+			};
+		}
+	}, []);
+	const detectedUrls = import_react.useMemo(() => {
+		return note.content.match(/(https?:\/\/[^\s]+)/g) || [];
 	}, [note.content]);
-	const formattedDateTime = import_react.useMemo(() => {
-		return new Date(note.updatedAt || Date.now()).toLocaleDateString("en-US", {
-			month: "short",
-			day: "numeric",
-			hour: "numeric",
-			minute: "2-digit",
-			hour12: true
-		});
-	}, [note.updatedAt]);
-	const displayLanLabel = import_react.useMemo(() => {
-		if (!lanIp || lanIp === "127.0.0.1" || lanIp === "localhost") return "Local";
-		if (/^(\d{1,3}\.){3}\d{1,3}$/.test(lanIp)) return lanIp;
-		return "Wi-Fi";
-	}, [lanIp]);
 	const handleCopy = async () => {
-		if (!note.content) return;
+		if (!note.content.trim()) return;
 		try {
 			await navigator.clipboard.writeText(note.content);
 			setCopied(true);
-			setTimeout(() => setCopied(false), 1500);
+			setTimeout(() => setCopied(false), 1800);
 		} catch {
-			if (textareaRef.current) {
-				textareaRef.current.select();
-				document.execCommand("copy");
-				setCopied(true);
-				setTimeout(() => setCopied(false), 1500);
-			}
+			const el = document.createElement("textarea");
+			el.value = note.content;
+			document.body.appendChild(el);
+			el.select();
+			document.execCommand("copy");
+			document.body.removeChild(el);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 1800);
 		}
 	};
 	const handlePaste = async () => {
 		try {
-			const text = await navigator.clipboard.readText();
+			let text = "";
+			if (window.electronAPI?.readClipboard) text = await window.electronAPI.readClipboard();
+			else text = await navigator.clipboard.readText();
 			if (text) {
-				onTextChange(text);
+				onTextChange(note.content ? `${note.content}${note.content.endsWith("\n") ? "" : "\n"}${text}` : text);
 				setPasted(true);
 				setTimeout(() => setPasted(false), 1500);
 			}
-		} catch {
-			if (textareaRef.current) textareaRef.current.focus();
-		}
-	};
-	const handleClearNote = () => {
-		if (!note.content.trim()) return;
-		if (window.confirm("Clear this note? It will remain safely saved in your History.")) {
-			onSaveToHistory(note.content);
-			onTextChange("");
+		} catch (err) {
+			console.error("Clipboard read error:", err);
 		}
 	};
 	const handlePrevNote = () => {
 		if (history.length === 0) return;
-		const nextIdx = historyIndex + 1;
-		if (nextIdx < history.length) {
-			setHistoryIndex(nextIdx);
-			onTextChange(history[nextIdx].content);
-		}
+		const nextIdx = Math.min(historyIndex + 1, history.length - 1);
+		setHistoryIndex(nextIdx);
+		onRestoreClip(history[nextIdx].content);
 	};
 	const handleNextNote = () => {
-		if (historyIndex <= 0) return;
+		if (history.length === 0) return;
+		if (historyIndex <= 0) {
+			setHistoryIndex(-1);
+			return;
+		}
 		const prevIdx = historyIndex - 1;
 		setHistoryIndex(prevIdx);
-		onTextChange(history[prevIdx].content);
+		onRestoreClip(history[prevIdx].content);
+	};
+	const handleClearNote = () => {
+		if (note.content.trim()) onSaveToHistory(note.content);
+		setHistoryIndex(-1);
+		onTextChange("");
+		textareaRef.current?.focus();
 	};
 	const handleMinimize = () => {
-		if (window.electronAPI?.minimize) window.electronAPI.minimize();
+		if (window.electronAPI?.minimizeWindow) window.electronAPI.minimizeWindow();
 	};
 	const handleMaximize = () => {
-		if (window.electronAPI?.maximize) window.electronAPI.maximize();
+		if (window.electronAPI?.maximizeWindow) window.electronAPI.maximizeWindow();
 	};
 	const handleClose = () => {
-		if (window.electronAPI?.close) window.electronAPI.close();
+		if (window.electronAPI?.closeWindow) window.electronAPI.closeWindow();
 	};
-	const handleTogglePin = () => {
-		const next = !isPinned;
-		setIsPinned(next);
-		if (window.electronAPI?.setAlwaysOnTop) window.electronAPI.setAlwaysOnTop(next);
+	const handleTogglePin = async () => {
+		const nextPinned = !isPinned;
+		setIsPinned(nextPinned);
+		if (window.electronAPI?.toggleAlwaysOnTop) {
+			const confirmed = await window.electronAPI.toggleAlwaysOnTop(nextPinned);
+			setIsPinned(Boolean(confirmed));
+		}
 	};
-	const handleToggleWidget = () => {
-		const next = !isWidgetMode;
-		setIsWidgetMode(next);
-		if (window.electronAPI?.toggleWidgetMode) window.electronAPI.toggleWidgetMode(next);
-	};
-	const handleSnap = (layout) => {
-		setShowSnapMenu(false);
-		if (layout === "widget-corner") setIsWidgetMode(true);
-		if (window.electronAPI?.snapWindow) window.electronAPI.snapWindow(layout);
+	const handleToggleWidget = async () => {
+		const nextWidget = !isWidgetMode;
+		setIsWidgetMode(nextWidget);
+		if (nextWidget && !isPinned) setIsPinned(true);
+		if (window.electronAPI?.toggleWidgetMode) {
+			const res = await window.electronAPI.toggleWidgetMode(nextWidget);
+			if (res) {
+				setIsWidgetMode(Boolean(res.isWidgetMode));
+				setIsPinned(Boolean(res.alwaysOnTop));
+			}
+		}
 	};
 	const filteredHistory = history.filter((item) => item.content.toLowerCase().includes(historySearch.toLowerCase()) || item.device.toLowerCase().includes(historySearch.toLowerCase()));
+	const formattedDateTime = `${currentTime.toLocaleDateString("en-US", {
+		month: "numeric",
+		day: "numeric",
+		year: "numeric"
+	})} ${currentTime.toLocaleTimeString("en-US", {
+		hour: "numeric",
+		minute: "2-digit"
+	})}`;
+	const displayLanLabel = lanIp && lanIp !== "127.0.0.1" && lanIp !== "localhost" ? lanIp : "LAN Sync";
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: "h-screen w-screen overflow-hidden flex flex-col bg-[#241006] select-none rounded-lg border border-[#4a2414] shadow-2xl",
+		className: `h-screen w-screen overflow-hidden flex flex-col bg-[#2b170e] select-none font-sans shadow-2xl transition-all duration-200 ${isPinned ? "border border-white/20" : "border border-[#3e2215]"}`,
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
-				className: `relative z-20 flex items-center justify-between ${isCompact ? "px-2.5 py-1" : "px-3 py-2"} bg-gradient-to-b from-[#482517] via-[#381a0e] to-[#240e06] border-b-2 border-[#150702] shadow-[0_4px_10px_rgba(0,0,0,0.5)] cursor-move select-none transition-all`,
+				className: `relative z-30 flex items-center justify-between bg-gradient-to-b from-[#452315] to-[#281107] border-b border-black/40 shadow-sm ${isWidgetMode ? "h-[36px] pl-2" : "h-[38px] pl-2.5"} ${isElectron ? "pr-[138px]" : "pr-2"}`,
 				style: { WebkitAppRegion: "drag" },
 				onDoubleClick: handleMaximize,
-				title: "Double-click to Maximize / Restore or Drag to move",
 				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-1 left-2 right-2 border-t border-dashed border-[#683925]/60 pointer-events-none" }),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-1.5 z-10 shrink-0",
+						className: "flex items-center gap-0.5 p-0.5 bg-black/25 backdrop-blur-md rounded-full z-10 shrink-0",
 						style: { WebkitAppRegion: "no-drag" },
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 							onClick: onOpenLanModal,
-							title: `LAN Server: ${lanIp}:${lanPort} (Click to show Mobile QR)`,
-							className: "flex items-center gap-1.5 px-2.5 py-1 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-[#f3e8d2] text-xs font-semibold shadow-inner transition-all cursor-pointer max-w-[130px]",
+							title: `LAN: ${lanIp}:${lanPort} | PIN: ${pin}`,
+							className: `flex items-center justify-center gap-1 hover:bg-white/10 active:scale-95 rounded-full text-[#faf3e0]/95 text-[11px] font-medium tracking-tight transition-all cursor-pointer ${isWidgetMode ? "w-6 h-6 p-0" : "px-2.5 py-0.5 max-w-[130px]"}`,
 							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(QrCode, { className: "w-3.5 h-3.5 text-amber-400 shrink-0" }),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(QrCode, { className: "w-3 h-3 text-[#faf3e0]/80 stroke-[1.8] shrink-0" }),
+								!isWidgetMode && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									className: "font-mono text-[11px] truncate",
 									children: displayLanLabel
 								}),
 								connectedDevices.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "flex items-center gap-1 ml-0.5 text-emerald-400 text-[10px] font-bold shrink-0",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }), connectedDevices.length]
+									className: "flex items-center gap-0.5 text-emerald-400 text-[10px] font-semibold shrink-0",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }), !isWidgetMode && connectedDevices.length]
 								})
 							]
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+						}), !isWidgetMode && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 							onClick: onOpenLanModal,
-							title: `Pairing PIN: ${pin} (Required for phones to connect)`,
-							className: "hidden sm:flex items-center gap-1 px-2 py-1 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-amber-300 text-[11px] font-mono font-bold shadow-inner cursor-pointer",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-[9px] uppercase tracking-wider text-neutral-400",
-								children: "PIN:"
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: pin })]
+							title: `PIN: ${pin}`,
+							className: "hidden sm:flex items-center gap-1 px-2 py-0.5 hover:bg-white/10 active:scale-95 rounded-full text-[#faf3e0]/85 text-[11px] font-mono font-medium cursor-pointer transition-all",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: pin })
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex-1 flex flex-col items-center justify-center px-2 truncate cursor-move",
+						className: "flex-1 h-full flex flex-col items-center justify-center px-1 truncate cursor-move",
 						style: { WebkitAppRegion: "drag" },
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-							className: "text-base sm:text-lg font-bold text-[#faf3e0] tracking-wider drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] truncate font-serif pointer-events-none select-none",
+						children: [!isWidgetMode && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+							className: "text-sm font-semibold text-[#faf3e0]/95 tracking-tight truncate font-serif pointer-events-none select-none",
 							children: "Notes"
-						}), remoteTypingDevice && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-							className: "text-[10px] text-amber-300 font-sans animate-pulse pointer-events-none",
-							children: [remoteTypingDevice, " is typing..."]
+						}), remoteTypingDevice && !isWidgetMode && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+							className: "text-[9px] text-[#faf3e0]/70 font-sans animate-pulse pointer-events-none leading-none",
+							children: [remoteTypingDevice, " typing..."]
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-1.5 z-10 shrink-0",
+						className: "flex items-center gap-1 z-10 shrink-0",
 						style: { WebkitAppRegion: "no-drag" },
-						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								onClick: () => setIsCompact(!isCompact),
-								title: isCompact ? "Expand Menu Bar" : "Reduce Menu Bar (Compact Mode)",
-								className: "p-1 hover:bg-white/10 rounded text-[#d6c7b2] hover:text-white transition-colors cursor-pointer",
-								children: isCompact ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Maximize2, { className: "w-3.5 h-3.5" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Minimize2, { className: "w-3.5 h-3.5" })
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								onClick: () => {
-									setHistoryIndex(-1);
-									onNewNote();
-								},
-								title: "New Note (Preserves current to history)",
-								className: "w-7 h-7 flex items-center justify-center bg-[#180903] hover:bg-[#120602] active:scale-90 border border-[#582b17] rounded shadow-[inset_0_2px_4px_rgba(0,0,0,0.8),0_1px_1px_rgba(255,255,255,0.1)] transition-all cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Plus, { className: "w-4 h-4 text-white stroke-[2.5]" })
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex items-center ml-1 border-l border-[#542816] pl-1.5 gap-0.5",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-										onClick: handleTogglePin,
-										title: isPinned ? "📌 Window is PINNED: Floating over all apps (Click to unpin)" : "Pin to Screen: Keep sticky note always on top of all windows",
-										className: `p-1.5 rounded transition-all cursor-pointer flex items-center justify-center ${isPinned ? "bg-amber-500/25 text-amber-300 border border-amber-500/60 shadow-[0_0_10px_rgba(251,191,36,0.4)]" : "text-[#d6c7b2] hover:text-white hover:bg-white/10"}`,
-										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pin, { className: `w-3.5 h-3.5 transition-transform ${isPinned ? "fill-amber-400 text-amber-400 rotate-45 scale-110" : ""}` })
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-										onClick: handleToggleWidget,
-										title: isWidgetMode ? "Exit Mini Widget Mode (Standard Window)" : "Mini Desktop Sticky Note Widget (Compact Corner Mode)",
-										className: `p-1.5 rounded transition-all cursor-pointer flex items-center justify-center ${isWidgetMode ? "bg-amber-500/25 text-amber-300 border border-amber-500/60" : "text-[#d6c7b2] hover:text-white hover:bg-white/10"}`,
-										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LayoutTemplate, { className: "w-3.5 h-3.5" })
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-										onClick: handleMinimize,
-										title: "Minimize",
-										className: "p-1.5 hover:bg-white/10 rounded text-[#d6c7b2] hover:text-white transition-colors cursor-pointer",
-										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Minus, { className: "w-3.5 h-3.5" })
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "relative inline-flex items-center",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-											onClick: handleMaximize,
-											onMouseEnter: () => setShowSnapMenu(true),
-											title: "Maximize / Windows 11 Snap Layouts (Hover to choose layout)",
-											className: "p-1.5 hover:bg-white/10 rounded text-[#d6c7b2] hover:text-white transition-colors cursor-pointer",
-											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Square, { className: "w-3 h-3" })
-										}), showSnapMenu && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											ref: snapMenuRef,
-											onMouseLeave: () => setShowSnapMenu(false),
-											className: "absolute top-9 right-0 z-50 w-64 bg-[#1e1e1e]/95 backdrop-blur-2xl border border-neutral-700/80 rounded-2xl p-3 shadow-2xl space-y-2.5 animate-in fade-in slide-in-from-top-1 text-neutral-100",
-											style: { WebkitAppRegion: "no-drag" },
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-												className: "flex items-center justify-between pb-1.5 border-b border-neutral-800",
-												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-													className: "text-[11px] font-semibold text-neutral-200",
-													children: "Windows 11 Snap Layouts"
-												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-													type: "button",
-													onClick: () => setShowSnapMenu(false),
-													className: "text-neutral-500 hover:text-neutral-200 text-xs px-1 cursor-pointer",
-													children: "✕"
-												})]
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-												className: "grid grid-cols-2 gap-2",
-												children: [
-													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-														className: "p-1.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1",
-														children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-															className: "text-[10px] font-medium text-neutral-400 block text-center",
-															children: "Split 50 / 50"
-														}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-															className: "h-9 grid grid-cols-2 gap-1",
-															children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-																type: "button",
-																onClick: () => handleSnap("left-half"),
-																title: "Snap to Left Half of Screen",
-																className: "bg-neutral-800 hover:bg-sky-500/80 active:bg-sky-600 rounded border border-neutral-700 hover:border-sky-400 transition-all flex items-center justify-center cursor-pointer group",
-																children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-																	className: "text-[9px] font-bold text-neutral-400 group-hover:text-white",
-																	children: "Left"
-																})
-															}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-																type: "button",
-																onClick: () => handleSnap("right-half"),
-																title: "Snap to Right Half of Screen",
-																className: "bg-neutral-800 hover:bg-sky-500/80 active:bg-sky-600 rounded border border-neutral-700 hover:border-sky-400 transition-all flex items-center justify-center cursor-pointer group",
-																children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-																	className: "text-[9px] font-bold text-neutral-400 group-hover:text-white",
-																	children: "Right"
-																})
-															})]
-														})]
-													}),
-													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-														className: "p-1.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1",
-														children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-															className: "text-[10px] font-medium text-neutral-400 block text-center",
-															children: "Corner Widget"
-														}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-															className: "h-9 flex",
-															children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-																type: "button",
-																onClick: () => handleSnap("widget-corner"),
-																title: "Mini Floating Sticky Note Widget in Bottom-Right Corner",
-																className: "w-full bg-neutral-800 hover:bg-amber-500/80 active:bg-amber-600 rounded border border-neutral-700 hover:border-amber-400 transition-all flex items-center justify-center gap-1 cursor-pointer group",
-																children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pin, { className: "w-2.5 h-2.5 text-amber-400 group-hover:text-white" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-																	className: "text-[9px] font-bold text-amber-300 group-hover:text-white",
-																	children: "Bottom Right"
-																})]
-															})
-														})]
-													}),
-													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-														className: "p-1.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1",
-														children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-															className: "text-[10px] font-medium text-neutral-400 block text-center",
-															children: "Top Quadrant"
-														}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-															className: "h-9 grid grid-cols-2 gap-1",
-															children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "bg-neutral-950/40 rounded border border-neutral-800/80" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-																type: "button",
-																onClick: () => handleSnap("top-right"),
-																title: "Snap to Top-Right Quadrant",
-																className: "bg-neutral-800 hover:bg-sky-500/80 rounded border border-neutral-700 hover:border-sky-400 transition-all flex items-center justify-center cursor-pointer group",
-																children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-																	className: "text-[8px] font-bold text-neutral-400 group-hover:text-white",
-																	children: "Top R"
-																})
-															})]
-														})]
-													}),
-													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-														className: "p-1.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1",
-														children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-															className: "text-[10px] font-medium text-neutral-400 block text-center",
-															children: "Center Note"
-														}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-															className: "h-9 flex items-center justify-center",
-															children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-																type: "button",
-																onClick: () => handleSnap("center-note"),
-																title: "Center Sticky Note on Desktop",
-																className: "w-full h-full bg-neutral-800 hover:bg-sky-500/80 rounded border border-neutral-700 hover:border-sky-400 transition-all flex items-center justify-center cursor-pointer group",
-																children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-																	className: "text-[9px] font-bold text-neutral-400 group-hover:text-white",
-																	children: "Center"
-																})
-															})
-														})]
-													})
-												]
-											})]
-										})]
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-										onClick: handleClose,
-										title: "Close to Tray",
-										className: "p-1.5 hover:bg-red-600/80 rounded text-[#d6c7b2] hover:text-white transition-colors cursor-pointer",
-										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-3.5 h-3.5" })
-									})
-								]
-							})
-						]
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute bottom-1 left-2 right-2 border-b border-dashed border-[#552c1b]/60 pointer-events-none" })
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-center gap-0.5 p-0.5 bg-black/25 backdrop-blur-md rounded-full",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									onClick: () => {
+										setHistoryIndex(-1);
+										onNewNote();
+									},
+									title: "New Note",
+									className: "w-6 h-6 flex items-center justify-center hover:bg-white/10 active:scale-95 rounded-full text-[#faf3e0]/90 hover:text-white transition-all cursor-pointer",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Plus, { className: "w-3.5 h-3.5 stroke-[2]" })
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									onClick: handleTogglePin,
+									title: isPinned ? "Unpin" : "Pin on Top",
+									className: `w-6 h-6 rounded-full transition-all cursor-pointer flex items-center justify-center active:scale-95 ${isPinned ? "bg-white/20 text-white" : "text-[#faf3e0]/75 hover:text-white hover:bg-white/10"}`,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pin, { className: `w-3 h-3 stroke-[1.8] transition-transform ${isPinned ? "rotate-45 fill-white" : ""}` })
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									onClick: handleToggleWidget,
+									title: isWidgetMode ? "Standard Size" : "Mini Widget",
+									className: `w-6 h-6 rounded-full transition-all cursor-pointer flex items-center justify-center active:scale-95 ${isWidgetMode ? "bg-white/20 text-white" : "text-[#faf3e0]/75 hover:text-white hover:bg-white/10"}`,
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LayoutTemplate, { className: "w-3 h-3 stroke-[1.8]" })
+								})
+							]
+						}), !isElectron && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-center gap-0.5 pl-0.5",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									onClick: handleMinimize,
+									title: "Minimize",
+									className: "w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded-full text-[#faf3e0]/75 hover:text-white transition-colors cursor-pointer",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Minus, { className: "w-3 h-3 stroke-[1.8]" })
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									onClick: handleMaximize,
+									title: "Maximize",
+									className: "w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded-full text-[#faf3e0]/75 hover:text-white transition-colors cursor-pointer",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Square, { className: "w-2.5 h-2.5 stroke-[1.8]" })
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									onClick: handleClose,
+									title: "Close",
+									className: "w-6 h-6 flex items-center justify-center hover:bg-red-500/80 rounded-full text-[#faf3e0]/75 hover:text-white transition-colors cursor-pointer",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-3 h-3 stroke-[1.8]" })
+								})
+							]
+						})]
+					})
 				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("main", {
 				className: "relative flex-1 flex flex-col overflow-hidden bg-[#fbf5cd] text-neutral-900 shadow-inner",
 				children: [
-					!isCompact && !isWidgetMode && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center justify-between px-6 pt-3 pb-1 border-b border-[#e5dcab] text-xs",
+					!isWidgetMode && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-center justify-between px-6 pt-2.5 pb-1 border-b border-[#e5dcab]/80 text-xs",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-center gap-2",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "font-serif font-bold text-[#991b1b] tracking-wider text-sm",
+								className: "font-serif font-semibold text-[#991b1b] tracking-tight text-xs",
 								children: "Today"
 							}), isPinned && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-								className: "flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-200/80 px-2 py-0.5 rounded-full border border-amber-400/60",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pin, { className: "w-2.5 h-2.5 fill-amber-800 rotate-45" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Pinned on Top" })]
+								className: "flex items-center gap-1 text-[10px] font-medium text-[#6e3b26] bg-black/[0.06] px-2 py-0.5 rounded-full",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Pin, { className: "w-2.5 h-2.5 rotate-45" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Pinned" })]
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "text-[#854d0e] font-sans text-xs tracking-tight",
+							className: "text-[#854d0e]/80 font-sans text-[11px] tracking-tight",
 							children: formattedDateTime
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "relative flex-1 flex overflow-hidden",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 bottom-0 left-[44px] w-px bg-red-400/40 pointer-events-none z-10" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 bottom-0 left-[44px] w-px bg-red-400/35 pointer-events-none z-10" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: "flex-1 h-full w-full overflow-y-auto px-4 pl-[54px] pr-4 py-2 relative",
-							style: { background: "repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(148, 163, 184, 0.35) 27px, rgba(148, 163, 184, 0.35) 28px)" },
+							style: { background: "repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(148, 163, 184, 0.32) 27px, rgba(148, 163, 184, 0.32) 28px)" },
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
 								ref: textareaRef,
 								value: note.content,
@@ -13232,175 +12798,154 @@ var WindowsApp = ({ note, connectedDevices, history, lanIp, lanPort, pin = "4819
 									onTextChange(e.target.value);
 								},
 								placeholder: "Type note or paste text... Instant real-time LAN sync with your phone",
-								className: "w-full h-full min-h-[300px] bg-transparent resize-none border-none outline-none font-['Patrick_Hand',cursive,sans-serif] text-[20px] text-[#1c1917] placeholder:text-[#a8a29e] select-text focus:ring-0 leading-[28px]",
+								className: "w-full h-full min-h-[200px] bg-transparent resize-none border-none outline-none font-['Patrick_Hand',cursive,sans-serif] text-[20px] text-[#1c1917] placeholder:text-[#a8a29e] select-text focus:ring-0 leading-[28px]",
 								autoFocus: true,
 								spellCheck: "false"
 							})
 						})]
 					}),
-					detectedUrls.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "px-6 py-1.5 bg-[#f5ecc0] border-t border-[#e2d69b] flex items-center gap-2 overflow-x-auto z-10",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "text-[10px] uppercase font-bold text-[#854d0e] tracking-wider shrink-0",
-							children: "Link:"
-						}), detectedUrls.map((url, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
+					detectedUrls.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "px-5 py-1.5 bg-[#f5ecc0]/80 border-t border-[#e2d69b]/70 flex items-center gap-1.5 overflow-x-auto z-10",
+						children: detectedUrls.map((url, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
 							href: url,
 							target: "_blank",
 							rel: "noopener noreferrer",
-							className: "inline-flex items-center gap-1 text-xs text-[#0369a1] hover:underline bg-white/70 px-2 py-0.5 rounded border border-[#cbd5e1] truncate max-w-[260px]",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, { className: "w-3 h-3 shrink-0" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "inline-flex items-center gap-1 text-[11px] font-medium text-[#1c1917] bg-black/[0.06] hover:bg-black/[0.1] px-2.5 py-0.5 rounded-full truncate max-w-[260px] transition-colors",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, { className: "w-3 h-3 shrink-0 opacity-70" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								className: "truncate",
 								children: url
 							})]
-						}, i))]
+						}, i))
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("footer", {
-						className: "relative z-20 flex items-center justify-around px-4 py-2.5 bg-[#fbf5cd] border-t border-[#e8dfb0]",
+						className: "relative z-20 flex items-center justify-around px-3 py-1.5 bg-[#fbf5cd] border-t border-[#e8dfb0]/80",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handlePrevNote,
 								disabled: history.length === 0 || historyIndex >= history.length - 1,
-								title: "Previous Note in History",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronLeft, { className: "w-6 h-6 stroke-[2.2]" })
+								title: "Previous Note",
+								className: "w-7 h-7 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronLeft, { className: "w-4 h-4 stroke-[1.8]" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 								onClick: () => setIsHistoryOpen(!isHistoryOpen),
-								title: "Notes History & Clips",
-								className: "relative p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 transition-all cursor-pointer",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "w-6 h-6 stroke-[2.2]" }), history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "absolute top-1 right-1 w-2 h-2 rounded-full bg-[#991b1b]" })]
+								title: "History",
+								className: "relative w-7 h-7 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 transition-all cursor-pointer",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "w-4 h-4 stroke-[1.8]" }), history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#991b1b]" })]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handleClearNote,
 								disabled: !note.content.trim(),
-								title: "Clear Current Note",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-6 h-6 stroke-[2.2]" })
+								title: "Clear Note",
+								className: "w-7 h-7 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-4 h-4 stroke-[1.8]" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handleNextNote,
 								disabled: historyIndex <= 0,
-								title: "Next Note in History",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, { className: "w-6 h-6 stroke-[2.2]" })
+								title: "Next Note",
+								className: "w-7 h-7 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, { className: "w-4 h-4 stroke-[1.8]" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handlePaste,
-								title: "Paste from PC Clipboard",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 transition-all cursor-pointer",
-								children: pasted ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-5 h-5 text-emerald-700 stroke-[2.5]" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Clipboard, { className: "w-5 h-5 stroke-[2.2]" })
+								title: "Paste",
+								className: "w-7 h-7 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 transition-all cursor-pointer",
+								children: pasted ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-3.5 h-3.5 text-emerald-700 stroke-[2.2]" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Clipboard, { className: "w-3.5 h-3.5 stroke-[1.8]" })
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 								onClick: handleCopy,
 								disabled: !note.content.trim(),
-								title: "Copy Note Text",
-								className: "p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer",
-								children: copied ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-5 h-5 text-emerald-700 stroke-[2.5]" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Copy, { className: "w-5 h-5 stroke-[2.2]" })
+								title: "Copy",
+								className: "w-7 h-7 flex items-center justify-center rounded-full text-[#6e3b26] hover:bg-black/[0.06] active:scale-90 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer",
+								children: copied ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-3.5 h-3.5 text-emerald-700 stroke-[2.2]" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Copy, { className: "w-3.5 h-3.5 stroke-[1.8]" })
 							})
 						]
 					})
 				]
 			}),
-			isHistoryOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "absolute inset-y-0 right-0 w-80 z-30 bg-[#241209] border-l-2 border-[#542915] shadow-2xl flex flex-col animate-in slide-in-from-right duration-200",
-				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "p-3 bg-[#381a0e] border-b border-[#4d2413] flex items-center justify-between",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "flex items-center gap-2",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "w-4 h-4 text-amber-400" }),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									className: "font-bold text-white text-sm",
-									children: "Notes History"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "text-[11px] text-amber-200/70 bg-[#210c05] px-2 py-0.5 rounded-full border border-[#522514]",
+			isHistoryOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "fixed inset-0 z-40 flex justify-end bg-black/50 backdrop-blur-[2px] animate-in fade-in duration-150",
+				onClick: () => setIsHistoryOpen(false),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("aside", {
+					className: "w-[265px] max-w-[85vw] h-full flex flex-col bg-gradient-to-b from-[#452315] via-[#34180c] to-[#240f06] border-l border-black/40 shadow-2xl p-3.5 text-[#faf3e0] space-y-3 animate-in slide-in-from-right duration-200",
+					onClick: (e) => e.stopPropagation(),
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-center justify-between pt-0.5",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center gap-1.5",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-xs font-semibold text-[#faf3e0]/95 tracking-tight",
+									children: "History"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "px-2 py-0.5 bg-black/25 rounded-full text-[10px] font-medium text-[#faf3e0]/80",
 									children: history.length
-								})
-							]
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "flex items-center gap-1.5",
-							children: [history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								onClick: () => setIsClearModalOpen(true),
-								className: "text-[11px] text-red-300 hover:text-red-100 px-2.5 py-1 bg-red-950/80 hover:bg-red-900 rounded border border-red-800 transition-colors cursor-pointer font-semibold shadow-sm",
-								children: "Clear All"
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								onClick: () => setIsHistoryOpen(false),
-								className: "p-1 rounded text-neutral-400 hover:text-white transition-colors",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-4 h-4" })
+								})]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center gap-1.5",
+								children: [history.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									type: "button",
+									onClick: () => setIsClearModalOpen(true),
+									className: "px-2.5 py-1 rounded-full bg-red-500/20 hover:bg-red-500/30 active:scale-95 text-[11px] font-medium text-red-300 transition-all cursor-pointer",
+									children: "Clear"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+									type: "button",
+									onClick: () => setIsHistoryOpen(false),
+									className: "px-2.5 py-1 rounded-full bg-black/25 hover:bg-white/10 active:scale-95 text-[11px] font-medium text-[#faf3e0]/90 transition-all cursor-pointer",
+									children: "Close"
+								})]
 							})]
-						})]
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "p-2.5 bg-[#2d150b] border-b border-[#452010]",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						}),
+						history.length > 1 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "relative",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Search, { className: "w-3.5 h-3.5 text-amber-400/60 absolute left-2.5 top-2.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Search, { className: "w-3 h-3 text-[#faf3e0]/50 absolute left-2.5 top-2" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
 								type: "text",
 								value: historySearch,
 								onChange: (e) => setHistorySearch(e.target.value),
-								placeholder: "Search history...",
-								className: "w-full bg-[#1b0a04] border border-[#522514] rounded pl-8 pr-2.5 py-1 text-xs text-[#f5eedc] placeholder:text-[#8a7260] outline-none focus:border-amber-500"
+								placeholder: "Search notes...",
+								className: "w-full bg-black/25 rounded-xl pl-7 pr-2.5 py-1 text-xs text-[#faf3e0] placeholder:text-[#faf3e0]/45 outline-none focus:bg-black/35 transition-colors"
 							})]
-						})
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "flex-1 overflow-y-auto p-2.5 space-y-2",
-						children: filteredHistory.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "py-12 text-center text-[#9c826c]",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "text-xs",
-								children: "No notes in history yet."
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								className: "text-[11px] text-[#705a49] mt-1",
-								children: "Notes are auto-saved on 3s pause and when creating new notes."
-							})]
-						}) : filteredHistory.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							onClick: () => {
-								onRestoreClip(item.content);
-								setIsHistoryOpen(false);
-							},
-							className: "p-2.5 bg-[#1d0b04] hover:bg-[#2e1307] border border-[#4d2311] rounded-lg cursor-pointer transition-all flex flex-col gap-1 shadow",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "flex items-center justify-between text-[10px] text-[#9c826c]",
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "flex-1 overflow-y-auto space-y-1.5 pr-0.5",
+							children: filteredHistory.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "h-32 flex items-center justify-center text-xs text-[#faf3e0]/50",
+								children: "No saved notes"
+							}) : filteredHistory.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								onClick: () => {
+									onRestoreClip(item.content);
+									setIsHistoryOpen(false);
+								},
+								className: "p-2.5 bg-black/25 hover:bg-black/35 active:scale-[0.99] rounded-xl cursor-pointer transition-all flex flex-col gap-1",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "flex items-center justify-between text-[10px] text-[#faf3e0]/60",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: "font-semibold text-amber-300/90",
+										className: "text-[#faf3e0]/85 font-medium truncate max-w-[120px]",
 										children: item.device
-									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: new Date(item.timestamp).toLocaleTimeString([], {
-										hour: "2-digit",
-										minute: "2-digit"
-									}) })]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "text-xs text-[#f5eedc] font-['Patrick_Hand',cursive,sans-serif] text-[16px] line-clamp-3 whitespace-pre-wrap leading-tight",
-									children: item.content
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "flex items-center justify-end gap-2 pt-1 border-t border-[#3b190c]",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-										onClick: (e) => {
-											e.stopPropagation();
-											onDeleteClip(item.id);
-										},
-										className: "text-[11px] text-[#a37060] hover:text-red-400 p-0.5",
-										title: "Delete note",
-										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-3 h-3" })
-									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-										onClick: (e) => {
-											e.stopPropagation();
-											onRestoreClip(item.content);
-											setIsHistoryOpen(false);
-										},
-										className: "text-[11px] text-amber-300 font-medium flex items-center gap-1 hover:underline",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RotateCcw, { className: "w-3 h-3" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Restore" })]
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center gap-2",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: new Date(item.timestamp).toLocaleTimeString([], {
+											hour: "2-digit",
+											minute: "2-digit"
+										}) }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+											onClick: (e) => {
+												e.stopPropagation();
+												onDeleteClip(item.id);
+											},
+											className: "text-[#faf3e0]/50 hover:text-red-300 p-0.5 cursor-pointer transition-colors",
+											title: "Delete",
+											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Trash2, { className: "w-3 h-3" })
+										})]
 									})]
-								})
-							]
-						}, item.id))
-					})
-				]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "text-xs text-[#faf3e0]/95 line-clamp-2 whitespace-pre-wrap leading-snug",
+									children: item.content
+								})]
+							}, item.id))
+						})
+					]
+				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClearHistoryModal, {
 				isOpen: isClearModalOpen,
@@ -15789,7 +15334,6 @@ var import_browser = /* @__PURE__ */ __toESM((/* @__PURE__ */ __commonJSMin(((ex
 var LanDirectModal = ({ isOpen, onClose, lanIp, lanPort, pin = "4819", sessionId = "DEFAULT", allIps, onSelectIp, onUpdateLanTarget, onRegeneratePin, onOpenTroubleshoot, connectedClients }) => {
 	const [qrDataUrl, setQrDataUrl] = (0, import_react.useState)("");
 	const [copied, setCopied] = (0, import_react.useState)(false);
-	const [copiedPin, setCopiedPin] = (0, import_react.useState)(false);
 	const [targetInput, setTargetInput] = (0, import_react.useState)("");
 	const hostToUse = lanIp && lanIp !== "127.0.0.1" && lanIp !== "localhost" ? lanIp : typeof window !== "undefined" && window.location.hostname !== "localhost" ? window.location.hostname : "127.0.0.1";
 	const portToUse = lanPort || 8432;
@@ -15797,10 +15341,10 @@ var LanDirectModal = ({ isOpen, onClose, lanIp, lanPort, pin = "4819", sessionId
 	const qrAddress = `http://${hostToUse}:${portToUse}/?room=${encodeURIComponent(sessionId)}&host=${encodeURIComponent(hostToUse)}&port=${portToUse}&pin=${encodeURIComponent(pin)}`;
 	(0, import_react.useEffect)(() => {
 		if (isOpen && qrAddress) import_browser.toDataURL(qrAddress, {
-			width: 200,
+			width: 160,
 			margin: 1,
 			color: {
-				dark: "#0f172a",
+				dark: "#0a0a0a",
 				light: "#ffffff"
 			}
 		}).then((url) => setQrDataUrl(url)).catch(console.error);
@@ -15808,7 +15352,7 @@ var LanDirectModal = ({ isOpen, onClose, lanIp, lanPort, pin = "4819", sessionId
 	if (!isOpen) return null;
 	const handleCopy = async () => {
 		try {
-			await navigator.clipboard.writeText(qrAddress || displayAddress);
+			await navigator.clipboard.writeText(displayAddress);
 			setCopied(true);
 			setTimeout(() => setCopied(false), 1500);
 		} catch {}
@@ -15821,151 +15365,103 @@ var LanDirectModal = ({ isOpen, onClose, lanIp, lanPort, pin = "4819", sessionId
 		}
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in fade-in",
+		className: "fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/65 backdrop-blur-sm animate-in fade-in",
+		onClick: onClose,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "w-full max-w-sm bg-neutral-900 border border-neutral-800 rounded-2xl shadow-2xl p-5 text-neutral-100 space-y-4",
+			className: "w-full max-w-[235px] bg-[#1c1c1e]/95 backdrop-blur-xl rounded-2xl shadow-2xl p-3.5 text-neutral-100 space-y-2.5 select-none",
 			onClick: (e) => e.stopPropagation(),
 			children: [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex items-center justify-between pb-2 border-b border-neutral-800",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-2",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Wifi, { className: "w-4 h-4 text-emerald-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							className: "text-sm font-semibold",
-							children: "Wi-Fi Sync"
-						})]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						onClick: onClose,
-						className: "p-1 text-neutral-400 hover:text-neutral-100 rounded-lg hover:bg-neutral-800 transition-colors cursor-pointer",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-4 h-4" })
+					className: "flex items-center justify-center gap-1.5",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: `w-2 h-2 rounded-full ${connectedClients > 0 ? "bg-emerald-400 animate-pulse" : "bg-amber-400"}` }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "text-xs font-semibold text-neutral-200 tracking-tight",
+						children: connectedClients > 0 ? `${connectedClients} Synced` : "Wi-Fi Sync"
 					})]
 				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex flex-col items-center justify-center p-3 bg-white rounded-xl",
-					children: [qrDataUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "flex items-center justify-center p-2 bg-white rounded-xl mx-auto w-32 h-32",
+					children: qrDataUrl ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
 						src: qrDataUrl,
-						alt: "Pairing QR",
-						className: "w-40 h-40 object-contain rounded"
+						alt: "QR",
+						className: "w-full h-full object-contain"
 					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "w-40 h-40 flex items-center justify-center text-neutral-400 text-xs",
-						children: "Loading QR..."
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						className: "text-[11px] font-medium text-neutral-700 mt-1",
-						children: "Scan with phone camera or app"
-					})]
-				}),
-				connectedClients > 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex items-center justify-center gap-2 py-1.5 px-3 bg-emerald-950/70 border border-emerald-700/80 rounded-xl text-emerald-300 text-xs",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-2 h-2 rounded-full bg-emerald-400 animate-pulse" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-						className: "font-semibold",
-						children: [
-							"Handshake Active: ",
-							connectedClients,
-							" phone(s) synced"
-						]
-					})]
-				}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "text-center text-[11px] text-neutral-400",
-					children: "Waiting for phone to scan QR code..."
+						className: "text-neutral-400 text-[10px]",
+						children: "..."
+					})
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "p-3 bg-neutral-950 border border-neutral-800 rounded-xl space-y-1.5",
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "flex items-center justify-between text-[11px] text-neutral-400",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex items-center gap-1.5",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Lock, { className: "w-3.5 h-3.5 text-amber-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "font-semibold text-neutral-300",
-									children: "Pairing Security PIN:"
-								})]
-							}), onRegeneratePin && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-								type: "button",
-								onClick: onRegeneratePin,
-								className: "text-[10px] text-amber-400 hover:text-amber-300 flex items-center gap-1 cursor-pointer transition-colors",
-								title: "Generate new PIN",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RefreshCw, { className: "w-2.5 h-2.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "New PIN" })]
-							})]
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "flex items-center justify-between",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "font-mono text-xl tracking-[0.25em] font-bold text-amber-400 pl-1",
-								children: pin
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-								type: "button",
-								onClick: async () => {
-									await navigator.clipboard.writeText(pin).catch(() => {});
-									setCopiedPin(true);
-									setTimeout(() => setCopiedPin(false), 1500);
-								},
-								className: "px-2 py-1 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 rounded text-[11px] text-neutral-300 transition-colors cursor-pointer flex items-center gap-1",
-								children: [copiedPin ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-3 h-3 text-emerald-400" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Copy, { className: "w-3 h-3" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: copiedPin ? "Copied" : "Copy" })]
-							})]
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							className: "text-[10px] text-neutral-500 leading-tight",
-							children: "Other PCs on your Wi-Fi cannot see or connect to your notes without this PIN."
-						})
-					]
-				}),
-				allIps && allIps.length > 1 && onSelectIp && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "space-y-1 pt-1",
+					className: "flex items-center justify-between px-3 py-1.5 bg-white/[0.07] rounded-xl",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						className: "text-[10px] uppercase font-bold text-neutral-400 tracking-wider",
-						children: "Select PC Network Adapter:"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "flex flex-wrap gap-1 max-h-24 overflow-y-auto",
-						children: allIps.map((adapter) => {
-							const isSelected = adapter.ip === hostToUse;
-							return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-								type: "button",
-								onClick: () => onSelectIp(adapter.ip),
-								className: `px-2 py-1 text-[11px] rounded font-mono transition-all cursor-pointer ${isSelected ? "bg-amber-500/20 text-amber-300 border border-amber-500/50 font-bold" : "bg-neutral-800 text-neutral-400 hover:text-neutral-200 border border-neutral-700"}`,
-								children: [adapter.name ? `${adapter.name}: ` : "", adapter.ip]
-							}, adapter.ip);
-						})
+						className: "text-[11px] text-neutral-400 font-medium",
+						children: "PIN"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-center gap-2",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "font-mono text-xs font-bold tracking-[0.2em] text-amber-300",
+							children: pin
+						}), onRegeneratePin && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							onClick: onRegeneratePin,
+							title: "New PIN",
+							className: "text-neutral-400 hover:text-white transition-colors cursor-pointer",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RefreshCw, { className: "w-3 h-3" })
+						})]
 					})]
 				}),
+				allIps && allIps.length > 1 && onSelectIp && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("select", {
+					value: hostToUse,
+					onChange: (e) => onSelectIp(e.target.value),
+					className: "w-full px-2.5 py-1.5 bg-white/[0.07] rounded-xl text-[11px] font-mono text-neutral-200 outline-none cursor-pointer",
+					children: allIps.map((adapter) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("option", {
+						value: adapter.ip,
+						className: "bg-neutral-900",
+						children: [adapter.name ? `${adapter.name}: ` : "", adapter.ip]
+					}, adapter.ip))
+				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex items-center gap-2",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "flex-1 px-3 py-1.5 bg-neutral-800 border border-neutral-700 rounded-lg text-xs font-mono text-neutral-200 truncate select-all",
+					className: "flex items-center justify-between px-3 py-1.5 bg-white/[0.07] rounded-xl",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "text-[11px] font-mono text-neutral-300 truncate select-all",
 						children: displayAddress
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 						onClick: handleCopy,
-						className: "p-2 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 rounded-lg text-neutral-200 transition-colors cursor-pointer shrink-0",
-						title: "Copy address",
+						className: "text-neutral-400 hover:text-white transition-colors cursor-pointer shrink-0 ml-1.5",
+						title: "Copy IP",
 						children: copied ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-3.5 h-3.5 text-emerald-400" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Copy, { className: "w-3.5 h-3.5" })
 					})]
 				}),
 				onUpdateLanTarget && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
 					onSubmit: handleConnect,
-					className: "flex items-center gap-2 pt-1",
+					className: "flex items-center gap-1.5",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
 						type: "text",
 						value: targetInput,
 						onChange: (e) => setTargetInput(e.target.value),
-						placeholder: "Or enter PC IP...",
-						className: "flex-1 px-3 py-1.5 bg-neutral-800 border border-neutral-700 text-xs text-neutral-200 rounded-lg font-mono outline-none focus:border-amber-400 placeholder:text-neutral-500"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+						placeholder: "PC IP...",
+						className: "flex-1 min-w-0 px-2.5 py-1 bg-white/[0.07] text-[11px] text-white rounded-xl font-mono outline-none placeholder:text-neutral-500"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 						type: "submit",
 						disabled: !targetInput.trim(),
-						className: "px-3 py-1.5 bg-amber-400 hover:bg-amber-300 disabled:opacity-40 text-neutral-950 font-bold rounded-lg text-xs transition-colors cursor-pointer shrink-0 flex items-center gap-1",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Join" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "w-3 h-3" })]
+						className: "p-1.5 bg-white/15 hover:bg-white/25 disabled:opacity-30 text-white rounded-xl transition-all cursor-pointer shrink-0",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "w-3 h-3" })
 					})]
 				}),
-				onOpenTroubleshoot && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "pt-2 border-t border-neutral-800",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: `grid gap-2 pt-0.5 ${onOpenTroubleshoot ? "grid-cols-2" : "grid-cols-1"}`,
+					children: [onOpenTroubleshoot && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 						type: "button",
 						onClick: () => {
 							onClose();
 							onOpenTroubleshoot();
 						},
-						className: "w-full py-2 bg-neutral-800/80 hover:bg-neutral-800 text-neutral-300 hover:text-amber-300 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center justify-center gap-1.5",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleQuestionMark, { className: "w-3.5 h-3.5 text-amber-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Firewall & Wi-Fi Diagnostics" })]
-					})
+						className: "py-1.5 rounded-xl bg-white/[0.07] hover:bg-white/15 active:scale-[0.98] text-xs font-medium text-neutral-300 transition-all cursor-pointer",
+						children: "Setup"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						type: "button",
+						onClick: onClose,
+						className: "py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:scale-[0.98] text-xs font-medium text-neutral-200 transition-all cursor-pointer",
+						children: "Close"
+					})]
 				})
 			]
 		})
@@ -44648,7 +44144,6 @@ function toHtml5QrcodeFullConfig(config, verbose) {
 var QrScannerModal = ({ isOpen, onClose, onScanSuccess, onManualConnect }) => {
 	const [scannerError, setScannerError] = (0, import_react.useState)(null);
 	const [manualInput, setManualInput] = (0, import_react.useState)("");
-	const [showManual, setShowManual] = (0, import_react.useState)(false);
 	const [scannedResult, setScannedResult] = (0, import_react.useState)(null);
 	const scannerRef = (0, import_react.useRef)(null);
 	const containerId = "qr-camera-reader";
@@ -44667,8 +44162,8 @@ var QrScannerModal = ({ isOpen, onClose, onScanSuccess, onManualConnect }) => {
 				await scanner.start({ facingMode: "environment" }, {
 					fps: 15,
 					qrbox: {
-						width: 220,
-						height: 220
+						width: 170,
+						height: 170
 					},
 					aspectRatio: 1
 				}, (decodedText) => {
@@ -44680,11 +44175,9 @@ var QrScannerModal = ({ isOpen, onClose, onScanSuccess, onManualConnect }) => {
 						onClose();
 					});
 				}, () => {});
-			} catch (err) {
+			} catch {
 				if (!isMounted) return;
-				console.error("Camera QR error:", err);
-				setScannerError(err?.message || "Could not access camera. Please allow camera permissions or enter PC IP manually.");
-				setShowManual(true);
+				setScannerError("Camera unavailable");
 			}
 		}, 150);
 		return () => {
@@ -44709,32 +44202,21 @@ var QrScannerModal = ({ isOpen, onClose, onScanSuccess, onManualConnect }) => {
 		}
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-in fade-in",
+		className: "fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/65 backdrop-blur-sm animate-in fade-in",
+		onClick: onClose,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "w-full max-w-sm bg-neutral-900 border border-neutral-800 rounded-3xl shadow-2xl p-5 text-neutral-100 space-y-4",
+			className: "w-full max-w-[240px] bg-[#1c1c1e]/95 backdrop-blur-xl rounded-2xl shadow-2xl p-3.5 text-neutral-100 space-y-2.5 select-none",
 			onClick: (e) => e.stopPropagation(),
 			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex items-center justify-between pb-2 border-b border-neutral-800",
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							onClick: onClose,
-							className: "p-1 -ml-1 text-neutral-400 hover:text-neutral-100 rounded-full transition-colors cursor-pointer",
-							title: "Back",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowLeft, { className: "w-5 h-5" })
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "flex items-center gap-2",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Camera, { className: "w-4 h-4 text-emerald-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-								className: "text-sm font-semibold",
-								children: "Scan PC Screen"
-							})]
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "w-5" })
-					]
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "text-center",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "text-xs font-semibold text-neutral-200 tracking-tight",
+						children: "Scan QR"
+					})
 				}),
-				!showManual && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "relative w-full aspect-square bg-black rounded-2xl overflow-hidden flex items-center justify-center border border-neutral-800",
+				!scannerError ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "relative w-full aspect-square bg-black rounded-xl overflow-hidden flex items-center justify-center",
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							id: containerId,
@@ -44742,66 +44224,38 @@ var QrScannerModal = ({ isOpen, onClose, onScanSuccess, onManualConnect }) => {
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: "pointer-events-none absolute inset-0 flex items-center justify-center",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "w-48 h-48 border-2 border-emerald-400/80 rounded-2xl relative shadow-[0_0_20px_rgba(16,185,129,0.3)]",
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "w-full h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent absolute top-0 animate-pulse" })
-							})
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "w-36 h-36 border border-emerald-400/70 rounded-xl" })
 						}),
-						scannedResult && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "absolute inset-0 bg-neutral-950/90 flex flex-col items-center justify-center gap-2 text-emerald-400 animate-in fade-in",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-10 h-10" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-xs font-bold text-neutral-200",
-								children: "Connected!"
-							})]
+						scannedResult && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "absolute inset-0 bg-neutral-950/90 flex items-center justify-center text-emerald-400",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-7 h-7" })
 						})
 					]
+				}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+					className: "text-[11px] text-amber-300/90 text-center py-2",
+					children: scannerError
 				}),
-				!showManual && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					className: "text-center text-xs text-neutral-400",
-					children: "Point your camera at the QR code on your PC screen"
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
+					onSubmit: handleManualSubmit,
+					className: "flex items-center gap-1.5",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+						type: "text",
+						value: manualInput,
+						onChange: (e) => setManualInput(e.target.value),
+						placeholder: "PC IP...",
+						className: "flex-1 min-w-0 px-2.5 py-1.5 bg-white/[0.07] text-xs text-white rounded-xl font-mono outline-none placeholder:text-neutral-500"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						type: "submit",
+						disabled: !manualInput.trim(),
+						className: "p-1.5 bg-white/15 hover:bg-white/25 disabled:opacity-30 text-white rounded-xl transition-all cursor-pointer shrink-0",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "w-3.5 h-3.5" })
+					})]
 				}),
-				scannerError && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "p-3 bg-red-950/50 border border-red-800/60 rounded-xl flex items-start gap-2 text-xs text-red-200",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleAlert, { className: "w-4 h-4 text-red-400 shrink-0 mt-0.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: scannerError })]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "pt-1 border-t border-neutral-800",
-					children: !showManual ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						onClick: () => setShowManual(true),
-						className: "w-full py-1.5 text-xs text-neutral-400 hover:text-neutral-200 transition-colors text-center cursor-pointer",
-						children: "Or enter PC IP address manually"
-					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
-						onSubmit: handleManualSubmit,
-						className: "space-y-2",
-						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-xs text-neutral-400 block",
-								children: "Enter PC address or room code:"
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex items-center gap-2",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-									type: "text",
-									value: manualInput,
-									onChange: (e) => setManualInput(e.target.value),
-									placeholder: "e.g. 192.168.1.50 or CLIP-1234",
-									className: "flex-1 px-3 py-1.5 bg-neutral-800 border border-neutral-700 text-xs text-neutral-200 rounded-lg font-mono outline-none focus:border-amber-400",
-									autoFocus: true
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-									type: "submit",
-									disabled: !manualInput.trim(),
-									className: "px-3 py-1.5 bg-amber-400 hover:bg-amber-300 disabled:opacity-40 text-neutral-950 font-bold rounded-lg text-xs transition-colors cursor-pointer flex items-center gap-1 shrink-0",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Connect" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "w-3 h-3" })]
-								})]
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-								type: "button",
-								onClick: () => setShowManual(false),
-								className: "text-xs text-neutral-500 hover:text-neutral-300 transition-colors pt-1",
-								children: "← Back to camera scanner"
-							})
-						]
-					})
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					onClick: onClose,
+					className: "w-full py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:scale-[0.98] text-xs font-medium text-neutral-200 transition-all cursor-pointer",
+					children: "Close"
 				})
 			]
 		})
@@ -44811,27 +44265,15 @@ var QrScannerModal = ({ isOpen, onClose, onScanSuccess, onManualConnect }) => {
 var PermissionsModal = ({ isOpen, onClose }) => {
 	const [cameraStatus, setCameraStatus] = (0, import_react.useState)("prompt");
 	const [notificationStatus, setNotificationStatus] = (0, import_react.useState)("prompt");
-	const [clipboardStatus, setClipboardStatus] = (0, import_react.useState)("prompt");
-	const [vibrationStatus, setVibrationStatus] = (0, import_react.useState)("granted");
+	const [clipboardStatus, setClipboardStatus] = (0, import_react.useState)("granted");
 	const [networkStatus, setNetworkStatus] = (0, import_react.useState)("granted");
-	const [isRequesting, setIsRequesting] = (0, import_react.useState)(false);
 	const checkPermissions = async () => {
-		if (navigator.permissions && navigator.permissions.query) try {
+		if (navigator.permissions?.query) try {
 			const camQuery = await navigator.permissions.query({ name: "camera" });
 			setCameraStatus(camQuery.state);
 			camQuery.onchange = () => setCameraStatus(camQuery.state);
 		} catch {}
 		if ("Notification" in window) setNotificationStatus(Notification.permission === "granted" ? "granted" : Notification.permission === "denied" ? "denied" : "prompt");
-		if (navigator.permissions && navigator.permissions.query) try {
-			const clipQuery = await navigator.permissions.query({ name: "clipboard-read" });
-			setClipboardStatus(clipQuery.state);
-			clipQuery.onchange = () => setClipboardStatus(clipQuery.state);
-		} catch {
-			setClipboardStatus("granted");
-		}
-		else setClipboardStatus("granted");
-		if ("vibrate" in navigator) setVibrationStatus("granted");
-		else setVibrationStatus("unsupported");
 		if (navigator.onLine) setNetworkStatus("granted");
 	};
 	(0, import_react.useEffect)(() => {
@@ -44861,200 +44303,79 @@ var PermissionsModal = ({ isOpen, onClose }) => {
 			await navigator.clipboard.readText();
 			setClipboardStatus("granted");
 		} catch {
-			try {
-				await navigator.clipboard.writeText("");
-				setClipboardStatus("granted");
-			} catch {
-				setClipboardStatus("prompt");
-			}
+			setClipboardStatus("granted");
 		}
-	};
-	const testVibration = () => {
-		if ("vibrate" in navigator) {
-			navigator.vibrate([
-				100,
-				50,
-				150
-			]);
-			setVibrationStatus("granted");
-		}
-	};
-	const requestAll = async () => {
-		setIsRequesting(true);
-		triggerHaptic();
-		if (cameraStatus !== "granted") await requestCamera();
-		if (notificationStatus !== "granted") await requestNotification();
-		if (clipboardStatus !== "granted") await testClipboard();
-		testVibration();
-		setIsRequesting(false);
 	};
 	if (!isOpen) return null;
-	const permissions = [
-		{
-			id: "camera",
-			name: "Camera Viewfinder",
-			description: "Scans your PC monitor QR code for 1-second instant pairing",
-			icon: Camera,
-			status: cameraStatus,
-			required: true
-		},
-		{
-			id: "clipboard",
-			name: "Clipboard Access",
-			description: "Syncs and restores your notes and text clippings seamlessly",
-			icon: Clipboard,
-			status: clipboardStatus,
-			required: true
-		},
-		{
-			id: "notification",
-			name: "Sync Notifications",
-			description: "Alerts you when devices connect or when your PC buzzes your phone",
-			icon: Bell,
-			status: notificationStatus,
-			required: false
-		},
-		{
-			id: "network",
-			name: "Local Wi-Fi Network",
-			description: "Connects directly to your PC over home/office Wi-Fi (100% private)",
-			icon: Wifi,
-			status: networkStatus,
-			required: true
-		},
-		{
-			id: "vibrate",
-			name: "Haptic Vibrations",
-			description: "Tactile pulses when notes sync, buttons click, and QR codes pair",
-			icon: Vibrate,
-			status: vibrationStatus,
-			required: false
-		}
-	];
-	const grantedCount = permissions.filter((p) => p.status === "granted").length;
-	const allGranted = grantedCount === permissions.length;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: "fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex flex-col justify-end animate-in fade-in select-none",
+		className: "fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/65 backdrop-blur-sm animate-in fade-in select-none",
 		onClick: onClose,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "bg-neutral-900 border-t border-neutral-800 rounded-t-3xl p-5 text-neutral-100 max-h-[85vh] flex flex-col animate-in slide-in-from-bottom",
+			className: "w-full max-w-[230px] bg-[#1c1c1e]/95 backdrop-blur-xl rounded-2xl shadow-2xl p-3.5 text-neutral-100 space-y-2.5",
 			onClick: (e) => e.stopPropagation(),
 			children: [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					onClick: onClose,
-					className: "w-12 h-1.5 bg-neutral-600/80 active:bg-neutral-500 rounded-full mx-auto -mt-1 mb-3 cursor-pointer",
-					title: "Dismiss"
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex items-center justify-between pb-3 border-b border-neutral-800 shrink-0",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-2",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "p-2 rounded-xl bg-amber-400/10 text-amber-400 border border-amber-400/20",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "w-5 h-5" })
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							className: "text-sm font-bold text-neutral-100",
-							children: "Android Permissions Checklist"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							className: "text-[11px] text-neutral-400",
-							children: "Everything ClipSync needs to run natively"
-						})] })]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-800 border border-neutral-700 text-xs font-mono font-bold",
-						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: allGranted ? "text-emerald-400" : "text-amber-400",
-								children: grantedCount
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-neutral-500",
-								children: "/"
-							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "text-neutral-400",
-								children: permissions.length
-							})
-						]
-					})]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "w-full bg-neutral-800 h-1.5 rounded-full my-3 overflow-hidden shrink-0",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "h-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-all duration-300",
-						style: { width: `${grantedCount / permissions.length * 100}%` }
+					className: "text-center",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "text-xs font-semibold text-neutral-200 tracking-tight",
+						children: "Permissions"
 					})
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "flex-1 overflow-y-auto space-y-2 py-1",
-					children: permissions.map((item) => {
+					className: "space-y-1.5",
+					children: [
+						{
+							id: "camera",
+							name: "Camera",
+							icon: Camera,
+							status: cameraStatus,
+							action: requestCamera
+						},
+						{
+							id: "clipboard",
+							name: "Clipboard",
+							icon: Clipboard,
+							status: clipboardStatus,
+							action: testClipboard
+						},
+						{
+							id: "notification",
+							name: "Alerts",
+							icon: Bell,
+							status: notificationStatus,
+							action: requestNotification
+						},
+						{
+							id: "network",
+							name: "Wi-Fi",
+							icon: Wifi,
+							status: networkStatus,
+							action: () => {}
+						}
+					].map((item) => {
 						const Icon = item.icon;
 						const isGranted = item.status === "granted";
-						const isDenied = item.status === "denied";
 						return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "p-3 bg-neutral-800/70 border border-neutral-750 rounded-2xl flex items-center justify-between gap-3 transition-colors hover:bg-neutral-800",
+							className: "flex items-center justify-between px-3 py-1.5 bg-white/[0.07] rounded-xl",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex items-start gap-3 min-w-0",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-									className: `p-2 rounded-xl shrink-0 mt-0.5 ${isGranted ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" : "bg-neutral-700/60 text-neutral-300 border border-neutral-600"}`,
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: "w-4 h-4" })
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "min-w-0",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "flex items-center gap-1.5",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "text-xs font-semibold text-neutral-200",
-											children: item.name
-										}), item.required && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "text-[9px] px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 font-medium",
-											children: "Required"
-										})]
-									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-										className: "text-[11px] text-neutral-400 leading-tight mt-0.5 truncate",
-										children: item.description
-									})]
+								className: "flex items-center gap-2",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, { className: "w-3.5 h-3.5 text-neutral-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "text-xs text-neutral-200",
+									children: item.name
 								})]
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "shrink-0",
-								children: isGranted ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-semibold",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-3.5 h-3.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Allowed" })]
-								}) : isDenied ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-									onClick: () => {
-										if (item.id === "camera") requestCamera();
-										if (item.id === "notification") requestNotification();
-									},
-									className: "flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/30 text-xs font-medium active:scale-95 cursor-pointer",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleAlert, { className: "w-3.5 h-3.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Denied (Tap)" })]
-								}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-									onClick: () => {
-										if (item.id === "camera") requestCamera();
-										if (item.id === "notification") requestNotification();
-										if (item.id === "clipboard") testClipboard();
-										if (item.id === "vibrate") testVibration();
-									},
-									className: "flex items-center gap-1 px-3 py-1 rounded-full bg-amber-400 text-neutral-950 text-xs font-bold active:scale-95 transition-all cursor-pointer shadow-xs",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Grant" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, { className: "w-3 h-3" })]
-								})
+							}), isGranted ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "w-3.5 h-3.5 text-emerald-400" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								onClick: item.action,
+								className: "px-2.5 py-0.5 rounded-lg bg-amber-400 text-neutral-950 text-[10px] font-semibold cursor-pointer",
+								children: "Allow"
 							})]
 						}, item.id);
 					})
 				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "pt-3 border-t border-neutral-800 flex items-center justify-between gap-3 shrink-0 mt-2",
-					children: [!allGranted ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-						onClick: requestAll,
-						disabled: isRequesting,
-						className: "flex-1 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-neutral-950 text-xs font-bold flex items-center justify-center gap-1.5 active:scale-98 transition-all cursor-pointer shadow-md",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Sparkles, { className: "w-4 h-4" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Grant All Permissions" })]
-					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-						onClick: onClose,
-						className: "flex-1 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-neutral-950 text-xs font-bold flex items-center justify-center gap-1.5 active:scale-98 transition-all cursor-pointer shadow-md",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-4 h-4" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "All Permissions Granted - Ready" })]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						onClick: onClose,
-						className: "px-4 py-2.5 rounded-full bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-medium active:scale-95 transition-all cursor-pointer",
-						children: "Done"
-					})]
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "button",
+					onClick: onClose,
+					className: "w-full py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:scale-[0.98] text-xs font-medium text-neutral-200 transition-all cursor-pointer",
+					children: "Close"
 				})
 			]
 		})
@@ -45124,45 +44445,49 @@ var PinModal = ({ isOpen, onClose, onSubmitPin, errorMessage }) => {
 		}
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in fade-in",
+		className: "fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/65 backdrop-blur-sm animate-in fade-in",
 		onClick: onClose,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "w-full max-w-[240px] bg-neutral-900 border border-neutral-800 rounded-2xl shadow-xl p-4 text-neutral-100 space-y-3",
+			className: "w-full max-w-[230px] bg-[#1c1c1e]/95 backdrop-blur-xl rounded-2xl shadow-2xl p-4 text-neutral-100 space-y-3 select-none",
 			onClick: (e) => e.stopPropagation(),
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "flex items-center justify-between",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-					className: "text-xs font-medium text-neutral-300 tracking-wide",
-					children: "Enter PC PIN"
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-					onClick: onClose,
-					className: "p-1 -mr-1 text-neutral-500 hover:text-neutral-200 transition-colors cursor-pointer",
-					"aria-label": "Close",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-3.5 h-3.5" })
-				})]
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "text-center",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: "text-xs font-semibold text-neutral-200 tracking-tight",
+					children: "Enter PIN"
+				})
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
 				onSubmit: handleSubmit,
-				className: "space-y-2.5",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "flex justify-between gap-2",
-					onPaste: handlePaste,
-					children: digits.map((digit, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-						ref: (el) => {
-							inputRefs.current[idx] = el;
-						},
-						type: "text",
-						inputMode: "numeric",
-						pattern: "[0-9]*",
-						maxLength: 1,
-						value: digit,
-						onChange: (e) => handleDigitChange(idx, e.target.value),
-						onKeyDown: (e) => handleKeyDown(idx, e),
-						className: `w-11 h-12 bg-neutral-950 border text-center font-mono text-lg font-semibold rounded-xl outline-none transition-colors ${errorMessage ? "border-red-500/70 text-red-300 focus:border-red-400" : digit ? "border-amber-400/80 text-amber-300" : "border-neutral-800 text-neutral-100 focus:border-neutral-500"}`
-					}, idx))
-				}), errorMessage && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					className: "text-[11px] text-red-400 text-center",
-					children: "Incorrect PIN"
-				})]
+				className: "space-y-3",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "flex justify-between gap-2",
+						onPaste: handlePaste,
+						children: digits.map((digit, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+							ref: (el) => {
+								inputRefs.current[idx] = el;
+							},
+							type: "text",
+							inputMode: "numeric",
+							pattern: "[0-9]*",
+							maxLength: 1,
+							value: digit,
+							onChange: (e) => handleDigitChange(idx, e.target.value),
+							onKeyDown: (e) => handleKeyDown(idx, e),
+							className: `w-11 h-11 bg-white/[0.07] text-center font-mono text-base font-semibold rounded-xl outline-none transition-all ${errorMessage ? "ring-1 ring-red-500/80 text-red-400" : digit ? "ring-1 ring-amber-400/80 text-amber-300" : "text-white focus:ring-1 focus:ring-white/30"}`
+						}, idx))
+					}),
+					errorMessage && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "text-[11px] text-red-400 text-center leading-none",
+						children: "Incorrect PIN"
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						type: "button",
+						onClick: onClose,
+						className: "w-full py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:scale-[0.98] text-xs font-medium text-neutral-200 transition-all cursor-pointer",
+						children: "Close"
+					})
+				]
 			})]
 		})
 	});
@@ -45170,35 +44495,23 @@ var PinModal = ({ isOpen, onClose, onSubmitPin, errorMessage }) => {
 // src/components/TroubleshootModal.tsx
 var TroubleshootModal = ({ isOpen, onClose, lanIp, lanPort, pin, onUpdateTarget }) => {
 	const [testStatus, setTestStatus] = (0, import_react.useState)("idle");
-	const [testMessage, setTestMessage] = (0, import_react.useState)("");
 	const [editIp, setEditIp] = (0, import_react.useState)(lanIp);
 	const [editPort, setEditPort] = (0, import_react.useState)(String(lanPort));
 	const [editPin, setEditPin] = (0, import_react.useState)(pin);
-	const [activeTab, setActiveTab] = (0, import_react.useState)("test");
 	if (!isOpen) return null;
 	const runNetworkDiagnostic = async () => {
 		setTestStatus("testing");
-		setTestMessage(`Pinging http://${editIp}:${editPort}/api/health ...`);
 		try {
 			const controller = new AbortController();
-			const timeoutId = setTimeout(() => controller.abort(), 3500);
+			const timeoutId = setTimeout(() => controller.abort(), 3e3);
 			const res = await fetch(`http://${editIp}:${editPort}/api/health`, {
 				mode: "cors",
 				signal: controller.signal
 			});
 			clearTimeout(timeoutId);
-			if (res.ok) {
-				await res.json().catch(() => ({}));
-				setTestStatus("success");
-				setTestMessage(`Reachable! PC responded in real-time. Port ${editPort} is open.`);
-			} else {
-				setTestStatus("failed");
-				setTestMessage(`Received HTTP status ${res.status}. Port is open but returned error.`);
-			}
-		} catch (err) {
+			setTestStatus(res.ok ? "success" : "failed");
+		} catch {
 			setTestStatus("failed");
-			if (err.name === "AbortError") setTestMessage(`Timed out after 3.5s. Port ${editPort} is blocked by Windows Firewall or router AP Isolation.`);
-			else setTestMessage(`Failed to reach ${editIp}:${editPort}. Check if PC and phone are on the exact same Wi-Fi.`);
 		}
 	};
 	const handleSaveSettings = (e) => {
@@ -45209,264 +44522,77 @@ var TroubleshootModal = ({ isOpen, onClose, lanIp, lanPort, pin, onUpdateTarget 
 		}
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in",
+		className: "fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/65 backdrop-blur-sm animate-in fade-in",
+		onClick: onClose,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "w-full max-w-md bg-neutral-900 border border-neutral-800 rounded-3xl shadow-2xl p-5 text-neutral-100 space-y-4 max-h-[90vh] flex flex-col",
+			className: "w-full max-w-[240px] bg-[#1c1c1e]/95 backdrop-blur-xl rounded-2xl shadow-2xl p-3.5 text-neutral-100 space-y-2.5 select-none",
 			onClick: (e) => e.stopPropagation(),
-			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex items-center justify-between pb-3 border-b border-neutral-800 shrink-0",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "flex items-center gap-2",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldAlert, { className: "w-4 h-4 text-amber-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							className: "text-sm font-semibold",
-							children: "Wi-Fi & LAN Diagnostics"
-						})]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						onClick: onClose,
-						className: "p-1 text-neutral-400 hover:text-neutral-100 rounded-lg hover:bg-neutral-800 transition-colors cursor-pointer",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-4 h-4" })
-					})]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex rounded-xl bg-neutral-950 p-1 border border-neutral-800 text-xs shrink-0",
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							onClick: () => setActiveTab("test"),
-							className: `flex-1 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${activeTab === "test" ? "bg-neutral-800 text-amber-300 font-semibold" : "text-neutral-400 hover:text-neutral-200"}`,
-							children: "Ping Test"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							onClick: () => setActiveTab("firewall"),
-							className: `flex-1 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${activeTab === "firewall" ? "bg-neutral-800 text-amber-300 font-semibold" : "text-neutral-400 hover:text-neutral-200"}`,
-							children: "Firewall Help"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							onClick: () => setActiveTab("router"),
-							className: `flex-1 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${activeTab === "router" ? "bg-neutral-800 text-amber-300 font-semibold" : "text-neutral-400 hover:text-neutral-200"}`,
-							children: "Wi-Fi Router"
-						})
-					]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "overflow-y-auto flex-1 pr-1 space-y-3 text-xs",
-					children: [
-						activeTab === "test" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "space-y-3",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "p-3 bg-neutral-950 rounded-2xl border border-neutral-800 space-y-2",
-									children: [
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "flex items-center justify-between",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-												className: "text-neutral-400",
-												children: "Target PC Host:"
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-												className: "font-mono text-neutral-200",
-												children: [
-													editIp,
-													":",
-													editPort
-												]
-											})]
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "flex items-center justify-between",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-												className: "text-neutral-400",
-												children: "Pairing Security PIN:"
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-												className: "font-mono text-amber-400 font-bold tracking-widest",
-												children: editPin || "None"
-											})]
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-											type: "button",
-											onClick: runNetworkDiagnostic,
-											disabled: testStatus === "testing",
-											className: "w-full mt-2 py-2 bg-neutral-800 hover:bg-neutral-700 active:scale-98 text-amber-300 font-semibold rounded-xl border border-neutral-700 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RefreshCw, { className: `w-3.5 h-3.5 ${testStatus === "testing" ? "animate-spin" : ""}` }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: testStatus === "testing" ? "Testing Connection..." : "Test PC Connection Now" })]
-										})
-									]
-								}),
-								testStatus !== "idle" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: `p-3 rounded-xl border flex items-start gap-2.5 ${testStatus === "testing" ? "bg-neutral-800/50 border-neutral-700 text-neutral-300" : testStatus === "success" ? "bg-emerald-950/60 border-emerald-700/80 text-emerald-200" : "bg-red-950/60 border-red-800/80 text-red-200"}`,
-									children: [
-										testStatus === "testing" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RefreshCw, { className: "w-4 h-4 animate-spin shrink-0 text-amber-400 mt-0.5" }),
-										testStatus === "success" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-4 h-4 text-emerald-400 shrink-0 mt-0.5" }),
-										testStatus === "failed" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "w-4 h-4 text-red-400 shrink-0 mt-0.5" }),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "space-y-0.5",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												className: "font-semibold text-[11px] uppercase tracking-wider",
-												children: testStatus === "success" ? "Connection Verified" : testStatus === "failed" ? "Connection Blocked" : "Running Probe"
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												className: "text-xs opacity-90 leading-relaxed",
-												children: testMessage
-											})]
-										})
-									]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
-									onSubmit: handleSaveSettings,
-									className: "space-y-2 pt-2 border-t border-neutral-800",
-									children: [
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "text-[11px] text-neutral-400 font-medium block",
-											children: "Update IP, Port, or PIN:"
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "grid grid-cols-5 gap-2",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-												type: "text",
-												value: editIp,
-												onChange: (e) => setEditIp(e.target.value),
-												placeholder: "192.168.x.x",
-												className: "col-span-3 px-2.5 py-1.5 bg-neutral-950 border border-neutral-700 rounded-lg font-mono text-xs text-neutral-200 outline-none focus:border-amber-400"
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-												type: "text",
-												value: editPort,
-												onChange: (e) => setEditPort(e.target.value),
-												placeholder: "8432",
-												className: "col-span-2 px-2.5 py-1.5 bg-neutral-950 border border-neutral-700 rounded-lg font-mono text-xs text-neutral-200 outline-none focus:border-amber-400"
-											})]
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "flex items-center gap-2",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-												className: "relative flex-1",
-												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Lock, { className: "w-3.5 h-3.5 absolute left-2.5 top-2.5 text-neutral-500" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-													type: "text",
-													maxLength: 8,
-													value: editPin,
-													onChange: (e) => setEditPin(e.target.value),
-													placeholder: "Security PIN (e.g. 4819)",
-													className: "w-full pl-8 pr-2.5 py-1.5 bg-neutral-950 border border-neutral-700 rounded-lg font-mono text-xs text-neutral-200 outline-none focus:border-amber-400"
-												})]
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-												type: "submit",
-												className: "px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-neutral-950 font-bold rounded-lg text-xs cursor-pointer transition-colors shrink-0",
-												children: "Apply"
-											})]
-										})
-									]
-								})
-							]
-						}),
-						activeTab === "firewall" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "space-y-3 text-neutral-300 leading-relaxed",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "p-3 bg-neutral-950 rounded-2xl border border-neutral-800 space-y-2",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "flex items-center gap-2 text-amber-400 font-semibold",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Flame, { className: "w-4 h-4" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Windows Defender Firewall" })]
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "When Windows prompts you on first run, it asks to allow network access. If missed:" }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ol", {
-										className: "list-decimal list-inside space-y-1 text-neutral-400 pl-1",
-										children: [
-											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
-												"Press ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("kbd", {
-													className: "px-1.5 py-0.5 bg-neutral-800 rounded font-mono text-[10px] text-amber-300",
-													children: "Win + S"
-												}),
-												" and type ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "Windows Firewall" }),
-												"."
-											] }),
-											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
-												"Click ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "\"Allow an app through Windows Firewall\"" }),
-												"."
-											] }),
-											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
-												"Click ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "\"Change settings\"" }),
-												", scroll down to ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "ClipSync" }),
-												"."
-											] }),
-											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", { children: [
-												"Check both ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "Private" }),
-												" and ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "Public" }),
-												" boxes."
-											] })
-										]
-									})
-								]
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "p-3 bg-neutral-950 rounded-2xl border border-neutral-800 space-y-1.5",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "font-semibold text-neutral-200 block",
-									children: "Windows Network Profile (Private vs Public):"
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-									className: "text-neutral-400",
-									children: [
-										"Ensure your Windows Wi-Fi is set to ",
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "\"Private network\"" }),
-										" (Settings → Network & Internet → Wi-Fi → Properties). If set to \"Public network\", Windows blocks all local devices."
-									]
-								})]
-							})]
-						}),
-						activeTab === "router" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "space-y-3 text-neutral-300 leading-relaxed",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "p-3 bg-neutral-950 rounded-2xl border border-neutral-800 space-y-2",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "flex items-center gap-2 text-emerald-400 font-semibold",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Radio, { className: "w-4 h-4" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Router \"AP Isolation\" / Guest Network" })]
-									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
-										"Many routers and guest networks feature ",
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "Client Isolation" }),
-										" (or ",
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "AP Isolation" }),
-										"). This prevents Wi-Fi devices from sending data to other devices on the same Wi-Fi."
-									] }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										className: "p-2.5 bg-neutral-900 rounded-xl border border-neutral-800 space-y-1",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "text-amber-300 font-semibold block",
-											children: "⚡ 10-Second Test:"
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-											className: "text-neutral-400",
-											children: [
-												"Turn on your phone's ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: "Personal Hotspot" }),
-												" and connect your PC to it. If ClipSync immediately connects, your router has AP Isolation enabled."
-											]
-										})]
-									})
-								]
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "p-3 bg-neutral-950 rounded-2xl border border-neutral-800 space-y-1.5",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: "font-semibold text-neutral-200 block",
-									children: "VPN & Virtual Adapters:"
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "text-neutral-400",
-									children: "If running NordVPN, Tailscale, or WSL on your PC, make sure local LAN traffic is allowed in your VPN settings."
-								})]
-							})]
-						})
-					]
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "pt-2 border-t border-neutral-800 flex justify-end shrink-0",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						onClick: onClose,
-						className: "px-4 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-semibold rounded-xl text-xs transition-colors cursor-pointer",
-						children: "Done"
-					})
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "text-center",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: "text-xs font-semibold text-neutral-200 tracking-tight",
+					children: "Connection"
 				})
-			]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
+				onSubmit: handleSaveSettings,
+				className: "space-y-2",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "grid grid-cols-3 gap-1.5",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+							type: "text",
+							value: editIp,
+							onChange: (e) => setEditIp(e.target.value),
+							placeholder: "PC IP",
+							className: "col-span-2 px-2.5 py-1.5 bg-white/[0.07] rounded-xl font-mono text-[11px] text-white outline-none"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+							type: "text",
+							value: editPort,
+							onChange: (e) => setEditPort(e.target.value),
+							placeholder: "8432",
+							className: "col-span-1 px-2 py-1.5 bg-white/[0.07] rounded-xl font-mono text-[11px] text-white text-center outline-none"
+						})]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-center gap-1.5",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+							type: "text",
+							maxLength: 4,
+							value: editPin,
+							onChange: (e) => setEditPin(e.target.value),
+							placeholder: "PIN",
+							className: "w-20 px-2 py-1.5 bg-white/[0.07] rounded-xl font-mono text-[11px] text-amber-300 font-bold tracking-widest text-center outline-none"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+							type: "button",
+							onClick: runNetworkDiagnostic,
+							disabled: testStatus === "testing",
+							className: "flex-1 py-1.5 bg-white/[0.07] hover:bg-white/15 active:scale-[0.98] text-neutral-200 rounded-xl text-xs font-medium flex items-center justify-center gap-1 cursor-pointer transition-all",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(RefreshCw, { className: `w-3 h-3 ${testStatus === "testing" ? "animate-spin" : ""}` }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Ping" })]
+						})]
+					}),
+					testStatus === "success" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-center justify-center gap-1 text-[11px] text-emerald-400",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-3.5 h-3.5 shrink-0" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Reachable" })]
+					}),
+					testStatus === "failed" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "flex items-center justify-center gap-1 text-[10px] text-red-400",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TriangleAlert, { className: "w-3.5 h-3.5 shrink-0" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Blocked by Firewall or Wi-Fi" })]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "grid grid-cols-2 gap-2 pt-0.5",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							onClick: onClose,
+							className: "py-1.5 rounded-xl bg-white/10 hover:bg-white/15 active:scale-[0.98] text-xs font-medium text-neutral-200 transition-all cursor-pointer",
+							children: "Close"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "submit",
+							className: "py-1.5 rounded-xl bg-white/15 hover:bg-white/25 active:scale-[0.98] text-xs font-medium text-white transition-all cursor-pointer",
+							children: "Save"
+						})]
+					})
+				]
+			})]
 		})
 	});
 };
@@ -45550,13 +44676,8 @@ function App() {
 				safeStorageSet("clipsync_room", r);
 				return r;
 			}
-			const saved = localStorage.getItem("clipsync_room");
-			if (saved && saved.trim()) return saved.trim().toUpperCase();
-			const generated = "CLIP-" + Math.floor(1e3 + Math.random() * 9e3);
-			safeStorageSet("clipsync_room", generated);
-			return generated;
 		}
-		return "CLIP-" + Math.floor(1e3 + Math.random() * 9e3);
+		return "DEFAULT";
 	});
 	const [note, setNote] = (0, import_react.useState)(() => {
 		if (typeof window !== "undefined") {
@@ -45674,6 +44795,8 @@ function App() {
 					});
 					playSyncChime(soundEnabled);
 					triggerHaptic();
+				} else if (data.type === "history:update") {
+					if (Array.isArray(data.history)) setHistory(data.history);
 				} else if (data.type === "ping:notify") {
 					playPingChime(soundEnabled);
 					setBuzzNotification("Connected phone buzzed!");
@@ -45739,14 +44862,24 @@ function App() {
 					setNeedsPairing(false);
 					setPinErrorMessage(null);
 					lastPongRef.current = Date.now();
+					let localHistoryToMerge = [];
+					let localNoteToMerge = void 0;
+					try {
+						const rawHist = localStorage.getItem("clipsync_history");
+						if (rawHist) localHistoryToMerge = JSON.parse(rawHist);
+						const rawNote = localStorage.getItem("clipsync_note");
+						if (rawNote) localNoteToMerge = JSON.parse(rawNote);
+					} catch {}
 					ws.send(JSON.stringify({
 						type: "join",
-						sessionId,
+						sessionId: "DEFAULT",
 						pin,
 						deviceId,
 						deviceName: deviceInfo.name,
 						deviceType: currentPlatform === "android" ? "mobile" : "desktop",
-						isDesktop: currentPlatform === "windows"
+						isDesktop: currentPlatform === "windows",
+						note: localNoteToMerge,
+						history: localHistoryToMerge
 					}));
 					if (heartbeatInterval) clearInterval(heartbeatInterval);
 					heartbeatInterval = setInterval(() => {
@@ -45770,7 +44903,7 @@ function App() {
 							return;
 						}
 						if (msg.type === "auth:error") {
-							setPinErrorMessage(msg.message || "Incorrect pairing PIN. Please enter the PIN shown on your PC.");
+							setPinErrorMessage(msg.message || "Incorrect PIN");
 							setIsPinModalOpen(true);
 							setIsConnected(false);
 							return;
@@ -45780,13 +44913,19 @@ function App() {
 								setPin(msg.pin);
 								safeStorageSet("clipsync_pin", msg.pin);
 							}
-							if (msg.note && msg.note.content) {
+							if (msg.note && typeof msg.note.content === "string") {
 								setNote(msg.note);
 								lastSavedContentRef.current = msg.note.content;
 							}
-							if (msg.history && Array.isArray(msg.history) && msg.history.length > 0) setHistory(msg.history);
-							if (msg.clients) setConnectedDevices(msg.clients);
-							if (currentPlatform === "android" && (!connectedDevices || connectedDevices.length === 0)) showToast("Handshake Connected to PC!", "success");
+							if (msg.history && Array.isArray(msg.history)) {
+								setHistory(msg.history);
+								safeStorageSet("clipsync_history", JSON.stringify(msg.history));
+							}
+							if (msg.clients && Array.isArray(msg.clients)) {
+								const remoteOnly = msg.clients.filter((c) => c.deviceId !== deviceId);
+								setConnectedDevices(remoteOnly);
+							}
+							if (currentPlatform === "android") showToast("Synced with PC", "success");
 						} else if (msg.type === "pin:updated") {
 							if (msg.pin) {
 								setPin(msg.pin);
@@ -45818,14 +44957,14 @@ function App() {
 							updatedAt: msg.updatedAt || Date.now()
 						}));
 						else if (msg.type === "history:update") {
-							if (msg.history) setHistory(msg.history);
+							if (Array.isArray(msg.history)) setHistory(msg.history);
 						} else if (msg.type === "history:add") {
 							if (msg.clip) setHistory((prev) => [msg.clip, ...prev.filter((c) => c.id !== msg.clip.id)].slice(0, 50));
 						} else if (msg.type === "presence") {
-							if (msg.clients) setConnectedDevices(msg.clients);
+							if (msg.clients && Array.isArray(msg.clients)) setConnectedDevices(msg.clients.filter((c) => c.deviceId !== deviceId));
 							if (msg.event === "joined" && msg.deviceName && msg.deviceName !== deviceInfo.name) {
 								playSyncChime(soundEnabled);
-								showToast(`Handshake: ${msg.deviceName} connected`, "success");
+								showToast(`${msg.deviceName} connected`, "success");
 								triggerHaptic();
 							}
 						} else if (msg.type === "ping:notify") {
@@ -45964,11 +45103,17 @@ function App() {
 		showToast("Note restored", "success");
 	};
 	const handleDeleteClip = (clipId) => {
-		setHistory((prev) => prev.filter((c) => c.id !== clipId));
+		const clipContent = history.find((c) => c.id === clipId)?.content;
+		setHistory((prev) => {
+			const updated = prev.filter((c) => c.id !== clipId && (!clipContent || c.content !== clipContent));
+			safeStorageSet("clipsync_history", JSON.stringify(updated));
+			return updated;
+		});
 		if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) wsRef.current.send(JSON.stringify({
 			type: "clip:delete",
 			sessionId,
-			clipId
+			clipId,
+			clipContent
 		}));
 	};
 	const handleClearHistory = () => {
@@ -45979,7 +45124,7 @@ function App() {
 			sessionId,
 			history: []
 		}));
-		showToast("History cleared", "info");
+		showToast("History cleared on all connected devices", "info");
 	};
 	const handleBuzzDevices = () => {
 		if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
@@ -45993,6 +45138,9 @@ function App() {
 		}
 	};
 	const handleNewNote = () => {
+		if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+		const trimmedCurrent = note.content.trim();
+		if (trimmedCurrent) handleSaveToHistory(trimmedCurrent);
 		const freshNote = {
 			id: `note-${Date.now()}`,
 			content: "",
@@ -46006,13 +45154,13 @@ function App() {
 		lastSavedContentRef.current = "";
 		if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) wsRef.current.send(JSON.stringify({
 			type: "text:update",
-			sessionId,
+			sessionId: "DEFAULT",
 			content: "",
 			rev: freshNote.rev,
 			deviceId,
 			deviceName: deviceInfo.name
 		}));
-		showToast("New note ready", "info");
+		showToast("New note", "info");
 	};
 	const handlePinSubmit = (enteredPin) => {
 		const clean = enteredPin.trim();
@@ -46097,34 +45245,34 @@ function App() {
 		className: "h-screen w-screen overflow-hidden flex flex-col font-sans select-none bg-[#1c1815] text-neutral-100",
 		children: [
 			needsPairing && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "fixed top-2 left-1/2 -translate-x-1/2 z-50",
+				className: "fixed top-12 left-1/2 -translate-x-1/2 z-40",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 					onClick: () => setIsScannerOpen(true),
-					className: "px-3 py-1 bg-amber-600/95 hover:bg-amber-500 border border-amber-400/80 text-amber-50 text-xs font-medium rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-md active:scale-95 transition-all cursor-pointer",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(QrCode, { className: "w-3.5 h-3.5" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Ready to Pair: Tap to Scan PC" })]
+					className: "px-3 py-1 bg-[#1c1c1e]/90 hover:bg-[#2c2c2e] text-neutral-100 text-[11px] font-medium rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xl active:scale-95 transition-all cursor-pointer",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(QrCode, { className: "w-3 h-3 text-neutral-300" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Scan PC" })]
 				})
 			}),
 			!isConnected && !needsPairing && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "fixed top-2 left-1/2 -translate-x-1/2 z-50",
+				className: "fixed top-12 left-1/2 -translate-x-1/2 z-40",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 					onClick: () => setIsTroubleshootOpen(true),
-					className: "px-3 py-1 bg-red-950/90 hover:bg-red-900 border border-red-700/80 text-red-200 text-xs rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-md active:scale-95 transition-all cursor-pointer",
-					title: "Click to run network diagnostics & firewall checks",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(WifiOff, { className: "w-3 h-3 text-red-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "LAN Connecting... (Tap to Troubleshoot)" })]
+					className: "px-2.5 py-0.5 bg-[#1c1c1e]/85 hover:bg-[#2c2c2e] text-neutral-200 text-[11px] font-medium rounded-full shadow-md flex items-center gap-1.5 backdrop-blur-xl active:scale-95 transition-all cursor-pointer",
+					title: "Connection Setup",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Offline" })]
 				})
 			}),
 			statusToast && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "fixed top-3 left-1/2 -translate-x-1/2 z-50 pointer-events-none animate-in fade-in slide-in-from-top-2",
+				className: "fixed top-12 left-1/2 -translate-x-1/2 z-50 pointer-events-none animate-in fade-in slide-in-from-top-1",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "px-3.5 py-1.5 bg-neutral-900 border border-neutral-700 text-neutral-200 text-xs rounded-full shadow-xl flex items-center gap-2 backdrop-blur-md",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-3.5 h-3.5 text-emerald-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: statusToast.message })]
+					className: "px-3 py-1 bg-[#1c1c1e]/90 text-neutral-100 text-[11px] font-medium rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xl",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-3 h-3 text-emerald-400" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: statusToast.message })]
 				})
 			}),
 			buzzNotification && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-none",
+				className: "fixed top-12 left-1/2 -translate-x-1/2 z-50 pointer-events-none",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "px-4 py-1.5 bg-amber-400 text-neutral-950 text-xs font-bold rounded-full shadow-xl flex items-center gap-2 backdrop-blur-md animate-bounce",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Bell, { className: "w-3.5 h-3.5 fill-neutral-950" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: buzzNotification })]
+					className: "px-3 py-1 bg-[#1c1c1e]/90 text-neutral-100 text-[11px] font-medium rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-xl",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Bell, { className: "w-3 h-3 text-neutral-300" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: buzzNotification })]
 				})
 			}),
 			currentPlatform === "windows" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(WindowsApp, {

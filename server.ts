@@ -37,8 +37,11 @@ interface ClientMeta {
 
 interface SessionData {
   pin: string;
-  note: NoteState;
+  note: NoteState & { isDefault?: boolean };
   history: ClipItem[];
+  deletedIds: Set<string>;
+  deletedContents: Set<string>;
+  lastClearedAt: number;
 }
 
 // In-memory sessions store
@@ -50,38 +53,25 @@ function generatePin(): string {
 }
 
 function getOrCreateSession(sessionId: string): SessionData {
-  const normalized = sessionId.trim().toUpperCase() || 'DEFAULT';
+  const normalized = 'DEFAULT';
   let session = sessions.get(normalized);
   if (!session) {
     session = {
       pin: generatePin(),
       note: {
         id: 'note-1',
-        content: `👋 Welcome to your synced Sticky Note!\n\n📱 Scan the QR code or share this room code to open this note on your phone or tablet.\n\n⚡ Anything you type or paste here appears instantly across all your devices in real-time.`,
+        content: '',
         color: 'amber',
         fontSize: 'base',
-        updatedAt: Date.now(),
-        updatedBy: 'ClipSync Bot',
+        updatedAt: 0,
+        updatedBy: 'ClipSync',
         rev: 1,
+        isDefault: true,
       },
-      history: [
-        {
-          id: 'clip-demo-1',
-          content: 'https://github.com',
-          timestamp: Date.now() - 1000 * 60 * 5,
-          device: 'PC Desktop',
-          deviceType: 'desktop',
-          category: 'url',
-        },
-        {
-          id: 'clip-demo-2',
-          content: 'Verification Code: 482-910',
-          timestamp: Date.now() - 1000 * 60 * 15,
-          device: 'iPhone 15',
-          deviceType: 'mobile',
-          category: 'number',
-        },
-      ],
+      history: [],
+      deletedIds: new Set(),
+      deletedContents: new Set(),
+      lastClearedAt: 0,
     };
     sessions.set(normalized, session);
   }
@@ -90,8 +80,8 @@ function getOrCreateSession(sessionId: string): SessionData {
 
 function broadcastToSession(sessionId: string, payload: any, senderWs?: WebSocket) {
   const json = JSON.stringify(payload);
-  for (const [ws, meta] of clients.entries()) {
-    if (meta.sessionId === sessionId && ws.readyState === WebSocket.OPEN) {
+  for (const [ws] of clients.entries()) {
+    if (ws.readyState === WebSocket.OPEN) {
       if (!senderWs || ws !== senderWs) {
         ws.send(json);
       }
@@ -102,14 +92,12 @@ function broadcastToSession(sessionId: string, payload: any, senderWs?: WebSocke
 function getSessionClients(sessionId: string) {
   const result: Array<{ deviceId: string; deviceName: string; deviceType: string; isTyping?: boolean }> = [];
   for (const [, meta] of clients.entries()) {
-    if (meta.sessionId === sessionId) {
-      result.push({
-        deviceId: meta.deviceId,
-        deviceName: meta.deviceName,
-        deviceType: meta.deviceType,
-        isTyping: meta.isTyping,
-      });
-    }
+    result.push({
+      deviceId: meta.deviceId,
+      deviceName: meta.deviceName,
+      deviceType: meta.deviceType,
+      isTyping: meta.isTyping,
+    });
   }
   return result;
 }
@@ -123,16 +111,17 @@ async function startServer() {
 
   // API endpoints
   app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', timestamp: Date.now() });
+    const defaultSession = getOrCreateSession('DEFAULT');
+    res.json({ status: 'ok', pin: defaultSession.pin, timestamp: Date.now() });
   });
 
   app.get('/api/session/:id', (req, res) => {
     const session = getOrCreateSession(req.params.id);
     res.json({
-      sessionId: req.params.id.toUpperCase(),
+      sessionId: 'DEFAULT',
       note: session.note,
       history: session.history,
-      activeDevices: getSessionClients(req.params.id.toUpperCase()).length,
+      activeDevices: getSessionClients('DEFAULT').length,
     });
   });
 
@@ -159,7 +148,7 @@ async function startServer() {
 
   // REST paste endpoint for quick webhooks / script integration
   app.post('/api/session/:id/paste', (req, res) => {
-    const sessionId = req.params.id.toUpperCase();
+    const sessionId = 'DEFAULT';
     const session = getOrCreateSession(sessionId);
     const text = req.body.text || '';
     const device = req.body.device || 'API / Webhook';
@@ -171,16 +160,7 @@ async function startServer() {
     session.note.content = text;
     session.note.updatedAt = Date.now();
     session.note.updatedBy = device;
-
-    // Detect category
-    let category: 'note' | 'code' | 'url' | 'number' = 'note';
-    if (/^https?:\/\//i.test(text.trim())) {
-      category = 'url';
-    } else if (text.includes('\n') && (text.includes('function') || text.includes('import ') || text.includes('const '))) {
-      category = 'code';
-    } else if (/^\d{3,8}$/.test(text.trim()) || /^\d{3}[-\s]\d{3}$/.test(text.trim())) {
-      category = 'number';
-    }
+    session.note.isDefault = false;
 
     const newClip: ClipItem = {
       id: 'clip-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
@@ -188,7 +168,7 @@ async function startServer() {
       timestamp: Date.now(),
       device: device,
       deviceType: 'desktop',
-      category,
+      category: 'note',
     };
     session.history.unshift(newClip);
     if (session.history.length > 50) session.history.pop();
@@ -205,7 +185,7 @@ async function startServer() {
 
   // WebSocket connections
   wss.on('connection', (ws) => {
-    let currentSessionId = '';
+    let currentSessionId = 'DEFAULT';
 
     ws.on('message', (data) => {
       try {
@@ -222,17 +202,15 @@ async function startServer() {
         }
 
         if (msg.type === 'join') {
-          const rawId = (msg.sessionId || 'DEFAULT').trim().toUpperCase();
-          currentSessionId = rawId;
+          currentSessionId = 'DEFAULT';
           const session = getOrCreateSession(currentSessionId);
 
-          // If PIN is set and client does not supply matching PIN
-          if (session.pin && msg.pin && msg.pin.trim() !== session.pin) {
+          if (!msg.isDesktop && session.pin && msg.pin && msg.pin.trim() !== session.pin) {
             ws.send(JSON.stringify({
               type: 'auth:error',
               sessionId: currentSessionId,
               requiresPin: true,
-              message: 'Incorrect pairing PIN. Please enter the 4-digit PIN displayed on your PC screen.',
+              message: 'Incorrect PIN',
             }));
             return;
           }
@@ -245,7 +223,87 @@ async function startServer() {
             deviceType: msg.deviceType || 'desktop',
           });
 
-          // Send immediate initial sync with PIN
+          // 1. Smart Active Note Resolution on Handshake
+          if (msg.note && typeof msg.note.content === 'string') {
+            const incomingText = msg.note.content.trim();
+            const existingText = (session.note.content || '').trim();
+            const incomingTime = msg.note.updatedAt || 0;
+            const existingTime = session.note.updatedAt || 0;
+
+            if (session.note.isDefault || !existingText) {
+              if (incomingText) {
+                session.note = {
+                  ...session.note,
+                  content: msg.note.content,
+                  updatedAt: incomingTime || Date.now(),
+                  updatedBy: msg.deviceName || 'Device',
+                  rev: Math.max(session.note.rev || 1, msg.note.rev || 1),
+                  isDefault: false,
+                };
+              }
+            } else if (incomingText && incomingText !== existingText) {
+              if (incomingTime > existingTime) {
+                const archivedOld: ClipItem = {
+                  id: `clip-${Date.now()}-arch`,
+                  content: existingText,
+                  timestamp: existingTime || Date.now() - 1000,
+                  device: session.note.updatedBy || 'PC',
+                  deviceType: 'desktop',
+                };
+                if (!session.history.some((c) => c.content.trim() === existingText)) {
+                  session.history = [archivedOld, ...session.history].slice(0, 50);
+                }
+                session.note = {
+                  ...session.note,
+                  content: msg.note.content,
+                  updatedAt: incomingTime,
+                  updatedBy: msg.deviceName || 'Phone',
+                  rev: (session.note.rev || 1) + 1,
+                  isDefault: false,
+                };
+              } else {
+                const archivedIncoming: ClipItem = {
+                  id: `clip-${Date.now()}-arch`,
+                  content: incomingText,
+                  timestamp: incomingTime || Date.now() - 1000,
+                  device: msg.deviceName || 'Phone',
+                  deviceType: msg.deviceType || 'mobile',
+                };
+                if (!session.history.some((c) => c.content.trim() === incomingText)) {
+                  session.history = [archivedIncoming, ...session.history].slice(0, 50);
+                }
+              }
+            }
+          }
+
+          // 2. 2-Way History Merge with Tombstone Filtering
+          if (Array.isArray(msg.history) && msg.history.length > 0) {
+            const combined = [...session.history];
+            for (const incomingClip of msg.history) {
+              if (!incomingClip || !incomingClip.content) continue;
+              const cleanContent = incomingClip.content.trim();
+              if (!cleanContent) continue;
+
+              if (session.lastClearedAt && (incomingClip.timestamp || 0) <= session.lastClearedAt) continue;
+              if (session.deletedIds.has(incomingClip.id) || session.deletedContents.has(cleanContent)) continue;
+
+              if (!combined.some((c) => c.id === incomingClip.id || c.content.trim() === cleanContent)) {
+                combined.push(incomingClip);
+              }
+            }
+            combined.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            session.history = combined.slice(0, 50);
+
+            broadcastToSession(
+              currentSessionId,
+              {
+                type: 'history:update',
+                history: session.history,
+              },
+              ws
+            );
+          }
+
           ws.send(
             JSON.stringify({
               type: 'sync',
@@ -257,7 +315,6 @@ async function startServer() {
             })
           );
 
-          // Broadcast updated presence to all clients in session
           broadcastToSession(currentSessionId, {
             type: 'presence',
             clients: getSessionClients(currentSessionId),
@@ -265,7 +322,6 @@ async function startServer() {
             deviceName: msg.deviceName,
           });
         } else if (msg.type === 'pin:update') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
           if (msg.pin && msg.pin.trim()) {
             session.pin = msg.pin.trim();
@@ -275,7 +331,6 @@ async function startServer() {
             });
           }
         } else if (msg.type === 'text:update') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
 
           const nextRev = Math.max(session.note.rev || 0, msg.rev || 0) + 1;
@@ -283,8 +338,8 @@ async function startServer() {
           session.note.content = msg.content;
           session.note.updatedAt = Date.now();
           session.note.updatedBy = msg.deviceName || 'Connected Device';
+          session.note.isDefault = false;
 
-          // Broadcast update to others
           broadcastToSession(
             currentSessionId,
             {
@@ -295,10 +350,9 @@ async function startServer() {
               updatedBy: session.note.updatedBy,
               senderDeviceId: msg.deviceId,
             },
-            ws // don't echo back to sender to prevent cursor jumps
+            ws
           );
         } else if (msg.type === 'style:update') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
           if (msg.color) session.note.color = msg.color;
           if (msg.fontSize) session.note.fontSize = msg.fontSize;
@@ -310,20 +364,22 @@ async function startServer() {
             fontSize: session.note.fontSize,
             updatedAt: session.note.updatedAt,
           });
+        } else if (msg.type === 'history:add') {
+          const session = getOrCreateSession(currentSessionId);
+          if (msg.clip && msg.clip.content) {
+            const clean = msg.clip.content.trim();
+            session.deletedContents.delete(clean);
+            session.deletedIds.delete(msg.clip.id);
+            session.history = [msg.clip, ...session.history.filter((c) => c.id !== msg.clip.id && c.content.trim() !== clean)].slice(0, 50);
+            broadcastToSession(currentSessionId, {
+              type: 'history:update',
+              history: session.history,
+            });
+          }
         } else if (msg.type === 'clip:save') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
           const text = msg.content || '';
           if (!text.trim()) return;
-
-          let category: 'note' | 'code' | 'url' | 'number' = 'note';
-          if (/^https?:\/\//i.test(text.trim())) {
-            category = 'url';
-          } else if (text.includes('\n') && (text.includes('function') || text.includes('import ') || text.includes('const ') || text.includes('def '))) {
-            category = 'code';
-          } else if (/^\d{3,8}$/.test(text.trim()) || /^\d{3}[-\s]\d{3}$/.test(text.trim())) {
-            category = 'number';
-          }
 
           const clip: ClipItem = {
             id: 'clip-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
@@ -331,7 +387,7 @@ async function startServer() {
             timestamp: Date.now(),
             device: msg.deviceName || 'Device',
             deviceType: msg.deviceType || 'desktop',
-            category,
+            category: 'note',
           };
           session.history.unshift(clip);
           if (session.history.length > 50) session.history.pop();
@@ -342,22 +398,33 @@ async function startServer() {
             newClip: clip,
           });
         } else if (msg.type === 'clip:delete') {
-          if (!currentSessionId) return;
           const session = getOrCreateSession(currentSessionId);
-          session.history = session.history.filter((c) => c.id !== msg.clipId);
+          if (msg.clipId) session.deletedIds.add(msg.clipId);
+          if (msg.clipContent) session.deletedContents.add(msg.clipContent.trim());
+          for (const c of session.history) {
+            if (c.id === msg.clipId) {
+              session.deletedContents.add(c.content.trim());
+            }
+          }
+          session.history = session.history.filter((c) => c.id !== msg.clipId && (!msg.clipContent || c.content.trim() !== msg.clipContent.trim()));
 
           broadcastToSession(currentSessionId, {
             type: 'history:update',
             history: session.history,
           });
-        } else if (msg.type === 'clip:clear_history') {
-          if (!currentSessionId) return;
+        } else if (msg.type === 'history:update' || msg.type === 'clip:clear_history') {
           const session = getOrCreateSession(currentSessionId);
-          session.history = [];
+          const nextHistory = Array.isArray(msg.history) ? msg.history : [];
+          if (nextHistory.length === 0) {
+            session.lastClearedAt = Date.now();
+            session.deletedIds.clear();
+            session.deletedContents.clear();
+          }
+          session.history = nextHistory;
 
           broadcastToSession(currentSessionId, {
             type: 'history:update',
-            history: [],
+            history: session.history,
           });
         } else if (msg.type === 'ping:notify') {
           if (!currentSessionId) return;
