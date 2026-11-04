@@ -1,20 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { 
+  Plus, 
+  ChevronLeft, 
+  ChevronRight, 
+  Mail, 
+  Trash2, 
   Copy, 
   Check, 
-  BookmarkPlus, 
-  ExternalLink, 
-  History as HistoryIcon,
-  Palette,
-  Search,
+  Camera, 
+  ShieldCheck, 
+  Search, 
+  X, 
   RotateCcw,
-  Camera,
-  Plus,
-  ShieldCheck
+  ExternalLink
 } from 'lucide-react';
 import { NoteState, StickyColor, ClipItem, ConnectedDevice } from '../types';
-import { COLOR_SCHEMES, triggerHaptic } from '../utils/device';
-import { AppLogo } from '../components/AppLogo';
+import { triggerHaptic } from '../utils/device';
+import { ClearHistoryModal } from '../components/ClearHistoryModal';
 
 interface AndroidAppProps {
   note: NoteState;
@@ -39,7 +41,6 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
   connectedDevices,
   history,
   onTextChange,
-  onColorChange,
   onSaveToHistory,
   onRestoreClip,
   onDeleteClip,
@@ -51,19 +52,30 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [copied, setCopied] = useState(false);
-  const [savedClip, setSavedClip] = useState(false);
-  const [showColorSheet, setShowColorSheet] = useState(false);
   const [showHistorySheet, setShowHistorySheet] = useState(false);
+  const [isClearModalOpen, setIsClearModalOpen] = useState(false);
   const [historySearch, setHistorySearch] = useState('');
   const [detectedUrls, setDetectedUrls] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState<number>(-1); // -1 = active draft
 
-  const colorScheme = COLOR_SCHEMES[note.color] || COLOR_SCHEMES.yellow;
-
+  // Extract URLs for easy opening
   useEffect(() => {
     const urlRegex = /(https?:\/\/[^\s]+)/gi;
     const matches = note.content.match(urlRegex) || [];
     setDetectedUrls(Array.from(new Set(matches)).slice(0, 3));
   }, [note.content]);
+
+  // Format header date / time e.g. "Apr 20 12:33 PM"
+  const formattedDateTime = React.useMemo(() => {
+    const d = new Date(note.updatedAt || Date.now());
+    return d.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+  }, [note.updatedAt]);
 
   const handleCopy = async () => {
     if (!note.content) return;
@@ -82,12 +94,33 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
     }
   };
 
-  const handleSave = () => {
+  const handleClearNote = () => {
     if (!note.content.trim()) return;
     triggerHaptic();
-    onSaveToHistory(note.content);
-    setSavedClip(true);
-    setTimeout(() => setSavedClip(false), 1500);
+    if (window.confirm('Clear this note? It will stay safely saved in your History.')) {
+      onSaveToHistory(note.content);
+      onTextChange('');
+    }
+  };
+
+  // Previous Note Navigation
+  const handlePrevNote = () => {
+    if (history.length === 0) return;
+    triggerHaptic();
+    const nextIdx = historyIndex + 1;
+    if (nextIdx < history.length) {
+      setHistoryIndex(nextIdx);
+      onTextChange(history[nextIdx].content);
+    }
+  };
+
+  // Next Note Navigation
+  const handleNextNote = () => {
+    if (historyIndex <= 0) return;
+    triggerHaptic();
+    const prevIdx = historyIndex - 1;
+    setHistoryIndex(prevIdx);
+    onTextChange(history[prevIdx].content);
   };
 
   const filteredHistory = history.filter((item) =>
@@ -96,93 +129,124 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
   );
 
   return (
-    <div className={`h-screen w-screen overflow-hidden flex flex-col ${colorScheme.bgLight} ${colorScheme.bgDark} ${colorScheme.textLight} ${colorScheme.textDark} transition-colors duration-200 select-none pb-[env(safe-area-inset-bottom,0px)]`}>
-      {/* Android Material 3 Top App Bar */}
-      <header className={`h-14 px-4 flex items-center justify-between border-b ${colorScheme.borderLight} ${colorScheme.borderDark} ${colorScheme.headerLight} ${colorScheme.headerDark} shrink-0`}>
-        {/* Left: App Logo & Label */}
-        <div className="flex items-center gap-2.5">
-          <AppLogo size="sm" />
-          <div className="flex flex-col">
-            <span className="text-base font-bold tracking-tight leading-none">Write your note</span>
-            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1 mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>{connectedDevices.length} online</span>
-            </span>
-          </div>
-        </div>
+    <div className="h-screen w-screen overflow-hidden flex flex-col bg-[#2a1309] select-none pb-[env(safe-area-inset-bottom,0px)]">
+      {/* 1. CLASSIC STITCHED LEATHER HEADER */}
+      <header className="relative z-20 flex items-center justify-between px-3.5 py-2.5 bg-gradient-to-b from-[#482517] via-[#381a0e] to-[#240e06] border-b-2 border-[#150702] shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+        {/* Subtle decorative top stitched seam line */}
+        <div className="absolute top-1 left-2 right-2 border-t border-dashed border-[#683925]/60 pointer-events-none" />
 
-        {/* Right: Scan PC & Theme (Clear button removed) */}
-        <div className="flex items-center gap-1.5">
-          {/* Scan PC QR Code (Camera Scanner) */}
+        {/* Left Action Controls (Scan PC / Permissions) */}
+        <div className="flex items-center gap-1.5 z-10 shrink-0">
           <button
             onClick={() => {
               triggerHaptic();
               onOpenScanner();
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-950 text-xs font-semibold shadow-xs active:scale-95 transition-all cursor-pointer"
-            title="Scan PC QR Code"
+            title="Scan PC QR to Connect"
+            className="flex items-center gap-1.5 px-2.5 py-1 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-[#f3e8d2] text-xs font-semibold shadow-inner transition-all shrink-0 cursor-pointer"
           >
-            <Camera className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-600" />
-            <span>Scan PC</span>
+            <Camera className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span className="hidden sm:inline">Scan PC</span>
+            {connectedDevices.length > 0 && (
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse ml-0.5 shrink-0" />
+            )}
           </button>
 
-          {/* Permissions Checklist */}
           {onOpenPermissions && (
             <button
               onClick={() => {
                 triggerHaptic();
                 onOpenPermissions();
               }}
-              className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all cursor-pointer opacity-80 hover:opacity-100"
-              title="App Permissions Checklist"
+              title="Android Permissions Checklist"
+              className="p-1.5 bg-[#1a0a04]/80 hover:bg-[#1a0a04] active:scale-95 border border-[#5a2e1a] rounded text-[#d6c7b2] shadow-inner transition-all shrink-0 cursor-pointer"
             >
-              <ShieldCheck className="w-5 h-5 text-amber-500 dark:text-amber-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-300 shrink-0" />
             </button>
           )}
+        </div>
 
-          {/* Theme Color */}
+        {/* Embossed Leather Title: Always clean "Notes" without echoing typed keystrokes */}
+        <div className="flex-1 text-center px-2 truncate pointer-events-none">
+          <h1 className="text-base sm:text-lg font-bold text-[#faf3e0] tracking-wider drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] truncate font-serif">
+            Notes
+          </h1>
+          {remoteTypingDevice && (
+            <p className="text-[10px] text-amber-300 font-sans animate-pulse">
+              {remoteTypingDevice} is typing...
+            </p>
+          )}
+        </div>
+
+        {/* Right Action: Recessed Dark Button with White Plus (New Note) */}
+        <div className="flex items-center gap-1.5 z-10 shrink-0">
           <button
             onClick={() => {
               triggerHaptic();
-              setShowColorSheet(true);
+              setHistoryIndex(-1);
+              onNewNote();
             }}
-            className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all cursor-pointer opacity-80 hover:opacity-100"
-            title="Theme Color"
+            title="New Note"
+            className="w-8 h-8 flex items-center justify-center bg-[#180903] hover:bg-[#120602] active:scale-90 border border-[#582b17] rounded shadow-[inset_0_2px_4px_rgba(0,0,0,0.8),0_1px_1px_rgba(255,255,255,0.1)] transition-all cursor-pointer"
           >
-            <Palette className="w-5 h-5" />
+            <Plus className="w-5 h-5 text-white stroke-[2.5]" />
           </button>
         </div>
+
+        {/* Subtle decorative bottom stitched seam line */}
+        <div className="absolute bottom-1 left-2 right-2 border-b border-dashed border-[#552c1b]/60 pointer-events-none" />
       </header>
 
-      {/* Typing indicator */}
-      {remoteTypingDevice && (
-        <div className="px-4 py-1 bg-amber-400/20 text-amber-900 dark:text-amber-200 text-xs font-medium flex items-center gap-2 animate-pulse shrink-0">
-          <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
-          <span>PC is typing...</span>
+      {/* 2. CANARY YELLOW LINED LEGAL PAD BODY */}
+      <main className="relative flex-1 flex flex-col overflow-hidden bg-[#fbf5cd] text-neutral-900 shadow-inner">
+        {/* Paper Subheader Metadata Line (Today | Date & Time) */}
+        <div className="flex items-center justify-between px-6 pt-3 pb-1 border-b border-[#e5dcab] text-xs">
+          <span className="font-serif font-bold text-[#991b1b] tracking-wider text-sm">
+            Today
+          </span>
+          <span className="text-[#854d0e] font-sans text-xs tracking-tight">
+            {formattedDateTime}
+          </span>
         </div>
-      )}
 
-      {/* Main Touch-Friendly Writing Canvas */}
-      <main className="flex-1 p-4 sm:p-6 flex flex-col min-h-0 overflow-hidden relative">
-        <textarea
-          ref={textareaRef}
-          value={note.content}
-          onChange={(e) => onTextChange(e.target.value)}
-          placeholder="Write your note..."
-          className="w-full flex-1 h-full bg-transparent resize-none border-none outline-none focus:ring-0 text-base leading-relaxed placeholder:opacity-35 overflow-y-auto"
-          spellCheck="true"
-        />
+        {/* Lined Paper Canvas with Left Red Margin Rule */}
+        <div className="relative flex-1 flex overflow-hidden">
+          {/* Vertical Red Margin Rule Line */}
+          <div className="absolute top-0 bottom-0 left-[44px] w-px bg-red-400/40 pointer-events-none z-10" />
 
-        {/* URLs strip */}
+          {/* Lined ruled background & Textarea */}
+          <div
+            className="flex-1 h-full w-full overflow-y-auto px-4 pl-[54px] pr-4 py-2 relative"
+            style={{
+              background: 'repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(148, 163, 184, 0.35) 27px, rgba(148, 163, 184, 0.35) 28px)',
+            }}
+          >
+            <textarea
+              ref={textareaRef}
+              value={note.content}
+              onChange={(e) => {
+                setHistoryIndex(-1);
+                onTextChange(e.target.value);
+              }}
+              placeholder="Write your note or paste text here... Syncs instantly with PC"
+              className="w-full h-full min-h-[300px] bg-transparent resize-none border-none outline-none font-['Patrick_Hand',cursive,sans-serif] text-[20px] text-[#1c1917] placeholder:text-[#a8a29e] select-text focus:ring-0 leading-[28px]"
+              autoFocus
+              spellCheck="false"
+            />
+          </div>
+        </div>
+
+        {/* Detected URL Quick Access Pill */}
         {detectedUrls.length > 0 && (
-          <div className="pt-2 border-t border-black/10 dark:border-white/10 flex flex-wrap gap-1.5 shrink-0 mt-2">
+          <div className="px-6 py-1.5 bg-[#f5ecc0] border-t border-[#e2d69b] flex items-center gap-2 overflow-x-auto z-10">
+            <span className="text-[10px] uppercase font-bold text-[#854d0e] tracking-wider shrink-0">Link:</span>
             {detectedUrls.map((url, i) => (
               <a
                 key={i}
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-black/10 dark:bg-white/15 text-xs hover:underline font-mono truncate max-w-[240px]"
+                className="inline-flex items-center gap-1 text-xs text-[#0369a1] hover:underline bg-white/70 px-2 py-0.5 rounded border border-[#cbd5e1] truncate max-w-[220px]"
               >
                 <ExternalLink className="w-3 h-3 shrink-0" />
                 <span className="truncate">{url}</span>
@@ -190,200 +254,164 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
             ))}
           </div>
         )}
-      </main>
 
-      {/* "+ New Note" Floating Action Button (Replaced Paste Button) */}
-      <div className="fixed bottom-16 right-5 z-20">
-        <button
-          onClick={() => {
-            triggerHaptic();
-            onNewNote();
-          }}
-          className="h-14 px-5 rounded-full bg-amber-400 hover:bg-amber-300 text-neutral-950 font-bold shadow-2xl flex items-center gap-2 active:scale-95 transition-all cursor-pointer border border-amber-500/30"
-          title="Create a new blank note"
-        >
-          <Plus className="w-5 h-5 stroke-[2.5]" />
-          <span className="text-sm">New Note</span>
-        </button>
-      </div>
+        {/* 3. TACTILE SEPIA BOTTOM TOOLBAR */}
+        <footer className="relative z-20 flex items-center justify-around px-4 py-3 bg-[#fbf5cd] border-t border-[#e8dfb0]">
+          {/* Previous Note Button */}
+          <button
+            onClick={handlePrevNote}
+            disabled={history.length === 0 || historyIndex >= history.length - 1}
+            title="Previous Note in History"
+            className="p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+          >
+            <ChevronLeft className="w-6 h-6 stroke-[2.2]" />
+          </button>
 
-      {/* Android Bottom Navigation Strip */}
-      <footer className={`h-12 px-4 border-t ${colorScheme.borderLight} ${colorScheme.borderDark} bg-black/5 dark:bg-white/5 flex items-center justify-between shrink-0 select-none`}>
-        {/* Stats */}
-        <div className="flex items-center gap-2 font-mono text-[11px] opacity-60 tabular-nums">
-          <span>{note.content.length} chars</span>
-          <span>·</span>
-          <span>{note.content.trim() ? note.content.trim().split(/\s+/).length : 0} words</span>
-        </div>
-
-        {/* Quick actions */}
-        <div className="flex items-center gap-1">
+          {/* Mail / History Drawer Button */}
           <button
             onClick={() => {
               triggerHaptic();
               setShowHistorySheet(true);
             }}
-            className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors relative cursor-pointer"
-            title="Clipboard History"
+            title="Notes History & Clips"
+            className="relative p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 transition-all cursor-pointer"
           >
-            <HistoryIcon className="w-5 h-5 opacity-75" />
+            <Mail className="w-6 h-6 stroke-[2.2]" />
             {history.length > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-400"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#991b1b]" />
             )}
           </button>
 
+          {/* Trash / Clear Button */}
+          <button
+            onClick={handleClearNote}
+            disabled={!note.content.trim()}
+            title="Clear Current Note"
+            className="p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+          >
+            <Trash2 className="w-6 h-6 stroke-[2.2]" />
+          </button>
+
+          {/* Next Note Button */}
+          <button
+            onClick={handleNextNote}
+            disabled={historyIndex <= 0}
+            title="Next Note in History"
+            className="p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
+          >
+            <ChevronRight className="w-6 h-6 stroke-[2.2]" />
+          </button>
+
+          {/* Copy Button */}
           <button
             onClick={handleCopy}
-            disabled={!note.content}
-            className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors disabled:opacity-30 cursor-pointer"
-            title="Copy Note"
-          >
-            {copied ? <Check className="w-5 h-5 text-emerald-500" /> : <Copy className="w-5 h-5 opacity-75" />}
-          </button>
-
-          <button
-            onClick={handleSave}
             disabled={!note.content.trim()}
-            className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors disabled:opacity-30 cursor-pointer"
-            title="Save to History"
+            title="Copy Note Text"
+            className="p-2 rounded-full text-[#853828] hover:bg-[#eedf9c]/60 active:scale-90 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer"
           >
-            {savedClip ? <Check className="w-5 h-5 text-emerald-500" /> : <BookmarkPlus className="w-5 h-5 opacity-75" />}
+            {copied ? <Check className="w-5 h-5 text-emerald-700 stroke-[2.5]" /> : <Copy className="w-5 h-5 stroke-[2.2]" />}
           </button>
-        </div>
-      </footer>
+        </footer>
+      </main>
 
-      {/* Android Bottom Sheet: Theme Colors */}
-      {showColorSheet && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/60 flex flex-col justify-end animate-in fade-in"
-          onClick={() => setShowColorSheet(false)}
-        >
-          <div 
-            className="bg-neutral-900 border-t border-neutral-800 rounded-t-3xl p-5 text-neutral-100 space-y-3 animate-in slide-in-from-bottom"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div 
-              onClick={() => setShowColorSheet(false)} 
-              className="w-12 h-1.5 bg-neutral-600/80 active:bg-neutral-500 rounded-full mx-auto -mt-1 mb-2 cursor-pointer"
-              title="Swipe or tap to dismiss"
-            />
-            <div className="flex items-center justify-between pb-1 border-b border-neutral-800">
-              <span className="text-xs font-semibold text-neutral-300">Choose Note Color</span>
-            </div>
-            <div className="grid grid-cols-6 gap-2.5 py-2">
-              {(Object.keys(COLOR_SCHEMES) as StickyColor[]).map((cKey) => {
-                const isSelected = note.color === cKey;
-                return (
-                  <button
-                    key={cKey}
-                    onClick={() => {
-                      triggerHaptic();
-                      onColorChange(cKey);
-                      setShowColorSheet(false);
-                    }}
-                    className={`h-11 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
-                      isSelected ? 'ring-2 ring-amber-400 scale-105' : 'opacity-80 active:scale-95'
-                    } ${
-                      cKey === 'yellow' ? 'bg-amber-300 border-amber-400' :
-                      cKey === 'mint' ? 'bg-emerald-300 border-emerald-400' :
-                      cKey === 'lavender' ? 'bg-purple-300 border-purple-400' :
-                      cKey === 'blue' ? 'bg-sky-300 border-sky-400' :
-                      cKey === 'peach' ? 'bg-rose-300 border-rose-400' :
-                      'bg-neutral-800 border-neutral-600'
-                    }`}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Android Bottom Sheet: Clip History */}
+      {/* 4. SLIDE-UP HISTORY & SAVED CLIPS DRAWER */}
       {showHistorySheet && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/60 flex flex-col justify-end animate-in fade-in"
-          onClick={() => setShowHistorySheet(false)}
-        >
-          <div 
-            className="bg-neutral-900 border-t border-neutral-800 rounded-t-3xl p-4 text-neutral-100 flex flex-col max-h-[75vh] animate-in slide-in-from-bottom"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div 
-              onClick={() => setShowHistorySheet(false)} 
-              className="w-12 h-1.5 bg-neutral-600/80 active:bg-neutral-500 rounded-full mx-auto -mt-1 mb-2 cursor-pointer"
-              title="Swipe or tap to dismiss"
-            />
-            <div className="flex items-center justify-between pb-2 border-b border-neutral-800 shrink-0">
-              <div className="flex items-center gap-1.5">
-                <HistoryIcon className="w-4 h-4 text-amber-400" />
-                <span className="text-xs font-semibold">History ({history.length})</span>
+        <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div
+            className="fixed inset-0"
+            onClick={() => setShowHistorySheet(false)}
+          />
+          <div className="relative z-10 w-full max-h-[80vh] flex flex-col bg-[#241209] border-t-2 border-[#542915] rounded-t-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-300">
+            {/* Header */}
+            <div className="p-4 bg-[#381a0e] border-b border-[#4d2413] flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Mail className="w-5 h-5 text-amber-400" />
+                <h3 className="font-bold text-white text-base">Notes & Clip History</h3>
+                <span className="text-xs text-amber-200/70 bg-[#210c05] px-2 py-0.5 rounded-full border border-[#522514]">
+                  {history.length}
+                </span>
               </div>
-              <div>
+              <div className="flex items-center gap-2">
                 {history.length > 0 && (
                   <button
-                    onClick={() => {
-                      triggerHaptic();
-                      onClearHistory();
-                    }}
-                    className="text-xs text-red-400 hover:underline cursor-pointer"
+                    onClick={() => setIsClearModalOpen(true)}
+                    className="text-xs text-red-300 hover:text-red-100 px-2.5 py-1 bg-red-950/80 hover:bg-red-900 rounded border border-red-800 font-semibold shadow-sm transition-colors cursor-pointer"
                   >
                     Clear All
                   </button>
                 )}
+                <button
+                  onClick={() => setShowHistorySheet(false)}
+                  className="p-1 rounded-full text-neutral-400 hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
             </div>
 
             {/* Search */}
-            <div className="py-2 shrink-0">
+            <div className="p-3 bg-[#2d150b] border-b border-[#452010]">
               <div className="relative">
-                <Search className="w-3.5 h-3.5 text-neutral-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-amber-400/60 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   value={historySearch}
                   onChange={(e) => setHistorySearch(e.target.value)}
-                  placeholder="Search clippings..."
-                  className="w-full pl-8 pr-3 py-1.5 bg-neutral-800 rounded-xl text-xs text-neutral-200 placeholder-neutral-500 outline-none"
+                  placeholder="Search past notes..."
+                  className="w-full bg-[#1b0a04] border border-[#522514] rounded-lg pl-9 pr-3 py-1.5 text-sm text-[#f5eedc] placeholder:text-[#8a7260] outline-none focus:border-amber-500"
                 />
               </div>
             </div>
 
-            {/* History list */}
-            <div className="flex-1 overflow-y-auto space-y-2 py-1">
+            {/* Clip List */}
+            <div className="flex-1 overflow-y-auto p-3 space-y-2.5 max-h-[50vh]">
               {filteredHistory.length === 0 ? (
-                <div className="py-8 text-center text-xs text-neutral-500">
-                  No clippings in history.
+                <div className="py-12 text-center text-[#9c826c]">
+                  <p className="text-sm">No notes in history yet.</p>
+                  <p className="text-xs text-[#705a49] mt-1">
+                    Notes are automatically saved every 3 seconds and when tapping +
+                  </p>
                 </div>
               ) : (
                 filteredHistory.map((item) => (
                   <div
                     key={item.id}
-                    className="p-3 bg-neutral-800/80 rounded-2xl space-y-1.5 border border-neutral-750"
+                    onClick={() => {
+                      triggerHaptic();
+                      onRestoreClip(item.content);
+                      setShowHistorySheet(false);
+                    }}
+                    className="p-3 bg-[#1d0b04] hover:bg-[#2e1307] active:scale-[0.99] border border-[#4d2311] rounded-xl cursor-pointer transition-all flex flex-col gap-1.5 shadow"
                   >
-                    <p className="text-xs font-mono text-neutral-200 whitespace-pre-wrap break-all line-clamp-3 select-all bg-neutral-900/80 p-2.5 rounded-xl">
+                    <div className="flex items-center justify-between text-[11px] text-[#9c826c]">
+                      <span className="font-semibold text-amber-300/90">{item.device}</span>
+                      <span>{new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                    <p className="text-sm text-[#f5eedc] font-['Patrick_Hand',cursive,sans-serif] text-[18px] line-clamp-3 whitespace-pre-wrap leading-tight">
                       {item.content}
                     </p>
-
-                    <div className="flex items-center justify-end gap-2 pt-0.5">
+                    <div className="flex items-center justify-end gap-2 pt-1 border-t border-[#3b190c]">
                       <button
-                        onClick={async () => {
-                          triggerHaptic();
-                          await navigator.clipboard.writeText(item.content);
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeleteClip(item.id);
                         }}
-                        className="px-3 py-1 bg-neutral-700 rounded-lg text-xs font-medium text-neutral-200 cursor-pointer active:scale-95"
+                        className="text-xs text-[#a37060] hover:text-red-400 p-1"
+                        title="Delete note"
                       >
-                        Copy
+                        <Trash2 className="w-3.5 h-3.5" />
                       </button>
-
                       <button
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           triggerHaptic();
                           onRestoreClip(item.content);
                           setShowHistorySheet(false);
                         }}
-                        className="px-3 py-1 bg-amber-400 text-neutral-950 rounded-lg text-xs font-bold cursor-pointer active:scale-95"
+                        className="text-xs text-amber-300 font-medium flex items-center gap-1 hover:underline"
                       >
-                        Restore
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        <span>Restore</span>
                       </button>
                     </div>
                   </div>
@@ -393,6 +421,14 @@ export const AndroidApp: React.FC<AndroidAppProps> = ({
           </div>
         </div>
       )}
+
+      {/* Confirmation Modal: User must type 'clear' to clear all history */}
+      <ClearHistoryModal
+        isOpen={isClearModalOpen}
+        onClose={() => setIsClearModalOpen(false)}
+        onConfirm={onClearHistory}
+        itemCount={history.length}
+      />
     </div>
   );
 };

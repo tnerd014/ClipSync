@@ -7,6 +7,7 @@ interface LanDirectModalProps {
   onClose: () => void;
   lanIp: string;
   lanPort: number;
+  sessionId?: string;
   onUpdateLanTarget?: (target: string) => void;
   isElectron: boolean;
   connectedClients: number;
@@ -17,19 +18,24 @@ export const LanDirectModal: React.FC<LanDirectModalProps> = ({
   onClose,
   lanIp,
   lanPort,
+  sessionId = 'DEFAULT',
   onUpdateLanTarget,
 }) => {
   const [qrDataUrl, setQrDataUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const [targetInput, setTargetInput] = useState('');
 
+  // Clean host resolution: ensure mobile gets real Wi-Fi IP and port
+  const hostToUse = lanIp && lanIp !== '127.0.0.1' && lanIp !== 'localhost'
+    ? lanIp
+    : (typeof window !== 'undefined' && window.location.hostname !== 'localhost' ? window.location.hostname : '127.0.0.1');
+  const portToUse = lanPort || 8432;
+
   // Short display address
-  const displayAddress = lanIp.includes('://') ? lanIp : `${lanIp}:${lanPort}`;
-  const qrAddress = typeof window !== 'undefined'
-    ? (lanIp.startsWith('http') || lanIp.startsWith('ws')
-        ? lanIp
-        : `${window.location.protocol}//${window.location.host}`)
-    : '';
+  const displayAddress = `${hostToUse}:${portToUse}`;
+  
+  // Full URL for mobile camera scanning (opens web or deep links into Android app)
+  const qrAddress = `http://${hostToUse}:${portToUse}/?room=${encodeURIComponent(sessionId)}&host=${encodeURIComponent(hostToUse)}&port=${portToUse}`;
 
   useEffect(() => {
     if (isOpen && qrAddress) {
